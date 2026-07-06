@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>06 · Results and reproduction – Reciprocal health dynamics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6495a19aa3a96d24e06d370af9d69525.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-results-and-reproduction.html">06 · Results and reproduction</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Reciprocal health dynamics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reciprocal health dynamics: a guided tour</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-data-acquisition-with-lissr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01 · Data acquisition with lissr</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-building-the-panel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">02 · Building the panel</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-sample-selection-with-weasel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03 · Sample selection with weasel</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-measures-and-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04 · Measures and cleaning</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-models-and-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05 · Models and inference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-results-and-reproduction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">06 · Results and reproduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./run_all.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysis transcript (run_all)</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#model-comparison-clpm-versus-ri-clpm" id="toc-model-comparison-clpm-versus-ri-clpm" class="nav-link active" data-scroll-target="#model-comparison-clpm-versus-ri-clpm">Model comparison: CLPM versus RI-CLPM</a></li>
+  <li><a href="#between-person-trait-level-associations" id="toc-between-person-trait-level-associations" class="nav-link" data-scroll-target="#between-person-trait-level-associations">Between-person (trait-level) associations</a></li>
+  <li><a href="#within-person-dynamics-pooled-time-invariant" id="toc-within-person-dynamics-pooled-time-invariant" class="nav-link" data-scroll-target="#within-person-dynamics-pooled-time-invariant">Within-person dynamics (pooled, time-invariant)</a></li>
+  <li><a href="#socioeconomic-moderation" id="toc-socioeconomic-moderation" class="nav-link" data-scroll-target="#socioeconomic-moderation">Socioeconomic moderation</a></li>
+  <li><a href="#supporting-tests-and-per-group-detail" id="toc-supporting-tests-and-per-group-detail" class="nav-link" data-scroll-target="#supporting-tests-and-per-group-detail">Supporting tests and per-group detail</a></li>
+  <li><a href="#reproduction-ladder" id="toc-reproduction-ladder" class="nav-link" data-scroll-target="#reproduction-ladder">Reproduction ladder</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">06 · Results and reproduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This vignette renders every released table from <code>tables/</code> and closes with the exact reproduction ladder. It requires no LISS data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="cf">function</span>(f) utils<span class="sc">::</span><span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="st">".."</span>, <span class="st">"tables"</span>, f), <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) knitr<span class="sc">::</span><span class="fu">kable</span>(x, <span class="at">digits =</span> <span class="dv">3</span>, ...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="model-comparison-clpm-versus-ri-clpm" class="level2">
+<h2 class="anchored" data-anchor-id="model-comparison-clpm-versus-ri-clpm">Model comparison: CLPM versus RI-CLPM</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"clpm_vs_riclpm_fit.csv"</span>), <span class="at">caption =</span> <span class="st">"Pooled sample"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Pooled sample</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: right;">CFI</th>
+<th style="text-align: right;">TLI</th>
+<th style="text-align: right;">RMSEA</th>
+<th style="text-align: right;">SRMR</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CLPM</td>
+<td style="text-align: right;">0.919</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.101</td>
+<td style="text-align: right;">324299.559</td>
+<td style="text-align: right;">325076.907</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RI-CLPM</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">0.989</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">317876.698</td>
+<td style="text-align: right;">318693.911</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">difference</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: right;">-0.080</td>
+<td style="text-align: right;">-0.076</td>
+<td style="text-align: right;">-6422.861</td>
+<td style="text-align: right;">-6382.997</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"clpm_vs_riclpm_fit_grouped.csv"</span>), <span class="at">caption =</span> <span class="st">"Three-group (multigroup) models"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Three-group (multigroup) models</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: right;">CFI</th>
+<th style="text-align: right;">TLI</th>
+<th style="text-align: right;">RMSEA</th>
+<th style="text-align: right;">SRMR</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CLPM</td>
+<td style="text-align: right;">0.919</td>
+<td style="text-align: right;">0.873</td>
+<td style="text-align: right;">0.116</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: right;">323537.56</td>
+<td style="text-align: right;">325869.605</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RI-CLPM</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">0.988</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">317055.25</td>
+<td style="text-align: right;">319506.887</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">difference</td>
+<td style="text-align: right;">0.074</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">-0.080</td>
+<td style="text-align: right;">-0.072</td>
+<td style="text-align: right;">-6482.31</td>
+<td style="text-align: right;">-6362.718</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The RI-CLPM dominates on every descriptive index and by thousands of AIC and BIC points in both the pooled and the multigroup fits: the covariation among the constructs is predominantly between persons.</p>
+</section>
+<section id="between-person-trait-level-associations" class="level2">
+<h2 class="anchored" data-anchor-id="between-person-trait-level-associations">Between-person (trait-level) associations</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">tbl</span>(<span class="st">"between_person_covariances.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(bp, <span class="at">caption =</span> <span class="st">"Random-intercept variances and covariances (unstandardised)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Random-intercept variances and covariances (unstandardised)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">lhs</th>
+<th style="text-align: left;">rhs</th>
+<th style="text-align: right;">est</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">z</th>
+<th style="text-align: right;">pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: right;">17.342</td>
+<td style="text-align: right;">0.495</td>
+<td style="text-align: right;">35.066</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riPA</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">4.168</td>
+<td style="text-align: right;">0.259</td>
+<td style="text-align: right;">16.087</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">riFV</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">0.269</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">52.662</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">-1.123</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">-8.962</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">-0.674</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riPA</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">0.109</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">5.831</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">setNames</span>(bp<span class="sc">$</span>est[bp<span class="sc">$</span>lhs <span class="sc">==</span> bp<span class="sc">$</span>rhs], bp<span class="sc">$</span>lhs[bp<span class="sc">$</span>lhs <span class="sc">==</span> bp<span class="sc">$</span>rhs])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cv <span class="ot">&lt;-</span> bp[bp<span class="sc">$</span>lhs <span class="sc">!=</span> bp<span class="sc">$</span>rhs, ]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>cv<span class="sc">$</span>r <span class="ot">&lt;-</span> cv<span class="sc">$</span>est <span class="sc">/</span> <span class="fu">sqrt</span>(v[cv<span class="sc">$</span>lhs] <span class="sc">*</span> v[cv<span class="sc">$</span>rhs])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(cv[, <span class="fu">c</span>(<span class="st">"lhs"</span>, <span class="st">"rhs"</span>, <span class="st">"est"</span>, <span class="st">"r"</span>, <span class="st">"z"</span>, <span class="st">"pvalue"</span>)],</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Trait covariances with implied correlations"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Trait covariances with implied correlations</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">lhs</th>
+<th style="text-align: left;">rhs</th>
+<th style="text-align: right;">est</th>
+<th style="text-align: right;">r</th>
+<th style="text-align: right;">z</th>
+<th style="text-align: right;">pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">-1.123</td>
+<td style="text-align: right;">-0.132</td>
+<td style="text-align: right;">-8.962</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">-0.674</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">0.109</td>
+<td style="text-align: right;">0.103</td>
+<td style="text-align: right;">5.831</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Trait BMI relates negatively to trait activity, is essentially unrelated to the fruit-and-vegetable trait, and trait activity relates positively to the diet trait.</p>
+</section>
+<section id="within-person-dynamics-pooled-time-invariant" class="level2">
+<h2 class="anchored" data-anchor-id="within-person-dynamics-pooled-time-invariant">Within-person dynamics (pooled, time-invariant)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"riclpm_dynamics_coefficients_pooled.csv"</span>),</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Autoregressive and cross-lagged coefficients"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Autoregressive and cross-lagged coefficients</caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">block</th>
+<th style="text-align: left;">path</th>
+<th style="text-align: right;">est</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: left;">sig</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">BMI -&gt; BMI</td>
+<td style="text-align: right;">0.511</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.473</td>
+<td style="text-align: right;">0.549</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">FV -&gt; FV</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.146</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">PA -&gt; PA</td>
+<td style="text-align: right;">0.281</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.230</td>
+<td style="text-align: right;">0.332</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">BMI -&gt; FV</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.402</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">BMI -&gt; PA</td>
+<td style="text-align: right;">-0.070</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">-0.102</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">FV -&gt; BMI</td>
+<td style="text-align: right;">-0.060</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">-0.098</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">FV -&gt; PA</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">-0.069</td>
+<td style="text-align: right;">0.078</td>
+<td style="text-align: right;">0.913</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">PA -&gt; BMI</td>
+<td style="text-align: right;">-0.017</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">PA -&gt; FV</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: left;">.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Carry-over is moderate and weakest for diet; among the cross-lags, the BMI-PA pair is reciprocal, with both paths negative and small.</p>
+</section>
+<section id="socioeconomic-moderation" class="level2">
+<h2 class="anchored" data-anchor-id="socioeconomic-moderation">Socioeconomic moderation</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"focal_covariance_by_ses.csv"</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Standardised trait BMI-PA covariance by stratum"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Standardised trait BMI-PA covariance by stratum</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">group</th>
+<th style="text-align: right;">est.std</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: left;">SES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.120</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">-0.161</td>
+<td style="text-align: right;">-0.080</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ses1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.188</td>
+<td style="text-align: right;">-0.069</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ses2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.113</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">-0.158</td>
+<td style="text-align: right;">-0.067</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ses3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"focal_covariance_boot.csv"</span>),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Delta-method and bootstrap percentile intervals (R = 1,000)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Delta-method and bootstrap percentile intervals (R = 1,000)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">SES</th>
+<th style="text-align: right;">est.std</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">boot.lower</th>
+<th style="text-align: right;">boot.upper</th>
+<th style="text-align: right;">n_boot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: right;">-0.120</td>
+<td style="text-align: right;">-0.161</td>
+<td style="text-align: right;">-0.080</td>
+<td style="text-align: right;">-0.162</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">1000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: right;">-0.188</td>
+<td style="text-align: right;">-0.069</td>
+<td style="text-align: right;">-0.188</td>
+<td style="text-align: right;">-0.066</td>
+<td style="text-align: right;">1000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: right;">-0.113</td>
+<td style="text-align: right;">-0.158</td>
+<td style="text-align: right;">-0.067</td>
+<td style="text-align: right;">-0.160</td>
+<td style="text-align: right;">-0.065</td>
+<td style="text-align: right;">1000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"moderation_lrt.csv"</span>), <span class="at">caption =</span> <span class="st">"Free versus equal across strata (scaled LRT)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Free versus equal across strata (scaled LRT)</caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 5%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: right;">Df</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">Chisq</th>
+<th style="text-align: right;">Chisq diff</th>
+<th style="text-align: right;">Df diff</th>
+<th style="text-align: right;">Pr(&gt;Chisq)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">riBMI<sub></sub>riPA free</td>
+<td style="text-align: right;">387</td>
+<td style="text-align: right;">317055.2</td>
+<td style="text-align: right;">319506.9</td>
+<td style="text-align: right;">1160.185</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riBMI<sub></sub>riPA equal</td>
+<td style="text-align: right;">389</td>
+<td style="text-align: right;">317052.0</td>
+<td style="text-align: right;">319490.4</td>
+<td style="text-align: right;">1160.978</td>
+<td style="text-align: right;">1.473</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.479</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The focal covariance is negative and significant in every stratum, tightly clustered, and a model holding it equal is preferred: no socioeconomic moderation.</p>
+</section>
+<section id="supporting-tests-and-per-group-detail" class="level2">
+<h2 class="anchored" data-anchor-id="supporting-tests-and-per-group-detail">Supporting tests and per-group detail</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"time_invariance_lrt.csv"</span>), <span class="at">caption =</span> <span class="st">"Lagged paths free versus time-invariant"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Lagged paths free versus time-invariant</caption>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 4%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: right;">Df</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">Chisq</th>
+<th style="text-align: right;">Chisq diff</th>
+<th style="text-align: right;">Df diff</th>
+<th style="text-align: right;">Pr(&gt;Chisq)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">lagged paths free per wave</td>
+<td style="text-align: right;">387</td>
+<td style="text-align: right;">317055.2</td>
+<td style="text-align: right;">319506.9</td>
+<td style="text-align: right;">1160.185</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lagged paths time-invariant</td>
+<td style="text-align: right;">522</td>
+<td style="text-align: right;">317360.7</td>
+<td style="text-align: right;">318915.4</td>
+<td style="text-align: right;">1735.621</td>
+<td style="text-align: right;">154.242</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">0.123</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"riclpm_dynamics_coefficients.csv"</span>),</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Per-group time-invariant dynamics"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Per-group time-invariant dynamics</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 8%">
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">block</th>
+<th style="text-align: left;">group</th>
+<th style="text-align: left;">path</th>
+<th style="text-align: right;">est</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: left;">sig</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">BMI -&gt; BMI</td>
+<td style="text-align: right;">0.458</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.404</td>
+<td style="text-align: right;">0.513</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">BMI -&gt; BMI</td>
+<td style="text-align: right;">0.573</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.493</td>
+<td style="text-align: right;">0.652</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">BMI -&gt; BMI</td>
+<td style="text-align: right;">0.521</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">0.457</td>
+<td style="text-align: right;">0.585</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">FV -&gt; FV</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.139</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">FV -&gt; FV</td>
+<td style="text-align: right;">0.134</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">0.178</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">FV -&gt; FV</td>
+<td style="text-align: right;">0.138</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">0.106</td>
+<td style="text-align: right;">0.169</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">PA -&gt; PA</td>
+<td style="text-align: right;">0.204</td>
+<td style="text-align: right;">0.055</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: right;">0.311</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">PA -&gt; PA</td>
+<td style="text-align: right;">0.356</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.260</td>
+<td style="text-align: right;">0.451</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">autoregressive</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">PA -&gt; PA</td>
+<td style="text-align: right;">0.289</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">0.224</td>
+<td style="text-align: right;">0.355</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">BMI -&gt; FV</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.387</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">BMI -&gt; FV</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.920</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">BMI -&gt; FV</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">-0.028</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">BMI -&gt; PA</td>
+<td style="text-align: right;">-0.045</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">-0.105</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.142</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">BMI -&gt; PA</td>
+<td style="text-align: right;">-0.059</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.118</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.052</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">BMI -&gt; PA</td>
+<td style="text-align: right;">-0.093</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">-0.149</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">FV -&gt; BMI</td>
+<td style="text-align: right;">-0.058</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">-0.122</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.071</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">FV -&gt; BMI</td>
+<td style="text-align: right;">-0.058</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">-0.142</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.178</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">FV -&gt; BMI</td>
+<td style="text-align: right;">-0.067</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">-0.124</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">FV -&gt; PA</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">-0.122</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: right;">0.945</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">FV -&gt; PA</td>
+<td style="text-align: right;">-0.046</td>
+<td style="text-align: right;">0.080</td>
+<td style="text-align: right;">-0.203</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;">0.569</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">FV -&gt; PA</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.058</td>
+<td style="text-align: right;">-0.070</td>
+<td style="text-align: right;">0.159</td>
+<td style="text-align: right;">0.450</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">PA -&gt; BMI</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">-0.033</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">PA -&gt; BMI</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.731</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">PA -&gt; BMI</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">PA -&gt; FV</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-0.002</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">PA -&gt; FV</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.991</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cross-lagged</td>
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">PA -&gt; FV</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: left;">.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"ses_group_estimates.csv"</span>), <span class="at">caption =</span> <span class="st">"Per-group estimate overview"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Per-group estimate overview</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">effect</th>
+<th style="text-align: right;">est_SES_1</th>
+<th style="text-align: left;">p_SES_1</th>
+<th style="text-align: right;">est_SES_2</th>
+<th style="text-align: left;">p_SES_2</th>
+<th style="text-align: right;">est_SES_3</th>
+<th style="text-align: left;">p_SES_3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">wBMI2 ~ wBMI1</td>
+<td style="text-align: right;">0.534</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.584</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.438</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI2 ~ wPA1</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.043</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI2 ~ wFV1</td>
+<td style="text-align: right;">0.016</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.095</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.099</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA2 ~ wBMI1</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.103</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: right;">-0.217</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA2 ~ wPA1</td>
+<td style="text-align: right;">0.370</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.467</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.493</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA2 ~ wFV1</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV2 ~ wBMI1</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV2 ~ wPA1</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV2 ~ wFV1</td>
+<td style="text-align: right;">0.120</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: right;">0.107</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.232</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI3 ~ wBMI2</td>
+<td style="text-align: right;">0.489</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.425</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI3 ~ wPA2</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">-0.022</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.059</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI3 ~ wFV2</td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.153</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA3 ~ wBMI2</td>
+<td style="text-align: right;">-0.098</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.181</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA3 ~ wPA2</td>
+<td style="text-align: right;">0.352</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: right;">0.397</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.352</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA3 ~ wFV2</td>
+<td style="text-align: right;">0.210</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.034</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV3 ~ wBMI2</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV3 ~ wPA2</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV3 ~ wFV2</td>
+<td style="text-align: right;">0.135</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.142</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: right;">0.072</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI4 ~ wBMI3</td>
+<td style="text-align: right;">0.333</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.474</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.354</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI4 ~ wPA3</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI4 ~ wFV3</td>
+<td style="text-align: right;">-0.039</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.052</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.139</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA4 ~ wBMI3</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.062</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.258</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA4 ~ wPA3</td>
+<td style="text-align: right;">0.206</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.479</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: right;">0.349</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA4 ~ wFV3</td>
+<td style="text-align: right;">-0.145</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.116</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.263</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV4 ~ wBMI3</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.029</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV4 ~ wPA3</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV4 ~ wFV3</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.112</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI5 ~ wBMI4</td>
+<td style="text-align: right;">0.191</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: right;">0.316</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.442</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI5 ~ wPA4</td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.017</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI5 ~ wFV4</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.155</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA5 ~ wBMI4</td>
+<td style="text-align: right;">0.096</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.077</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.131</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA5 ~ wPA4</td>
+<td style="text-align: right;">-0.055</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.326</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: right;">0.086</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA5 ~ wFV4</td>
+<td style="text-align: right;">-0.085</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.309</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV5 ~ wBMI4</td>
+<td style="text-align: right;">-0.034</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.019</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV5 ~ wPA4</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV5 ~ wFV4</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.071</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.123</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI6 ~ wBMI5</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: right;">0.620</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.718</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI6 ~ wPA5</td>
+<td style="text-align: right;">-0.017</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI6 ~ wFV5</td>
+<td style="text-align: right;">-0.145</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.081</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.185</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA6 ~ wBMI5</td>
+<td style="text-align: right;">-0.098</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.078</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA6 ~ wPA5</td>
+<td style="text-align: right;">0.243</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.164</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA6 ~ wFV5</td>
+<td style="text-align: right;">-0.373</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.105</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV6 ~ wBMI5</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV6 ~ wPA5</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.013</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV6 ~ wFV5</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.121</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI7 ~ wBMI6</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.632</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.654</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wBMI7 ~ wPA6</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wBMI7 ~ wFV6</td>
+<td style="text-align: right;">-0.232</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA7 ~ wBMI6</td>
+<td style="text-align: right;">-0.067</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.054</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.023</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wPA7 ~ wPA6</td>
+<td style="text-align: right;">0.080</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.330</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.187</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wPA7 ~ wFV6</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.113</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.089</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV7 ~ wBMI6</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">-0.028</td>
+<td style="text-align: left;">*</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wFV7 ~ wPA6</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wFV7 ~ wFV6</td>
+<td style="text-align: right;">0.145</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.226</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: right;">0.148</td>
+<td style="text-align: left;">***</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"riclpm_covariate_effects.csv"</span>),</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Covariate effects on the random intercepts (standardised, fixed.x = TRUE)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Covariate effects on the random intercepts (standardised, fixed.x = TRUE)</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: left;">path</th>
+<th style="text-align: right;">est.std</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: left;">sig</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">age -&gt; riBMI</td>
+<td style="text-align: right;">0.132</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">0.182</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">age -&gt; riBMI</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.106</td>
+<td style="text-align: right;">0.218</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">age -&gt; riBMI</td>
+<td style="text-align: right;">0.190</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.147</td>
+<td style="text-align: right;">0.234</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">age -&gt; riFV</td>
+<td style="text-align: right;">0.333</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.284</td>
+<td style="text-align: right;">0.381</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">age -&gt; riFV</td>
+<td style="text-align: right;">0.340</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.283</td>
+<td style="text-align: right;">0.398</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">age -&gt; riFV</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: right;">0.320</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">age -&gt; riPA</td>
+<td style="text-align: right;">-0.087</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">-0.149</td>
+<td style="text-align: right;">-0.025</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">age -&gt; riPA</td>
+<td style="text-align: right;">-0.110</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">-0.187</td>
+<td style="text-align: right;">-0.032</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">age -&gt; riPA</td>
+<td style="text-align: right;">-0.047</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">-0.104</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">female -&gt; riBMI</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">-0.027</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">0.499</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">female -&gt; riBMI</td>
+<td style="text-align: right;">-0.048</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">-0.100</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: left;">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">female -&gt; riBMI</td>
+<td style="text-align: right;">-0.066</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">-0.106</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">female -&gt; riFV</td>
+<td style="text-align: right;">0.268</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.224</td>
+<td style="text-align: right;">0.311</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">female -&gt; riFV</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.153</td>
+<td style="text-align: right;">0.257</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">female -&gt; riFV</td>
+<td style="text-align: right;">0.249</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.208</td>
+<td style="text-align: right;">0.290</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">female -&gt; riPA</td>
+<td style="text-align: right;">-0.068</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">-0.118</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: left;">**</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">female -&gt; riPA</td>
+<td style="text-align: right;">-0.147</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">-0.210</td>
+<td style="text-align: right;">-0.085</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">female -&gt; riPA</td>
+<td style="text-align: right;">-0.117</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">-0.164</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">med -&gt; riBMI</td>
+<td style="text-align: right;">0.251</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.203</td>
+<td style="text-align: right;">0.299</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">med -&gt; riBMI</td>
+<td style="text-align: right;">0.138</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">0.079</td>
+<td style="text-align: right;">0.196</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">med -&gt; riBMI</td>
+<td style="text-align: right;">0.153</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">0.106</td>
+<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">med -&gt; riFV</td>
+<td style="text-align: right;">-0.020</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">0.435</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">med -&gt; riFV</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">-0.037</td>
+<td style="text-align: right;">0.076</td>
+<td style="text-align: right;">0.503</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">med -&gt; riFV</td>
+<td style="text-align: right;">-0.037</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.120</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses1</td>
+<td style="text-align: left;">med -&gt; riPA</td>
+<td style="text-align: right;">-0.095</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">-0.148</td>
+<td style="text-align: right;">-0.042</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ses2</td>
+<td style="text-align: left;">med -&gt; riPA</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">0.885</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ses3</td>
+<td style="text-align: left;">med -&gt; riPA</td>
+<td style="text-align: right;">-0.034</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">-0.082</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.174</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="reproduction-ladder" class="level2">
+<h2 class="anchored" data-anchor-id="reproduction-ladder">Reproduction ladder</h2>
+<ol type="1">
+<li><code>remotes::install_deps()</code> from the compendium root (pulls <code>lissr</code> and <code>weasel</code> from GitHub per <code>DESCRIPTION</code>).</li>
+<li>Obtain LISS access, then <code>make acquire</code> and <code>make panel</code> (vignettes 01 and 02), or place an existing <code>liss_merged_long.sav</code> in <code>data/</code>.</li>
+<li><code>make sample</code> for the standalone weasel audit; <code>make analysis</code> to render <code>analysis/run_all.md</code>, the chunk-by-chunk transcript ending in <code>sessionInfo()</code>.</li>
+<li>First render takes roughly two hours, dominated by the bootstrap; the seeded, fingerprint-guarded cache makes subsequent renders take minutes.</li>
+</ol>
+<p>Two assertions run inside the pipeline on every render: the <code>lissr</code> equivalisation must equal the in-line formula, and the <code>weasel</code> scenario must select exactly the pipeline’s 5,676 respondents. A failed assertion stops the render rather than silently diverging.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.6.1 (2026-06-24)
+Platform: aarch64-apple-darwin23
+Running under: macOS Tahoe 26.5.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] C.UTF-8/UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
+
+time zone: Europe/Amsterdam
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] htmlwidgets_1.6.4 compiler_4.6.1    fastmap_1.2.0     cli_3.6.6        
+ [5] tools_4.6.1       htmltools_0.5.9   otel_0.2.0        yaml_2.3.12      
+ [9] rmarkdown_2.31    knitr_1.51        jsonlite_2.0.0    xfun_0.57        
+[13] digest_0.6.39     rlang_1.2.0       evaluate_1.0.5   </code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/siardv\.github\.io\/diet-activity-bmi-riclpm\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Research compendium: RI-CLPM analyses of diet quality, physical activity, and BMI (LISS panel)</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
