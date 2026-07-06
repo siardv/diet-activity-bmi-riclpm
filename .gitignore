@@ -1,0 +1,62 @@
+# research compendium ignore policy: track code, documentation, and small
+# aggregate outputs; never track raw or derived microdata, manuscript text,
+# or operational shell scripts.
+
+# os and editor junk
+.DS_Store
+Thumbs.db
+
+# r session and ide artefacts
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Rproj.user/
+
+# quarto and knitr caches (curated rendered outputs stay tracked)
+.quarto/
+*_cache/
+/_site/
+
+# raw liss microdata and codebooks: never committed (centerdata licence)
+data/*
+!data/README.md
+
+# statistical data containers anywhere in the tree
+*.sav
+*.zsav
+*.dta
+*.por
+*.rds
+*.rda
+*.RData
+*.RDS
+
+# person-level derived artefacts (panel identifiers, subject-level subsets)
+sample_ids*
+*liss_subset*
+
+# manuscript text and office/document formats stay out of the code repository
+manuscript*
+drafts/
+*.docx
+*.doc
+*.tex
+*.odt
+*.pdf
+
+# shell scripts and one-off operational files: general pattern per project
+# policy; add an explicit negation with a written justification if a shell
+# file ever needs tracking for academic reasons
+*sh
+
+# patches, backups, temporary and packaging files
+*.patch
+*.orig
+*.rej
+*.bak*
+*.tmp
+*~
+*.zip
+*.tar
+*.tar.gz

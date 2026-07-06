@@ -1,0 +1,135 @@
+---
+title: "03 · Sample selection with weasel"
+---
+
+The analytic sample keeps every respondent observed on at least three of the seven analysis waves, and estimates under full-information maximum likelihood. This vignette expresses that rule as an explicit, named, auditable scenario with [`weasel`](https://github.com/siardv/weasel), shows the audit outputs the article draws on, and demonstrates the machinery live on synthetic data.
+
+## Semantics first
+
+`weasel` counts a respondent as observed at a wave when a row with that `(id, wave)` pair exists in the long data. The study's notion of observed is substantive: at least one focal measure (BMI, fruit and vegetable consumption, or sport hours) reported at that wave. The bridge is a presence filter applied before planning:
+
+```{r}
+#| eval: false
+presence <- liss %>%
+  dplyr::filter(
+    t %in% analysis_waves,
+    !is.na(bmi) | !is.na(fv) | !is.na(pa)
+  )
+```
+
+Rows with a wave record but no focal measurement therefore do not count as observed, exactly as in the pipeline's own rule.
+
+## The rule as a scenario
+
+Three defaults ship with `weasel_plan()` (`anchored_strict`, `anchored_balanced`, `lenient_info_max`); the study's rule is a fourth, custom one. Within the full seven-wave span, at least three observed waves means at most four missing; endpoints are not required, and interior-gap limits are set non-binding.
+
+```{r}
+#| eval: false
+ws_plan <- weasel::weasel_plan(
+  presence[c("id", "t", "female", "age")],
+  id = "id", wave = "t", span = "full",
+  scenarios = data.frame(
+    scenario = "min3_of7",
+    require_endpoints = FALSE,
+    max_missing = 4L,
+    n_gap_max = 5L,
+    max_gap_max = 5L
+  )
+)
+analysis_ids <- unique(weasel::weasel_apply(ws_plan, "min3_of7")$id)
+```
+
+The pipeline (chunk `cb112` of `analysis/reciprocal-health-dynamics.R`) runs this plan alongside its own one-liner and asserts `setequal()` between the two id sets, so the transcript proves at every render that the scenario and the rule are the same selection: 5,676 respondents.
+
+## The audits the article uses
+
+Three diagnostics turn the rule from a stipulation into an argued choice.
+
+**Tolerance sensitivity.** `weasel_sensitivity()` sweeps the minimum-wave tolerance and reports the retained sample at each level, which is the sample-size trade-off behind choosing three as the threshold:
+
+```{r}
+#| eval: false
+weasel::weasel_sensitivity(
+  ws_plan,
+  require_endpoints = FALSE, max_missing = 0:6,
+  n_gap_max = 5L, max_gap_max = 5L
+)
+```
+
+**Attrition selectivity.** `weasel_selectivity()` compares retained and excluded respondents on covariates via standardised mean differences, the empirical check on whether completeness-based selection skews the sample that the missing-at-random discussion in the article leans on:
+
+```{r}
+#| eval: false
+weasel::weasel_selectivity(ws_plan, "min3_of7")
+```
+
+**Prose justification.** `weasel_justify_subset()` generates methods-section text stating the window, the constraints, the retained count, and the coverage achieved, regenerable from the same inputs:
+
+```{r}
+#| eval: false
+cat(weasel::weasel_justify_subset(ws_plan, "min3_of7"))
+```
+
+`scripts/02_select_sample.R` runs all of the above against the real panel and writes the id list and the justification to `output/`.
+
+## Live demonstration on synthetic data
+
+Everything above executes here on generated data with the study's exact scenario, so the outputs can be inspected without any LISS access.
+
+```{r}
+#| eval: !expr requireNamespace("weasel", quietly = TRUE)
+set.seed(42)
+d <- do.call(rbind, lapply(1:400, function(i) {
+  w <- sort(sample(1:7, sample(1:7, 1)))
+  data.frame(id = i, t = w, female = stats::rbinom(1, 1, 0.5),
+             age = stats::rnorm(1, 50, 15))
+}))
+
+sc <- data.frame(
+  scenario = "min3_of7", require_endpoints = FALSE,
+  max_missing = 4L, n_gap_max = 5L, max_gap_max = 5L
+)
+p <- weasel::weasel_plan(d, id = "id", wave = "t", span = "full", scenarios = sc)
+p
+```
+
+```{r}
+#| eval: !expr requireNamespace("weasel", quietly = TRUE)
+weasel::weasel_print_table(
+  weasel::weasel_sensitivity(p, require_endpoints = FALSE, max_missing = 0:6,
+                             n_gap_max = 5L, max_gap_max = 5L),
+  title = "sample size by minimum-wave tolerance"
+)
+weasel::weasel_print_table(
+  weasel::weasel_selectivity(p, "min3_of7"),
+  title = "retained vs excluded"
+)
+cat(weasel::weasel_justify_subset(p, "min3_of7"))
+```
+
+```{r}
+#| eval: !expr requireNamespace("weasel", quietly = TRUE)
+sub <- weasel::weasel_apply(p, "min3_of7")
+identical(
+  sort(unique(sub$id)),
+  sort(as.integer(names(which(table(d$id) >= 3))))
+)
+```
+
+The final `identical()` is the same equivalence the pipeline asserts on the real data: the scenario is the rule.
+
+## Interactive exploration
+
+Before committing to any rule, the scope pipeline maps the participation landscape:
+
+```{r}
+#| eval: false
+weasel::set_weasel_scope(presence, "id", "t", gap = 1)
+weasel::evaluate_weasel_scope()
+weasel::weasel_summarize_waves()
+weasel::weasel_print_table(weasel::weasel_filter_wave_summary(), n = 10)
+weasel::weasel_scope_info()
+weasel::weasel_clear_scope()
+```
+
+Panels on non-consecutive schedules (biennial waves, waves recorded as years) are handled with `grid = "observed"` in both pipelines.

@@ -1,0 +1,58 @@
+---
+title: "05 · Models and inference"
+---
+
+All models are estimated in `lavaan` with robust maximum likelihood (`MLR`), full-information maximum likelihood for missingness, and, for the grouped fits, `group = "ses"` over the three educational strata. The pipeline chunks named below live in `analysis/reciprocal-health-dynamics.R`; the rendered transcript `analysis/run_all.md` shows each with its output.
+
+## Two specifications, one lag structure
+
+The **CLPM** (`cb117`) regresses each observed score at wave *t* on all three observed scores at wave *t − 1*, with wave-1 covariances and within-wave residual covariances.
+
+The **RI-CLPM** (`cb122`) decomposes each observed score into a grand mean, a person-specific random intercept, and an occasion-specific within-person component, then places the identical lag structure on the within-person components:
+
+```{r}
+#| eval: false
+riBMI =~ 1*BMI1 + 1*BMI2 + 1*BMI3 + 1*BMI4 + 1*BMI5 + 1*BMI6 + 1*BMI7
+
+wBMI2 + wPA2 + wFV2 ~ wBMI1 + wPA1 + wFV1
+
+BMI1 ~~ 0*BMI1
+```
+
+Unit loadings define the random intercepts, observed residual variances are fixed to zero so all variance routes through the intercepts and the within components, wave-1 within covariances are freed, and the three random-intercept variances and three covariances are estimated.
+
+## Why the comparison is descriptive
+
+The CLPM is nested within the RI-CLPM: fixing the three random-intercept variances, and with them the covariances, to zero collapses one into the other. Because those constraints sit on the boundary of the admissible space, the scaled chi-square difference does not follow its nominal distribution (Stoel et al., 2006), so the models are compared on robust fit indices and information criteria. The verdict does not hinge on calibration: the RI-CLPM is superior on every index and preferred by margins of thousands of AIC and BIC points (vignette 06 renders the tables).
+
+## Constraints that are formally testable
+
+Two equality constraints have interior nulls and admit valid scaled likelihood-ratio tests:
+
+- **Time invariance of the lagged paths** (`cb135` to `cb148`): holding the twenty-seven lagged paths equal across the six wave transitions costs Δχ²(135) = 154.24, p = 0.123; the parsimonious time-invariant dynamics are adopted and reported.
+- **Equality of the within-person dynamics across SES** : Δχ²(108) = 95.37, p = 0.802, supporting the equal-dynamics specification.
+
+## Measurement structure over time
+
+With one indicator per construct per wave, classical longitudinal measurement invariance is untestable; instead a stable-trait factor model per construct (seven annual measures on one factor, three correlated factors, `cb194` to `cb208`, via `minvariance`) is progressively constrained. Loadings and intercepts hold within conventional fit-change limits; equal residual variances are clearly rejected, which the RI-CLPM accommodates by estimating within-person variances freely per wave.
+
+## The moderation test and its audit
+
+The focal question constrains one parameter set: the trait-level BMI-PA covariance, free versus equal across the three strata (`cb224`-region):
+
+```{r}
+#| eval: false
+free_syntax  <- ri_clpm_syntax
+equal_syntax <- sub("riBMI ~~ riPA", "riBMI ~~ c(rc, rc, rc)*riPA", ri_clpm_syntax)
+lavaan::lavTestLRT(fit_free, fit_equal)
+```
+
+The scaled test returns Δχ²(2) = 1.47, p = 0.479, with both information criteria preferring the equal model. Per-group standardised covariances are extracted with delta-method intervals and audited by a seeded percentile bootstrap (R = 1,000, seed 20240501) whose cache sits behind a fit fingerprint, so a ninety-minute computation reruns only when the model actually changes.
+
+## Covariate-adjusted refit
+
+A secondary model regresses the random intercepts on female, baseline age, and the medication count. These fits use `fixed.x = TRUE`: treating binary covariates as stochastic under FIML yields a degenerate joint distribution and a non-positive-definite starting covariance, so the covariates are conditioned on rather than modelled. The focal pattern is unchanged under adjustment.
+
+## What gets written
+
+Every table the article reports is written to `tables/` as CSV during the render: fit comparisons, between-person covariances, pooled and per-group dynamics, focal covariances with bootstrap bounds, the two likelihood-ratio tests, and the covariate effects. Vignette 06 renders each of them.

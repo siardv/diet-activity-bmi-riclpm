@@ -1,0 +1,621 @@
+---
+title: "RI-CLPM analysis transcript"
+always_allow_html: true
+output:
+  github_document:
+    toc: true
+    html_preview: false
+---
+
+```{r setup, include=FALSE}
+# echo every step's code, print messages and warnings, keep going on errors so
+# the transcript stays complete, and send figures where github renders them.
+knitr::opts_chunk$set(
+  echo = TRUE, message = TRUE, warning = TRUE, error = TRUE,
+  comment = "#>", fig.path = "run_all_files/figure-gfm/"
+)
+library(magrittr) # %>%, %<>%, %$%
+invisible(lapply(list.files("R", pattern = "[.][Rr]$", full.names = TRUE), source))
+
+# pull the validated chunks out of reciprocal-health-dynamics.R by their
+# "# ---- cb<id> ----" headers, in the order they should run.
+src <- readLines("reciprocal-health-dynamics.R", warn = FALSE)
+hdr <- grep("^# ---- cb[0-9]+ ----", src)
+ids <- as.integer(sub("^# ---- cb([0-9]+) ----.*", "\\1", src[hdr]))
+bounds <- c(hdr, length(src) + 1L)
+chunk <- function(id) {
+  k <- match(id, ids)
+  src[(hdr[k] + 1L):(bounds[k + 1L] - 1L)]
+}
+run_ids <- c(
+  51:57, 106:111, 112:115, 117, 119, 122, 124,
+  125, 135, 137, 146, 148, 157, 167, 169, 178, 180, 189,
+  194:197, 206:208, 213, 224:226
+)
+```
+
+## 1 data
+
+```{r data}
+data_dir <- liss_data_dir()
+
+# seed the long frame from the merged backbone.
+liss <- read_liss("liss_merged_long.sav", data_dir = data_dir)
+
+# data provenance: birth times of the merged backbone and the source extracts it
+# was assembled from. fall back to modification time on volumes that do not
+# record a birth time; missing files surface as NA age.
+sav_files <- c(
+  "liss_merged_long.sav", "liss_health.sav", "liss_sport.sav",
+  "liss_income.sav", "liss_background.sav", "liss_personality.sav"
+)
+fs::file_info(fs::path(data_dir, sav_files)) %>%
+  dplyr::transmute(
+    file        = sav_files,
+    time_source = ifelse(is.na(birth_time), "modified", "birth"),
+    created     = dplyr::coalesce(birth_time, modification_time),
+    age_days    = round(as.numeric(difftime(Sys.time(), created, units = "days")))
+  ) %>%
+  dplyr::arrange(created)
+```
+
+## 2 analysis steps
+
+```{r steps, results='asis', echo=FALSE}
+# emit one child chunk per step so knitr echoes its code and prints every
+# intermediate result, not just the last value. objects persist across steps
+# because the children share the global knit environment.
+step_desc <- trimws(sub("^# ---- cb[0-9]+ ----[ ]?", "", src[hdr]))
+names(step_desc) <- ids
+for (k in seq_along(run_ids)) {
+  id <- run_ids[k]
+  title <- step_desc[as.character(id)]
+  if (is.na(title) || title == "") title <- sprintf("step cb%d", id)
+  cat(
+    knitr::knit_child(
+      text  = c(sprintf("### 2.%d %s", k, title), "", sprintf("```{r cb%d}", id), chunk(id), "```", ""),
+      envir = knitr::knit_global(),
+      quiet = TRUE
+    ),
+    sep = "\n"
+  )
+}
+```
+
+## 3 result tables
+
+```{r tables}
+stopifnot(all(c(paste0("BMI", 1:7), paste0("PA", 1:7), paste0("FV", 1:7)) %in% names(wide)))
+cat(sprintf(
+  "N = %d | SES groups: %s\n", nrow(wide),
+  paste(names(table(wide$ses)), table(wide$ses), sep = "=", collapse = " / ")
+))
+dir.create("tables", showWarnings = FALSE)
+# missing-data accounting under FIML: the effective N actually used by the
+# likelihood, the realised coverage of the analysis variables, and the listwise
+# N it replaces. paste inside the {r tables} chunk, right after
+# dir.create("tables", showWarnings = FALSE) and before the CLPM vs RI-CLPM block.
+analysis_vars <- c(paste0("BMI", 1:7), paste0("PA", 1:7), paste0("FV", 1:7))
+listwise_n <- sum(complete.cases(wide[analysis_vars]))
+
+ri_fit <- all_model_fits$pooled$ri_clpm_pooled_fit
+effective_n <- lavaan::lavInspect(ri_fit, "ntotal")
+coverage <- diag(lavaan::lavInspect(ri_fit, "coverage"))
+
+cat(sprintf(
+  paste0(
+    "FIML effective N = %d | listwise N = %d | panel N = %d\n",
+    "realised coverage: %.1f%% to %.1f%% across the %d indicators (mean %.1f%%)\n"
+  ),
+  effective_n, listwise_n, nrow(wide),
+  100 * min(coverage), 100 * max(coverage), length(coverage), 100 * mean(coverage)
+))
+
+# preliminary: CLPM vs RI-CLPM on an identical lag structure.
+# both models now carry the same autoregressive and cross-lagged paths and
+# differ only in that the RI-CLPM partitions stable between-person variance into
+# random intercepts, so the two are not nested. compare on robust descriptive
+# fit indices and on AIC and BIC, not on a chi-square difference test.
+fit_msrs <- c("cfi.robust", "tli.robust", "rmsea.robust", "srmr", "aic", "bic")
+
+fit_compare <- function(clpm, riclpm) {
+  m <- as.data.frame(rbind(
+    CLPM      = lavaan::fitMeasures(clpm, fit_msrs),
+    `RI-CLPM` = lavaan::fitMeasures(riclpm, fit_msrs)
+  ))
+  names(m) <- c("CFI", "TLI", "RMSEA", "SRMR", "AIC", "BIC")
+  m <- rbind(m, difference = m["RI-CLPM", ] - m["CLPM", ])
+  cbind(model = rownames(m), m)
+}
+
+# pooled comparison (headline preliminary)
+clpm_vs_riclpm <- fit_compare(
+  all_model_fits$pooled$clpm_pooled_fit,
+  all_model_fits$pooled$ri_clpm_pooled_fit
+)
+utils::write.csv(clpm_vs_riclpm, "tables/clpm_vs_riclpm_fit.csv", row.names = FALSE)
+knitr::kable(
+  clpm_vs_riclpm,
+  row.names = FALSE, digits = c(0, 3, 3, 3, 3, 0, 0),
+  caption = "preliminary: CLPM vs RI-CLPM, pooled (robust fit, AIC, BIC)"
+)
+
+# grouped comparison (confirmation across SES groups)
+clpm_vs_riclpm_grouped <- fit_compare(
+  all_model_fits$grouped$clpm_grouped_fit,
+  all_model_fits$grouped$ri_clpm_grouped_fit
+)
+utils::write.csv(
+  clpm_vs_riclpm_grouped, "tables/clpm_vs_riclpm_fit_grouped.csv",
+  row.names = FALSE
+)
+knitr::kable(
+  clpm_vs_riclpm_grouped,
+  row.names = FALSE, digits = c(0, 3, 3, 3, 3, 0, 0),
+  caption = "preliminary: CLPM vs RI-CLPM, by SES group (robust fit, AIC, BIC)"
+)
+
+# pooled between-person (random-intercept) variances and covariances
+ppe <- lavaan::parameterEstimates(all_model_fits$pooled$ri_clpm_pooled_fit)
+between <- ppe[
+  ppe$op == "~~" & ppe$lhs %in% c("riBMI", "riPA", "riFV"),
+  c("lhs", "rhs", "est", "se", "z", "pvalue")
+]
+utils::write.csv(between, "tables/between_person_covariances.csv", row.names = FALSE)
+knitr::kable(between, row.names = FALSE, caption = "between-person (co)variances")
+
+# path estimates compared across SES groups
+ses_estimates <- compare_ses_groups(
+  all_model_fits$grouped$ri_clpm_grouped_fit,
+  include_p_values = FALSE, hide_non_significant = FALSE, only_lagged_effect = FALSE
+)
+utils::write.csv(ses_estimates, "tables/ses_group_estimates.csv", row.names = FALSE)
+knitr::kable(ses_estimates, caption = "path estimates by SES group")
+
+# descriptive statistics for the wide panel
+writeLines(
+  as.character(describe(wide, exclude = "id", caption = "Descriptive statistics")),
+  "tables/descriptives.html"
+)
+
+# model fit indices for the pooled RI-CLPM (uses the optional 'report' package)
+if (requireNamespace("report", quietly = TRUE)) {
+  fit_tables <- model_fit_table(all_model_fits$pooled$ri_clpm_pooled_fit)
+  writeLines(as.character(fit_tables[[1]]), "tables/ri_clpm_fit_parameters.html")
+  writeLines(as.character(fit_tables[[2]]), "tables/ri_clpm_fit_indices.md")
+}
+
+list.files("tables")
+```
+
+## 4 measurement invariance (interpretation)
+
+Because the RI-CLPM fixes every factor loading to one, metric (equal-loading)
+invariance holds by construction, which is enough to compare the structural
+parameters across SES groups: the autoregressive and cross-lagged regressions
+and the between-person random-intercept (co)variances. The across-SES comparison
+in the analysis steps provides the formal structural test, whether the
+regression paths can be held equal across groups; scalar (equal-intercept) and
+strict (equal-residual) invariance are not required here and are reported only
+for completeness.
+
+## 5 moderation test
+
+```{r moderation}
+# formal test of the socioeconomic moderation: is the focal between-person
+# covariance (the BMI and PA random intercepts) equal across SES groups? fit the
+# grouped RI-CLPM with that one covariance held equal across groups, then compare
+# it to the free grouped fit with a scaled likelihood-ratio test. the constrained
+# model is nested in the free one (it fixes a single covariance equal across
+# groups), so a scaled LRT is the right tool, unlike the non-nested CLPM vs
+# RI-CLPM comparison.
+free_fit <- all_model_fits$grouped$ri_clpm_grouped_fit
+
+# constrain riBMI ~~ riPA equal across the three groups via one shared label;
+# everything else stays free per group.
+ri_clpm_syntax_eq <- sub(
+  "riBMI ~~ riPA", "riBMI ~~ c(rc, rc, rc)*riPA",
+  ri_clpm_syntax, fixed = TRUE
+)
+eq_fit <- lavaan::lavaan(
+  model = ri_clpm_syntax_eq,
+  data = wide,
+  group = "ses",
+  group.label = c("ses1", "ses2", "ses3"),
+  int.ov.free = TRUE,
+  meanstructure = TRUE,
+  estimator = "MLR",
+  se = "robust",
+  missing = "fiml",
+  fixed.x = FALSE
+)
+
+mod_lrt <- lavaan::lavTestLRT(
+  free_fit, eq_fit,
+  method = "satorra.2000",
+  model.names = c("riBMI~~riPA free", "riBMI~~riPA equal")
+)
+lrt_df <- cbind(model = rownames(mod_lrt), as.data.frame(mod_lrt))
+utils::write.csv(lrt_df, "tables/moderation_lrt.csv", row.names = FALSE)
+knitr::kable(
+  lrt_df, row.names = FALSE, digits = 3,
+  caption = "moderation test: riBMI ~~ riPA free vs equal across SES (scaled LRT)"
+)
+```
+
+```{r moderation-estimates}
+# standardised focal covariance with 95% CIs, by SES group.
+std <- lavaan::standardizedSolution(free_fit, level = 0.95)
+focal <- std[
+  std$op == "~~" &
+    ((std$lhs == "riBMI" & std$rhs == "riPA") |
+      (std$lhs == "riPA" & std$rhs == "riBMI")),
+  c("group", "est.std", "se", "ci.lower", "ci.upper", "pvalue")
+]
+focal$SES <- factor(focal$group, levels = 1:3, labels = c("ses1", "ses2", "ses3"))
+utils::write.csv(focal, "tables/focal_covariance_by_ses.csv", row.names = FALSE)
+knitr::kable(
+  focal[c("SES", "est.std", "se", "ci.lower", "ci.upper", "pvalue")],
+  row.names = FALSE, digits = 3,
+  caption = "standardised BMI-PA random-intercept covariance by SES group (95% CI)"
+)
+```
+
+```{r moderation-bootstrap}
+# bootstrap percentile CIs for the focal standardised covariance, per SES group.
+# reuse tables/focal_covariance_boot.csv when a stored fit fingerprint still
+# matches the current free_fit, skipping the slow refit; a changed fit re-runs the
+# bootstrap automatically. delete the csv to force a fresh run regardless. boot_R
+# is the draw count when it does run.
+boot_R <- 1000L
+boot_seed <- 20240501L
+boot_csv <- "tables/focal_covariance_boot.csv"
+
+# cache validity fingerprint. the cached intervals belong to one specific fit, so
+# fingerprint free_fit by its focal point estimates (the bootstrapped quantity),
+# its effective N and free-parameter count, and the bootstrap settings. reuse the
+# cache on an exact match; a mismatch re-runs the bootstrap. a cache present with
+# no fingerprint (the first render after this patch) is adopted and fingerprinted.
+fp_file <- "tables/focal_covariance_boot.fingerprint"
+fp_focal <- focal$est.std
+names(fp_focal) <- as.character(focal$SES)
+fp_focal <- fp_focal[order(names(fp_focal))]
+boot_fingerprint <- paste(
+  paste0("R=", boot_R),
+  paste0("seed=", boot_seed),
+  paste0("ntotal=", lavaan::lavInspect(free_fit, "ntotal")),
+  paste0("npar=", lavaan::lavInspect(free_fit, "npar")),
+  paste0("focal=", paste(names(fp_focal), signif(fp_focal, 6), sep = ":", collapse = ",")),
+  sep = "|"
+)
+cached_fp <- if (file.exists(fp_file)) trimws(readLines(fp_file, warn = FALSE))[1] else NA_character_
+reuse_cache <- file.exists(boot_csv) &&
+  (is.na(cached_fp) || identical(cached_fp, boot_fingerprint))
+
+if (reuse_cache) {
+  if (is.na(cached_fp)) {
+    cat("Adopting the existing bootstrap cache; recording the fit fingerprint.\n")
+  } else {
+    cat("Reusing cached bootstrap CIs (fit fingerprint matched).\n")
+  }
+  prev <- utils::read.csv(boot_csv, stringsAsFactors = FALSE)
+  focal$boot.lower <- prev$boot.lower[match(as.character(focal$SES), prev$SES)]
+  focal$boot.upper <- prev$boot.upper[match(as.character(focal$SES), prev$SES)]
+  focal$n_boot <- prev$n_boot[1]
+} else {
+  cat("Running the bootstrap (no cache present, or the fit fingerprint changed).\n")
+  focal_std_fun <- function(fit) {
+    ss <- lavaan::standardizedSolution(fit)
+    sel <- ss$op == "~~" &
+      ((ss$lhs == "riBMI" & ss$rhs == "riPA") |
+        (ss$lhs == "riPA" & ss$rhs == "riBMI"))
+    out <- ss$est.std[sel]
+    names(out) <- paste0("ses", ss$group[sel])
+    out
+  }
+  ncpus <- max(1L, parallel::detectCores() - 1L)
+  use_par <- if (.Platform$OS.type == "windows") "no" else "multicore"
+  set.seed(boot_seed)
+  boot_args <- list(object = free_fit, R = boot_R, FUN = focal_std_fun, parallel = use_par)
+  if (use_par != "no") boot_args <- c(boot_args, list(ncpus = ncpus, iseed = boot_seed))
+  boot_focal <- do.call(lavaan::bootstrapLavaan, boot_args)
+  if (is.null(colnames(boot_focal))) colnames(boot_focal) <- c("ses1", "ses2", "ses3")
+  boot_focal <- boot_focal[stats::complete.cases(boot_focal), , drop = FALSE]
+  boot_ci <- t(apply(boot_focal, 2, stats::quantile, probs = c(0.025, 0.975), na.rm = TRUE))
+  colnames(boot_ci) <- c("boot.lower", "boot.upper")
+  focal$boot.lower <- boot_ci[as.character(focal$SES), "boot.lower"]
+  focal$boot.upper <- boot_ci[as.character(focal$SES), "boot.upper"]
+  focal$n_boot <- nrow(boot_focal)
+}
+
+focal_out <- focal[c("SES", "est.std", "ci.lower", "ci.upper", "boot.lower", "boot.upper", "n_boot")]
+utils::write.csv(focal_out, boot_csv, row.names = FALSE)
+# persist the fingerprint describing the fit these intervals belong to
+writeLines(boot_fingerprint, fp_file)
+knitr::kable(
+  focal_out, row.names = FALSE, digits = 3,
+  caption = paste(
+    "standardised BMI-PA random-intercept covariance by SES group:",
+    "delta-method vs bootstrap percentile 95% CIs"
+  )
+)
+```
+
+```{r moderation-coef-plot}
+# coefficient plot (figure 2): point estimates with bootstrap percentile CIs,
+# the more trustworthy interval for a standardised covariance.
+ggplot2::ggplot(focal, ggplot2::aes(x = SES, y = est.std)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = "dashed") +
+  ggplot2::geom_errorbar(
+    ggplot2::aes(ymin = boot.lower, ymax = boot.upper), width = 0.15
+  ) +
+  ggplot2::geom_point(size = 3) +
+  ggplot2::labs(
+    x = "SES group",
+    y = "standardised BMI-PA random-intercept covariance",
+    title = "Between-person BMI-PA association by SES (bootstrap 95% CI)"
+  ) +
+  ggplot2::theme_bw()
+```
+
+## 6 RI-CLPM coefficients
+
+The autoregressive and cross-lagged coefficients are reported from a time-invariant grouped RI-CLPM (lagged paths constrained equal across waves within each SES group, free across groups), so each effect is a single row per SES group; these are the invariant raw coefficients, so they are unstandardised. Dynamics are from the no-covariate model behind the moderation analysis. Covariate effects on the random intercepts come from a refit conditioning on the covariates (`fixed.x = TRUE`), standardised when that model's implied covariance is positive definite. The core dynamics models elsewhere keep `fixed.x = FALSE`; if a refit fails to converge, the relevant block falls back to the earlier free-per-wave / unstandardised form. A fully pooled time-invariant model (lagged paths equal across waves and across SES groups, justified by the across-SES structural invariance result) summarises the dynamics in nine unstandardised coefficients, reported alongside the per-group tables. A scaled likelihood-ratio test compares the free-per-wave grouped model with its time-invariant counterpart to check the time-invariance assumption. Estimates, intervals, and the test are written to `tables/`.
+
+```{r coefficients}
+# refinement 1: dynamics from a time-invariant grouped ri-clpm (lagged paths
+# share labels across waves within each SES group, free across groups via
+# group-specific label vectors), one row per effect, reported unstandardised (the
+# constrained raw coefficients are the invariant quantities). refinement 2:
+# covariate effects standardised from the fixed.x = TRUE refit when its implied
+# covariance is positive definite. both fall back if a refit fails.
+is_within <- function(v) grepl("^w(BMI|PA|FV)[1-7]$", v)
+fam <- function(v) sub("^w(BMI|PA|FV)[1-7]$", "\\1", v)
+star <- function(p) {
+  ifelse(p <= 0.001, "***",
+    ifelse(p <= 0.01, "**", ifelse(p <= 0.05, "*", ifelse(p <= 0.1, ".", ""))))
+}
+fmt_p <- function(p) ifelse(p < 0.001, "<0.001", formatC(p, format = "f", digits = 3))
+
+# build a time-invariant variant of the no-covariate syntax by labelling the
+# lagged paths and sharing those labels across waves
+lagged_free <- paste(
+  "wBMI2 + wPA2 + wFV2 ~ wBMI1 + wPA1 + wFV1",
+  "wBMI3 + wPA3 + wFV3 ~ wBMI2 + wPA2 + wFV2",
+  "wBMI4 + wPA4 + wFV4 ~ wBMI3 + wPA3 + wFV3",
+  "wBMI5 + wPA5 + wFV5 ~ wBMI4 + wPA4 + wFV4",
+  "wBMI6 + wPA6 + wFV6 ~ wBMI5 + wPA5 + wFV5",
+  "wBMI7 + wPA7 + wFV7 ~ wBMI6 + wPA6 + wFV6",
+  sep = "\n"
+)
+lagged_ti <- paste(vapply(1:6, function(t) {
+  sprintf(paste(
+    "wBMI%d ~ c(bb1,bb2,bb3)*wBMI%d + c(pb1,pb2,pb3)*wPA%d + c(fb1,fb2,fb3)*wFV%d",
+    "wPA%d ~ c(bp1,bp2,bp3)*wBMI%d + c(pp1,pp2,pp3)*wPA%d + c(fp1,fp2,fp3)*wFV%d",
+    "wFV%d ~ c(bf1,bf2,bf3)*wBMI%d + c(pf1,pf2,pf3)*wPA%d + c(ff1,ff2,ff3)*wFV%d",
+    sep = "\n"
+  ), t + 1L, t, t, t, t + 1L, t, t, t, t + 1L, t, t, t)
+}, character(1)), collapse = "\n")
+ri_clpm_syntax_ti <- sub(lagged_free, lagged_ti, ri_clpm_syntax, fixed = TRUE)
+
+free_fit_ti <- NULL
+if (grepl("c(bb1,bb2,bb3)*wBMI", ri_clpm_syntax_ti, fixed = TRUE)) {
+  free_fit_ti <- tryCatch(
+    lavaan::lavaan(
+      model = ri_clpm_syntax_ti, fixed.x = FALSE, data = wide, group = "ses",
+      group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
+      meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
+    ),
+    error = function(e) NULL
+  )
+}
+
+lab_map <- c(
+  bb = "BMI -> BMI", pp = "PA -> PA", ff = "FV -> FV",
+  pb = "PA -> BMI", fb = "FV -> BMI", bp = "BMI -> PA",
+  fp = "FV -> PA", bf = "BMI -> FV", pf = "PA -> FV"
+)
+
+if (!is.null(free_fit_ti) && isTRUE(lavaan::lavInspect(free_fit_ti, "converged"))) {
+  dyn <- lavaan::parameterEstimates(free_fit_ti)
+  dyn <- dyn[dyn$op == "~" & grepl("^(bb|pp|ff|pb|fb|bp|fp|bf|pf)[123]$", dyn$label), ]
+  dyn <- dyn[!duplicated(dyn[c("group", "label")]), ]
+  dyn$prefix <- sub("[123]$", "", dyn$label)
+  dyn$group <- paste0("ses", dyn$group)
+  dyn$path <- lab_map[dyn$prefix]
+  dyn$block <- ifelse(dyn$prefix %in% c("bb", "pp", "ff"), "autoregressive", "cross-lagged")
+  est_col <- "est"
+  dyn_cap <- "time-invariant, unstandardised"
+} else {
+  dyn <- lavaan::standardizedSolution(free_fit)
+  dyn <- dyn[dyn$op == "~" & is_within(dyn$lhs) & is_within(dyn$rhs), ]
+  dyn$group <- paste0("ses", dyn$group)
+  dyn$path <- paste(dyn$rhs, "->", dyn$lhs)
+  dyn$block <- ifelse(fam(dyn$lhs) == fam(dyn$rhs), "autoregressive", "cross-lagged")
+  est_col <- "est.std"
+  dyn_cap <- "free per wave, standardised (time-invariant refit did not converge)"
+}
+dyn$sig <- star(dyn$pvalue)
+dyn_tab <- dyn[, c("block", "group", "path", est_col, "se", "ci.lower", "ci.upper", "pvalue", "sig")]
+dyn_tab <- dyn_tab[order(dyn_tab$block, dyn_tab$path, dyn_tab$group), ]
+utils::write.csv(dyn_tab, "tables/riclpm_dynamics_coefficients.csv", row.names = FALSE)
+dyn_tab$pvalue <- fmt_p(dyn_tab$pvalue)
+keep <- setdiff(names(dyn_tab), "block")
+
+knitr::kable(
+  dyn_tab[dyn_tab$block == "autoregressive", keep],
+  format = "markdown", row.names = FALSE, digits = 3,
+  caption = paste0("autoregressive coefficients by SES group (", dyn_cap, ")")
+)
+knitr::kable(
+  dyn_tab[dyn_tab$block == "cross-lagged", keep],
+  format = "markdown", row.names = FALSE, digits = 3,
+  caption = paste0("cross-lagged coefficients by SES group (", dyn_cap, ")")
+)
+
+# refinement 3: fully pooled time-invariant dynamics. lagged paths held equal
+# across waves and across SES groups (justified by the across-SES structural
+# invariance result), collapsing each effect to one unstandardised coefficient.
+# built like the per-group time-invariant syntax but with scalar labels, which a
+# grouped lavaan model constrains across groups as well; same config as free_fit.
+lagged_ti_pooled <- paste(vapply(1:6, function(t) {
+  sprintf(paste(
+    "wBMI%d ~ bb*wBMI%d + pb*wPA%d + fb*wFV%d",
+    "wPA%d ~ bp*wBMI%d + pp*wPA%d + fp*wFV%d",
+    "wFV%d ~ bf*wBMI%d + pf*wPA%d + ff*wFV%d",
+    sep = "\n"
+  ), t + 1L, t, t, t, t + 1L, t, t, t, t + 1L, t, t, t)
+}, character(1)), collapse = "\n")
+ri_clpm_syntax_ti_pooled <- sub(lagged_free, lagged_ti_pooled, ri_clpm_syntax, fixed = TRUE)
+
+free_fit_ti_pooled <- NULL
+if (grepl("bb*wBMI", ri_clpm_syntax_ti_pooled, fixed = TRUE)) {
+  free_fit_ti_pooled <- tryCatch(
+    lavaan::lavaan(
+      model = ri_clpm_syntax_ti_pooled, fixed.x = FALSE, data = wide, group = "ses",
+      group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
+      meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
+    ),
+    error = function(e) NULL
+  )
+}
+
+if (!is.null(free_fit_ti_pooled) && isTRUE(lavaan::lavInspect(free_fit_ti_pooled, "converged"))) {
+  pool <- lavaan::parameterEstimates(free_fit_ti_pooled)
+  pool <- pool[pool$op == "~" & pool$label %in% names(lab_map), ]
+  pool <- pool[!duplicated(pool$label), ]
+  pool$path <- lab_map[pool$label]
+  pool$block <- ifelse(pool$label %in% c("bb", "pp", "ff"), "autoregressive", "cross-lagged")
+  pool$sig <- star(pool$pvalue)
+  pool_tab <- pool[, c("block", "path", "est", "se", "ci.lower", "ci.upper", "pvalue", "sig")]
+  pool_tab <- pool_tab[order(pool_tab$block, pool_tab$path), ]
+  utils::write.csv(pool_tab, "tables/riclpm_dynamics_coefficients_pooled.csv", row.names = FALSE)
+  pool_tab$pvalue <- fmt_p(pool_tab$pvalue)
+  knitr::kable(
+    pool_tab, format = "markdown", row.names = FALSE, digits = 3,
+    caption = "pooled coefficients (time-invariant across waves and SES groups, unstandardised)"
+  )
+} else {
+  cat("\nThe pooled time-invariant refit did not converge; pooled coefficients are not shown.\n")
+}
+
+# refinement 4: scaled likelihood-ratio test of the time-invariance assumption.
+# free_fit (the free-per-wave grouped RI-CLPM from the moderation section, cb167)
+# and free_fit_ti (the per-group time-invariant model above) share estimator MLR,
+# se robust, missing fiml, fixed.x = FALSE and int.ov.free, so free_fit_ti is
+# nested in free_fit and the scaled diff test is valid. guard against future drift
+# in those settings: if they diverge, refit a matching free-per-wave model.
+ti_opt_keys <- c("estimator", "se", "missing", "fixed.x")
+opts_match <- function(a, b) {
+  isTRUE(all.equal(
+    lavaan::lavInspect(a, "options")[ti_opt_keys],
+    lavaan::lavInspect(b, "options")[ti_opt_keys]
+  ))
+}
+ti_lrt_df <- NULL
+ti_msg <- NULL
+if (exists("free_fit") && !is.null(free_fit_ti) &&
+  isTRUE(lavaan::lavInspect(free_fit_ti, "converged"))) {
+  free_fit_cmp <- free_fit
+  if (!opts_match(free_fit, free_fit_ti)) {
+    free_fit_cmp <- tryCatch(
+      lavaan::lavaan(
+        model = ri_clpm_syntax, fixed.x = FALSE, data = wide, group = "ses",
+        group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
+        meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
+      ),
+      error = function(e) NULL
+    )
+  }
+  if (!is.null(free_fit_cmp) && isTRUE(lavaan::lavInspect(free_fit_cmp, "converged"))) {
+    ti_lrt <- tryCatch(
+      lavaan::lavTestLRT(
+        free_fit_cmp, free_fit_ti, method = "satorra.2000",
+        model.names = c("lagged paths free per wave", "lagged paths time-invariant")
+      ),
+      error = function(e) NULL
+    )
+    if (!is.null(ti_lrt)) {
+      ti_lrt_df <- cbind(model = rownames(ti_lrt), as.data.frame(ti_lrt))
+      utils::write.csv(ti_lrt_df, "tables/time_invariance_lrt.csv", row.names = FALSE)
+      cn <- names(ti_lrt)
+      ci <- grep("Chisq diff", cn, fixed = TRUE)
+      di <- grep("Df diff", cn, fixed = TRUE)
+      pp <- grep("Pr(>", cn, fixed = TRUE)
+      if (length(ci) && length(di) && length(pp)) {
+        rws <- which(!is.na(ti_lrt[[cn[ci[1]]]]))
+        if (length(rws)) {
+          r <- rws[length(rws)]
+          ti_chisq <- ti_lrt[[cn[ci[1]]]][r]
+          ti_dfd <- as.integer(round(ti_lrt[[cn[di[1]]]][r]))
+          ti_pval <- ti_lrt[[cn[pp[1]]]][r]
+          ti_verdict <- if (is.na(ti_pval)) {
+            "the scaled difference test was not computable"
+          } else if (ti_pval > 0.05) {
+            "the data are consistent with holding the lagged paths time-invariant"
+          } else {
+            "the data argue against full time-invariance of the lagged paths"
+          }
+          ti_msg <- sprintf(
+            "time-invariance LRT: scaled chi-square difference = %.2f, df = %d, p = %s; %s.",
+            ti_chisq, ti_dfd, fmt_p(ti_pval), ti_verdict
+          )
+        }
+      }
+    }
+  }
+}
+
+if (!is.null(ti_lrt_df)) {
+  knitr::kable(
+    ti_lrt_df, row.names = FALSE, digits = 3,
+    caption = "time-invariance LRT: lagged paths free per wave vs time-invariant (scaled)"
+  )
+} else {
+  cat("\nThe time-invariance LRT could not be computed; a required fit was unavailable.\n")
+}
+
+if (!is.null(ti_msg)) cat("\n", ti_msg, "\n", sep = "")
+
+# covariate effects on the random intercepts, conditioning on the covariates
+covar_fit <- tryCatch(
+  lavaan::lavaan(
+    model = ri_clpm_covar_syntax, fixed.x = TRUE, data = wide, group = "ses",
+    group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
+    meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
+  ),
+  error = function(e) NULL
+)
+if (!is.null(covar_fit) && isTRUE(lavaan::lavInspect(covar_fit, "converged"))) {
+  cv_std <- tryCatch(lavaan::standardizedSolution(covar_fit), error = function(e) NULL)
+  if (!is.null(cv_std)) {
+    cv <- cv_std
+    cv_col <- "est.std"
+    cv_cap <- "standardised"
+  } else {
+    cv <- lavaan::parameterEstimates(covar_fit)
+    cv_col <- "est"
+    cv_cap <- "unstandardised, covariate model not positive definite"
+  }
+  cv <- cv[cv$op == "~" & grepl("^ri(BMI|PA|FV)$", cv$lhs) & !is_within(cv$rhs), ]
+  cv$group <- paste0("ses", cv$group)
+  cv$path <- paste(cv$rhs, "->", cv$lhs)
+  cv$sig <- star(cv$pvalue)
+  cv_tab <- cv[, c("group", "path", cv_col, "se", "ci.lower", "ci.upper", "pvalue", "sig")]
+  cv_tab <- cv_tab[order(cv_tab$path, cv_tab$group), ]
+  utils::write.csv(cv_tab, "tables/riclpm_covariate_effects.csv", row.names = FALSE)
+  cv_tab$pvalue <- fmt_p(cv_tab$pvalue)
+  knitr::kable(
+    cv_tab, format = "markdown", row.names = FALSE, digits = 3,
+    caption = paste0("covariate effects on the random intercepts by SES group (", cv_cap, ", fixed.x = TRUE)")
+  )
+} else {
+  cat("\nThe covariate-adjusted refit did not converge; covariate effects are not shown.\n")
+}
+```
+
+## 7 session information
+
+```{r session-info}
+sessionInfo()
+```

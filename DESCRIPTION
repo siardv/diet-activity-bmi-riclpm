@@ -1,0 +1,39 @@
+Package: reciprocal.health.dynamics
+Type: Compendium
+Title: Socioeconomic Variations in the Reciprocal Relationships Between
+    Diet Quality, Physical Activity, and Body Mass Index
+Version: 1.0.0
+Authors@R:
+    person("Siard", "van den Bosch", email = "siardvandenbosch@me.com",
+           role = c("aut", "cre", "cph"))
+Description: Research compendium for a random-intercept cross-lagged
+    panel study of BMI, physical activity, and fruit and vegetable
+    consumption across seven annual waves of the Dutch LISS panel, with
+    socioeconomic status as a multigroup moderator. Serves as a worked
+    use case for the lissr package (archive access, recipe-driven
+    merging, income cleaning and equivalisation) and the weasel package
+    (wave-based sample selection, tolerance sensitivity, and attrition
+    selectivity diagnostics). No microdata are included.
+License: MIT + file LICENSE
+Depends:
+    R (>= 4.1.0)
+Imports:
+    dplyr,
+    ggplot2,
+    haven,
+    here,
+    kableExtra,
+    knitr,
+    lavaan,
+    magrittr,
+    minvariance,
+    purrr,
+    rlang,
+    rmarkdown,
+    weasel (>= 0.3.0),
+    lissr (>= 1.2.0)
+Remotes:
+    siardv/lissr,
+    siardv/weasel
+Encoding: UTF-8
+URL: https://github.com/siardv/lissr, https://github.com/siardv/weasel

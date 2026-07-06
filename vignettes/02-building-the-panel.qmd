@@ -1,0 +1,100 @@
+---
+title: "02 · Building the panel"
+---
+
+The analysis reads one file, `liss_merged_long.sav`: a long panel with one row per respondent per wave, carrying `nomem_encr`, `nohouse_encr`, `wavenr`, the focal measures (`bmi`, `frve`, `sport`), demographics (`gender`, `leeftijd`, `oplmet`, `aantalhh`, `aantalki`), medication (`medicine`), smoking (`smoke`), and net household income (`nethh`). Two routes produce it.
+
+## Route A: the committed merged panel (published results)
+
+The published estimates come from four thematic extracts (`liss_health.sav`, `liss_sport.sav`, `liss_income.sav`, `liss_background.sav`) that were cleaned and merged into `liss_merged_long.sav`, and that committed file is the operative Route A input: place it in `data/` and the analysis reads it directly. `scripts/01_build_panel.R` (default route) checks that it is in place.
+
+The construction itself is preserved verbatim in `scripts/build_liss_merged.R`: it joins the extracts on `nomem_encr` and the wave column, harmonises the income variables (`ci00a339`, `ci00a229`, `ci00a001` become `nethh`, `nethh_min`, `positiehh`), and repairs implausible `nethh` values per household through an explicit correction loop (order-of-magnitude checks against a household's own income history, per-wave case review, monotone repair of decimal-shift errors) before writing the merged file. It is a documented record rather than a live builder: it targets the original extract schema, and the extract vintage now in circulation has drifted from it (the current `liss_income.sav` carries `wavenr` but not the `wave` column its background-income join expects), so sourcing it against today's `data/` stops at that join by design. Holders of the frozen original extracts can run it via `RHD_BUILD_ROUTE=provenance`, and `scripts/verify_liss_merged.R` then reconstructs the panel with writing disabled and compares it cell by cell against the committed file.
+
+One consequence matters for anyone regenerating the inputs from scratch: in these extracts, `bmi` and the fruit-and-vegetable composite `frve` (scored 1 to 3) were already derived. The raw health module instead carries two 1-to-6 frequency items, vegetables (`chXXa196`) and fruit (`chXXa197`). The composite rule lives in the archived extract, so any raw-item reconstruction must be validated wave by wave against the extract before it is substituted.
+
+## Route B: recipe-driven merging with lissr (forward path)
+
+`lissr` ships validated YAML recipes for all ten core modules; each recipe encodes the wave file patterns, variable harmonisation, boundary handling, and validation checks for one module.
+
+```{r}
+#| eval: false
+data_dir <- Sys.getenv("LISS_DATA_DIR", "data")
+
+ch_recipe <- lissr::liss_recipe("ch")
+lissr::validate_recipe(ch_recipe, "ch_merge_recipe.yml")
+
+ch <- lissr::merge_liss_module(ch_recipe, data_dir = data_dir, output_dir = "output")
+cs <- lissr::merge_liss_module(lissr::liss_recipe("cs"), data_dir = data_dir, output_dir = "output")
+
+panel <- lissr::merge_liss_panel(
+  list(ch, cs),
+  join_by = c("nomem_encr", "wave_year")
+)
+```
+
+`merge_liss_panel()` joins on the calendar year the recipes assign to each wave (`ch07a` is 2007, `cs08a` is 2008), so the leisure series pairs with the health wave of the same calendar year and `ch07a` has no leisure partner. The archived extract's alignment of the sport series to the seven panel waves is the reference; verify it against this year-based join before substituting Route B for Route A.
+
+Demographics are then attached from the monthly Background Variables files, which the module downloader does not fetch: obtain the seven November files listed in vignette 01 and unzip them anywhere under `data/` (flat, an `avars/` subfolder, or the per-zip subfolders an unzip tool creates; the code locates each `.sav` recursively). Each wave joins to the background snapshot of its main fieldwork month, keyed on `nomem_encr` plus the calendar year, never on `nohouse_encr`:
+
+```{r}
+#| eval: false
+avars_stems <- c(
+  "avars_200711", "avars_200811", "avars_200911", "avars_201011",
+  "avars_201111", "avars_201211", "avars_201311"
+)
+background <- purrr::imap_dfr(avars_stems, function(stem, w) {
+  f <- list.files(data_dir, pattern = paste0("^", stem, ".*\\.sav$"),
+                  recursive = TRUE, full.names = TRUE)
+  stopifnot(length(f) == 1)
+  dplyr::mutate(haven::read_sav(f), wave_year = 2006L + w)
+})
+panel <- dplyr::left_join(panel, background, by = c("nomem_encr", "wave_year"))
+```
+
+When a new wave is released, `lissr::onboard_new_wave()` extends a recipe against the previous wave's contract instead of hand-editing patterns:
+
+```{r}
+#| eval: false
+lissr::onboard_new_wave(
+  recipe_path = system.file("recipes", "ch_merge_recipe.yml", package = "lissr"),
+  new_file = "ch25r_EN_1_0p.sav",
+  prev_wave_id = "ch24q"
+)
+```
+
+`scripts/01_build_panel.R` sits behind the `RHD_BUILD_ROUTE` environment variable: the default `historical` route checks the committed merged file is in place, `provenance` sources the preserved construction record for holders of the original extracts, and `lissr` runs the recipe-driven merge above.
+
+## Income cleaning as rules, not edits
+
+The manual `nethh` repairs of Route A have a packaged descendant: `lissr`'s rule-driven income-cleaning framework, documented in the package's Income Cleaning article. The packaged ruleset is the single source of truth: preparation rules (P01 to P06) resolve columns, attach background demographics, expand bracket codes, rectify sign errors, and sweep residual SPSS missing codes; detection rules (D01 to D11) flag implausible cells; correction rules (C01 to C06) generate candidate replacements; a finalisation rule (F01) voids anything still outside the plausible range.
+
+```{r}
+#| eval: false
+rs <- lissr::liss_cleaning_ruleset()
+print(rs)
+```
+
+The cleaner operates on merged module output, so the income module feeds it. A dry run in `"flag"` mode performs the full procedure without touching a value; proposals arrive in `nethh_proposed` and every would-be decision in the ledger:
+
+```{r}
+#| eval: false
+ci <- lissr::merge_liss_module(
+  lissr::liss_recipe("ci"), data_dir = data_dir, output_dir = "output"
+)
+dry <- lissr::liss_clean_income(ci, mode = "flag")
+head(dry$decisions)
+summary(dry)
+```
+
+Once the proposals look right, the default `"correct"` mode applies them and writes the audit artefacts; original values are always preserved:
+
+```{r}
+#| eval: false
+cleaned <- lissr::liss_clean_income(ci, background = avars, output_dir = "output")
+cleaned$data$nethh
+cleaned$data$nethh_observed
+table(cleaned$data$nethh_clean_status, useNA = "ifany")
+lissr::liss_cleaning_report(cleaned, output_dir = "output")
+```
+
+`liss_cleaning_report()` renders a markdown report whose methodology section is generated from the ruleset that actually ran, the complete decision ledger as CSV, and a JSONL audit log, so the documentation cannot drift from the code. A third mode, `"na_only"`, voids detected cells without imputing, for analyses that prefer missingness over model-based corrections. Rules can be disabled or re-parameterised per run (`disable`, `params`, `income_cap`), and a lasting policy is an edited copy of the packaged YAML passed as `ruleset`, checked by `validate_cleaning_ruleset()`. Attaching the background demographics improves donor-pool matching (rule C05); rule P01 aligns the monthly file to the annual wave scale and joins on the person id.

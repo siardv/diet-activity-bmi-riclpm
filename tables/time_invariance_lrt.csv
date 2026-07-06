@@ -1,0 +1,3 @@
+"model","Df","AIC","BIC","Chisq","Chisq diff","Df diff","Pr(>Chisq)"
+"lagged paths free per wave",387,317055.25044359,319506.887195716,1160.18546683353,NA,NA,NA
+"lagged paths time-invariant",522,317360.686174886,318915.382651844,1735.6211981296,154.2417014987,135,0.12308251232707

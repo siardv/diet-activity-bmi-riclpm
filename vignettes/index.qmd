@@ -1,0 +1,14 @@
+---
+title: "Reciprocal health dynamics: a guided tour"
+---
+
+This compendium documents, in order, every step from an empty `data/` folder to the tables in the article. Each vignette is self-contained; together they are deliberately exhaustive.
+
+1. **Data acquisition with lissr.** Registering, authenticating, browsing the archive, and downloading exactly the files the study needs.
+2. **Building the panel.** The historical extract route that produced the published inputs, and the recipe-driven lissr route that replaces it going forward.
+3. **Sample selection with weasel.** The minimum-three-of-seven-waves rule as an explicit scenario, with sensitivity and selectivity audits. Contains a fully executed demonstration on synthetic data.
+4. **Measures and cleaning.** Construct definitions, the physical-activity plausibility ceiling, the education mapping behind the SES strata, and income equivalisation and cleaning.
+5. **Models and inference.** The CLPM and RI-CLPM specifications, estimation settings, the boundary-constraint rationale for the model comparison, invariance checks, and the moderation test.
+6. **Results and reproduction.** Every released table rendered from `tables/`, plus the exact reproduction ladder. Renders without any LISS data.
+
+Chunks that require LISS microdata are marked `eval: false` and mirror the pipeline verbatim; everything else executes at render time.

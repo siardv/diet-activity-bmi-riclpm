@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this compendium, please cite the article and the two packages it demonstrates."
+type: software
+title: "Reciprocal health dynamics: research compendium"
+authors:
+  - family-names: "Bosch"
+    name-particle: "van den"
+    given-names: "Siard"
+    email: "siardvandenbosch@me.com"
+license: MIT
+version: "1.0.0"
+date-released: "2026-07-04"
+repository-code: "https://github.com/siardv/diet-activity-bmi-riclpm"
+url: "https://siardv.github.io/diet-activity-bmi-riclpm/"
+preferred-citation:
+  type: article
+  title: "Socioeconomic Variations in the Reciprocal Relationships Between Diet Quality, Physical Activity, and Body Mass Index: A Random-Intercept Cross-Lagged Panel Study"
+  authors:
+    - family-names: "Bosch"
+      name-particle: "van den"
+      given-names: "Siard"
+  year: 2026
+  journal: "Social Science & Medicine"
+  notes: "Manuscript under review; citation details to be updated on publication."

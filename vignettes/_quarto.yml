@@ -1,0 +1,16 @@
+project:
+  type: default
+  render:
+    - "*.qmd"
+
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-overflow: wrap
+    theme: cosmo
+
+execute:
+  warning: false
+  message: false

@@ -1,0 +1,68 @@
+---
+title: "01 · Data acquisition with lissr"
+---
+
+The study uses three ingredients from the LISS Data Archive: the health module (`ch`), the leisure module that carries weekly sport hours (`cs`), and the monthly Background Variables (`avars`) that supply demographics, education, income, and household composition. This vignette walks the acquisition end to end with [`lissr`](https://github.com/siardv/lissr).
+
+## Access and credentials
+
+LISS access is free for research after registration and a signed statement at <https://www.lissdata.nl>. `lissr` stores the account in the system keyring, so the password never appears in scripts or history.
+
+```{r}
+#| eval: false
+lissr::liss_store_credentials("<your liss user number>")   # once; prompts for the password
+lissr::liss_login()                                        # keyring + two-factor prompt
+lissr::liss_is_logged_in()
+```
+
+## Orientation
+
+Two calls give the lay of the land: the module catalogue and the module-by-wave availability matrix. The matrix and the downloader cover the ten core longitudinal modules; the Background Variables file is catalogued alongside them but distributed separately (see below).
+
+```{r}
+#| eval: false
+lissr::liss_modules()
+lissr::liss_wave_matrix()
+```
+
+The wave matrix makes the study's window visible at a glance: the health module runs annually from `ch07a` (2007) through `ch13g` (2013), skips 2014, and resumes with `ch15h`. The seven waves `ch07a` to `ch13g` are therefore the longest run of consecutive annual health waves, and that is the window the study analyses; a break in annual spacing would undermine the time-invariant lag constraints of the panel model.
+
+## Selection and download
+
+`liss_select()` opens an interactive picker over the ten core longitudinal modules, their waves, and file types. The wave prompt takes the archive's positional wave indices (w1 to w18), not year codes: health w1 to w7 are `ch07a` to `ch13g` and w8 is already `ch15h` (2014 was skipped), while leisure w1 is `cs08a` (that module started in 2008). Entering `7:13` therefore fetches 2013 to 2020, not 2007 to 2013. For this study:
+
+- modules: Health and Social Integration and Leisure (`cs`, labelled Culture and Sports in the lissr recipes)
+- waves: enter `1:7`, which yields `ch07a` to `ch13g` and `cs08a` to `cs14g`; the leisure set is a one-wave superset covering both candidate alignments (see vignette 02)
+- file types: SPSS `.sav`, optionally the English codebooks, which document every item
+
+```{r}
+#| eval: false
+selection <- lissr::liss_select()
+lissr::liss_download(selection, .dir = "data")
+```
+
+One pitfall: confirming the module prompt without a selection returns `NULL`, and `liss_download(NULL)` then offers the entire archive (all ten modules, every wave); cancel and reselect instead.
+
+`.sav` is the tested default throughout `lissr`; the downloader can also fetch `.dta`, but treat that path as experimental. With `.dir = "data"` the unzipped files land in `data/` directly (set `LISS_DATA_DIR` if they live elsewhere); `data/README.md` shows the expected layout. `scripts/00_acquire_data.R` wraps this whole vignette.
+
+## Background Variables
+
+Demographics (sex, age, education, household composition) live in the monthly Background Variables file (`avars`). It appears in the module catalogue but is not part of the wave matrix or the module download flow, so obtain it separately from the archive's Background Variables page and place the files under `data/avars/`.
+
+Which months? LISS guidance is to merge each questionnaire with the background variables of the month it was fielded, and every health codebook states its collection window under `Date of data collection`: the main fieldwork month is November in all seven waves (`ch07a` adds a February 2008 mop-up, `ch08b` to `ch13g` a December mop-up). One file per wave therefore suffices:
+
+| wave | fieldwork | avars file |
+|---|---|---|
+| `ch07a` | Nov 2007 (and Feb 2008) | `avars_200711_EN_3.0p.zip` |
+| `ch08b` | Nov 2008 (and Dec 2008) | `avars_200811_EN_2.0p.zip` |
+| `ch09c` | Nov 2009 (and Dec 2009) | `avars_200911_EN_2.0p.zip` |
+| `ch10d` | Nov 2010 (and Dec 2010) | `avars_201011_EN_2.0p.zip` |
+| `ch11e` | Nov 2011 (and Dec 2011) | `avars_201111_EN_2.0p.zip` |
+| `ch12f` | Nov 2012 (and Dec 2012) | `avars_201211_EN_1.0p.zip` |
+| `ch13g` | Nov 2013 (and Dec 2013) | `avars_201311_EN_1.0p.zip` |
+
+Respondents who answered in a mop-up month are matched to the November snapshot under this rule; for the slow-moving demographics the study uses, the discrepancy is negligible, but the archived extract's own month choice belongs to the alignment verification flagged in vignette 02. The variables consumed downstream are `nomem_encr` and `nohouse_encr` (keys), `geslacht` (sex, recoded to the pipeline's female indicator), `leeftijd` (age), `oplmet` (education), `aantalhh`, and `aantalki` (household size and children). Vignette 02 shows the join: on `nomem_encr` plus the wave's calendar year, never on `nohouse_encr`.
+
+## Identifiers
+
+Every merge downstream keys on `nomem_encr`, the encrypted respondent id. The household id `nohouse_encr` is present in the early waves this study uses but is dropped in later waves of most modules, where it must come from the Background Variables instead; join demographics on `nomem_encr` only, matching the fieldwork month to the wave.

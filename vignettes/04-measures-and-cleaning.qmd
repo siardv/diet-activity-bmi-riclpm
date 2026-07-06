@@ -1,0 +1,67 @@
+---
+title: "04 · Measures and cleaning"
+---
+
+This vignette records every measurement and cleaning decision between the merged panel and the model frame, in pipeline order.
+
+## Focal constructs
+
+**BMI.** Self-reported height and weight, `weight / height^2`, taken as delivered by the merged panel; observed values lie in a plausible range and no analysis-stage filter is applied. A reporting bias that is stable within persons is absorbed by the random intercept.
+
+**Physical activity.** Weekly hours of sports participation behind a participation gate; non-participants are zero. A plausibility ceiling is applied before the analysis subset so it propagates everywhere:
+
+```{r}
+#| eval: false
+pa_ceiling <- 40
+liss %<>% dplyr::mutate(pa = dplyr::if_else(pa > pa_ceiling, NA_real_, pa))
+```
+
+Values above forty hours per week exceed any plausible general-population sport load and are set missing, then handled by FIML like all other missingness.
+
+**Fruit and vegetable consumption.** A two-item composite (vegetable and fruit frequency), scored 1 to 3, delivered pre-derived in the historical extract (see vignette 02 for the raw-item caveat).
+
+## The education-based SES strata
+
+Education arrives as `oplmet` in the Background Variables. The pipeline recodes it in two steps.
+
+First, categories collapse to four levels: primary (with `other` and `not yet started or completed` assigned lowest), vmbo with havo/vwo, mbo, and hbo with wo:
+
+```{r}
+#| eval: false
+educ = dplyr::case_when(
+  oplmet == 1 ~ 1, oplmet == 2 ~ 2, oplmet == 3 ~ 2,
+  oplmet == 4 ~ 3, oplmet == 5 ~ 4, oplmet == 6 ~ 4,
+  oplmet == 7 ~ 1, oplmet == 8 ~ 1, oplmet == 9 ~ 1,
+  TRUE ~ NA_real_
+)
+```
+
+Second, the household maximum is taken per wave (households with no observed education yield `NA`), and the four levels collapse to three by merging the two lowest, so the strata read: lower (up to general secondary), intermediate (mbo), higher (hbo or wo). The value at each respondent's first observed wave defines the stratum, treated as time-invariant thereafter. Resulting sizes: 1,914 / 1,449 / 2,313, no missing values.
+
+General secondary schooling is preparatory rather than qualifying in the Dutch system; as a highest completed level it indicates that no subsequent vocational or tertiary qualification was obtained, which is why it sits with the lower stratum.
+
+## Income equivalisation
+
+Household net income is equivalised by dividing by the square root of a weighted household size, adults plus 0.8 times the number of children:
+
+```{r}
+#| eval: false
+stand_inc = nethh / ((aantalhh - aantalki + 0.8 * aantalki)^0.5)
+```
+
+This is exactly `lissr`'s `weighted_sqrt` scale, and the pipeline asserts the identity at render time:
+
+```{r}
+#| eval: false
+eq <- lissr::liss_equivalise_income(
+  liss$nethh, liss$aantalhh, liss$aantalki, verbose = FALSE
+)
+ok <- is.finite(liss$stand_inc) & is.finite(eq)
+stopifnot(isTRUE(all.equal(liss$stand_inc[ok], eq[ok])))
+```
+
+`liss_equivalise_income()` also offers `scale = "oecd_modified"` (divisor `1 + 0.5 * (adults - 1) + 0.3 * children`) and `scale = "sqrt"` (square root of household size), which makes scale-choice robustness a one-argument change. Income does not define the SES strata; the equivalised variable is retained for description and sensitivity analysis.
+
+## Covariates
+
+Gender (female = 1), age at baseline, and a Mokken-validated medication count (0 to 5) enter as time-invariant predictors of the random intercepts in the covariate-augmented model only; the focal estimates come from the unadjusted model. Smoking is excluded by design for the collider-bias reasons set out in the article's Methods.
