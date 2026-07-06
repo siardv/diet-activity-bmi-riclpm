@@ -1,5 +1,7 @@
 # Reciprocal health dynamics
 
+Rendered vignettes and the full analysis transcript: <https://siardv.github.io/diet-activity-bmi-riclpm/>
+
 Research compendium for **Socioeconomic Variations in the Reciprocal Relationships Between Diet Quality, Physical Activity, and Body Mass Index: A Random-Intercept Cross-Lagged Panel Study** (target journal: *Social Science & Medicine*).
 
 Seven annual waves of the Dutch [LISS panel](https://www.lissdata.nl) (analytic N = 5,676 under full-information maximum likelihood) are analysed with random-intercept cross-lagged panel models (RI-CLPM) in `lavaan`, with household educational attainment as a three-group moderator. Headline results: covariation among BMI, physical activity, and fruit and vegetable consumption is predominantly between persons; the trait-level BMI-PA association is negative, significant, and uniform across socioeconomic strata; within persons, only the BMI-PA pair shows a small, reliable, mutually reinforcing pattern.
