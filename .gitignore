@@ -60,3 +60,4 @@ drafts/
 *.zip
 *.tar
 *.tar.gz
+vignettes/_site/
