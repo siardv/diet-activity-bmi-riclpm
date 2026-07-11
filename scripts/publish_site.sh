@@ -35,7 +35,7 @@ touch "$tmp/.nojekyll"
     if [ "${1:-}" = "--no-push" ]; then
       echo "committed to gh-pages; push skipped (--no-push)"
     else
-      git push origin gh-pages
+      git push --force-with-lease origin gh-pages
     fi
   fi
 )
