@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>05 · Models and inference – Reciprocal health dynamics</title>
+<title>S5 · Models and inference – Reciprocal health dynamics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-models-and-inference.html">05 · Models and inference</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-models-and-inference.html">S5 · Models and inference</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -146,49 +146,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reciprocal health dynamics: a guided tour</span></a>
+ <span class="menu-text">Online supplementary material: a guided tour</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-data-acquisition-with-lissr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">01 · Data acquisition with lissr</span></a>
+ <span class="menu-text">S1 · Data acquisition with lissr</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-building-the-panel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">02 · Building the panel</span></a>
+ <span class="menu-text">S2 · Building the panel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-sample-selection-with-weasel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03 · Sample selection with weasel</span></a>
+ <span class="menu-text">S3 · Sample selection with weasel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-measures-and-cleaning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">04 · Measures and cleaning</span></a>
+ <span class="menu-text">S4 · Measures and cleaning</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-models-and-inference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">05 · Models and inference</span></a>
+ <span class="menu-text">S5 · Models and inference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-results-and-reproduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06 · Results and reproduction</span></a>
+ <span class="menu-text">S6 · Results and reproduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./run_all.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis transcript (run_all)</span></a>
+ <span class="menu-text">S7 · Analysis transcript (run_all)</span></a>
   </div>
 </li>
     </ul>
@@ -206,6 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#constraints-that-are-formally-testable" id="toc-constraints-that-are-formally-testable" class="nav-link" data-scroll-target="#constraints-that-are-formally-testable">Constraints that are formally testable</a></li>
   <li><a href="#measurement-structure-over-time" id="toc-measurement-structure-over-time" class="nav-link" data-scroll-target="#measurement-structure-over-time">Measurement structure over time</a></li>
   <li><a href="#the-moderation-test-and-its-audit" id="toc-the-moderation-test-and-its-audit" class="nav-link" data-scroll-target="#the-moderation-test-and-its-audit">The moderation test and its audit</a></li>
+  <li><a href="#construction-audit-sensitivity" id="toc-construction-audit-sensitivity" class="nav-link" data-scroll-target="#construction-audit-sensitivity">Construction-audit sensitivity</a></li>
   <li><a href="#covariate-adjusted-refit" id="toc-covariate-adjusted-refit" class="nav-link" data-scroll-target="#covariate-adjusted-refit">Covariate-adjusted refit</a></li>
   <li><a href="#what-gets-written" id="toc-what-gets-written" class="nav-link" data-scroll-target="#what-gets-written">What gets written</a></li>
   </ul>
@@ -216,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">05 · Models and inference</h1>
+<h1 class="title">S5 · Models and inference</h1>
 </div>
 
 
@@ -233,11 +234,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>All models are estimated in <code>lavaan</code> with robust maximum likelihood (<code>MLR</code>), full-information maximum likelihood for missingness, and, for the grouped fits, <code>group = "ses"</code> over the three educational strata. The pipeline chunks named below live in <code>analysis/reciprocal-health-dynamics.R</code>; the rendered transcript <code>analysis/run_all.md</code> shows each with its output.</p>
+<p>All models are estimated in <code>lavaan</code> with robust maximum likelihood (<code>MLR</code>), full-information maximum likelihood for missingness, and, for the grouped fits, <code>group = "ses"</code> over the three educational strata. The pipeline chunks live in <code>analysis/reciprocal-health-dynamics.R</code>; the rendered transcript (S7) shows each with its output, and its section numbers are cited below.</p>
 <section id="two-specifications-one-lag-structure" class="level2">
 <h2 class="anchored" data-anchor-id="two-specifications-one-lag-structure">Two specifications, one lag structure</h2>
-<p>The <strong>CLPM</strong> (<code>cb117</code>) regresses each observed score at wave <em>t</em> on all three observed scores at wave <em>t − 1</em>, with wave-1 covariances and within-wave residual covariances.</p>
-<p>The <strong>RI-CLPM</strong> (<code>cb122</code>) decomposes each observed score into a grand mean, a person-specific random intercept, and an occasion-specific within-person component, then places the identical lag structure on the within-person components:</p>
+<p>The <strong>CLPM</strong> regresses each observed score at wave <em>t</em> on all three observed scores at wave <em>t − 1</em>, with wave-1 covariances and within-wave residual covariances.</p>
+<p>The <strong>RI-CLPM</strong> decomposes each observed score into a grand mean, a person-specific random intercept, and an occasion-specific within-person component, then places the identical lag structure on the within-person components:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>riBMI <span class="ot">=</span><span class="er">~</span> <span class="dv">1</span><span class="sc">*</span>BMI1 <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>BMI2 <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>BMI3 <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>BMI4 <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>BMI5 <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>BMI6 <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>BMI7</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -245,27 +246,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BMI1 <span class="sc">~</span><span class="er">~</span> <span class="dv">0</span><span class="sc">*</span>BMI1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Unit loadings define the random intercepts, observed residual variances are fixed to zero so all variance routes through the intercepts and the within components, wave-1 within covariances are freed, and the three random-intercept variances and three covariances are estimated.</p>
+<p>Unit loadings define the random intercepts, observed residual variances are fixed to zero so all variance routes through the intercepts and the within components, wave-1 within covariances are freed, and the three random-intercept variances and three covariances are estimated. The complete parameter output of every fitted model (estimates, standard errors, z statistics, p values, confidence intervals, and standardised values) is released as <code>tables/full_parameters_*.csv</code> and rendered in S6.</p>
 </section>
 <section id="why-the-comparison-is-descriptive" class="level2">
 <h2 class="anchored" data-anchor-id="why-the-comparison-is-descriptive">Why the comparison is descriptive</h2>
-<p>The CLPM is nested within the RI-CLPM: fixing the three random-intercept variances, and with them the covariances, to zero collapses one into the other. Because those constraints sit on the boundary of the admissible space, the scaled chi-square difference does not follow its nominal distribution (Stoel et al., 2006), so the models are compared on robust fit indices and information criteria. The verdict does not hinge on calibration: the RI-CLPM is superior on every index and preferred by margins of thousands of AIC and BIC points (vignette 06 renders the tables).</p>
+<p>The CLPM is nested within the RI-CLPM: fixing the three random-intercept variances, and with them the covariances, to zero collapses one into the other. Because those constraints sit on the boundary of the admissible space, the scaled chi-square difference does not follow its nominal distribution (Stoel et al., 2006), so the models are compared on robust fit indices and information criteria. The verdict does not hinge on calibration: the RI-CLPM is superior on every index and preferred by margins of thousands of AIC and BIC points (S6 renders the tables).</p>
 </section>
 <section id="constraints-that-are-formally-testable" class="level2">
 <h2 class="anchored" data-anchor-id="constraints-that-are-formally-testable">Constraints that are formally testable</h2>
 <p>Two equality constraints have interior nulls and admit valid scaled likelihood-ratio tests:</p>
 <ul>
-<li><strong>Time invariance of the lagged paths</strong> (<code>cb135</code> to <code>cb148</code>): holding the twenty-seven lagged paths equal across the six wave transitions costs Δχ²(135) = 154.24, p = 0.123; the parsimonious time-invariant dynamics are adopted and reported.</li>
-<li><strong>Equality of the within-person dynamics across SES</strong> : Δχ²(108) = 95.37, p = 0.802, supporting the equal-dynamics specification.</li>
+<li><strong>Time invariance of the lagged paths</strong> (transcript S7, section 6): holding the twenty-seven lagged paths equal across the six wave transitions costs Δχ²(135) = 154.24, p = 0.123; the parsimonious time-invariant dynamics are adopted and reported.</li>
+<li><strong>Equality of the within-person dynamics across SES</strong> (transcript S7, across-SES invariance steps): Δχ²(108) = 95.37, p = 0.802, supporting the equal-dynamics specification.</li>
 </ul>
+<p>The across-SES comparison is reported at two levels only, configural and equal regressions, because the RI-CLPM parameterisation makes the other conventional levels vacuous: loadings are fixed to one (metric equality is automatic) and observed residual variances and covariances are fixed to zero (nothing for “strict” or “residual” equality to constrain).</p>
 </section>
 <section id="measurement-structure-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="measurement-structure-over-time">Measurement structure over time</h2>
-<p>With one indicator per construct per wave, classical longitudinal measurement invariance is untestable; instead a stable-trait factor model per construct (seven annual measures on one factor, three correlated factors, <code>cb194</code> to <code>cb208</code>, via <code>minvariance</code>) is progressively constrained. Loadings and intercepts hold within conventional fit-change limits; equal residual variances are clearly rejected, which the RI-CLPM accommodates by estimating within-person variances freely per wave.</p>
+<p>With one indicator per construct per wave, classical longitudinal measurement invariance is untestable; instead a stable-trait factor model per construct (seven annual measures on one factor, three correlated factors, via <code>minvariance</code>) is progressively constrained. The transcript’s invariance table reports the standard chi-squares with model df (165, 177, 189, 203) and the scaled chi-squares alongside. Loadings and intercepts hold within conventional fit-change limits; equal residual variances are clearly rejected, which the RI-CLPM accommodates by estimating within-person variances freely per wave.</p>
 </section>
 <section id="the-moderation-test-and-its-audit" class="level2">
 <h2 class="anchored" data-anchor-id="the-moderation-test-and-its-audit">The moderation test and its audit</h2>
-<p>The focal question constrains one parameter set: the trait-level BMI-PA covariance, free versus equal across the three strata (<code>cb224</code>-region):</p>
+<p>The focal question constrains one parameter set: the trait-level BMI-PA covariance, free versus equal across the three strata (transcript S7, section 5):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>free_syntax  <span class="ot">&lt;-</span> ri_clpm_syntax</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>equal_syntax <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"riBMI ~~ riPA"</span>, <span class="st">"riBMI ~~ c(rc, rc, rc)*riPA"</span>, ri_clpm_syntax)</span>
@@ -273,13 +275,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The scaled test returns Δχ²(2) = 1.47, p = 0.479, with both information criteria preferring the equal model. Per-group standardised covariances are extracted with delta-method intervals and audited by a seeded percentile bootstrap (R = 1,000, seed 20240501) whose cache sits behind a fit fingerprint, so a ninety-minute computation reruns only when the model actually changes.</p>
 </section>
+<section id="construction-audit-sensitivity" class="level2">
+<h2 class="anchored" data-anchor-id="construction-audit-sensitivity">Construction-audit sensitivity</h2>
+<p>Because the frozen input’s BMI embeds construction-stage corrections (S4), the transcript ends with a sensitivity refit (S7, section 7): every audited person-wave in categories <code>value_changed</code> and <code>merged_only</code> is set missing (3,969 BMI observations in the analysis frame) and the pooled model, the grouped model, and the moderation test are re-estimated. The results reproduce the primary analysis: trait-level BMI-PA covariance −1.131 against −1.123, per-stratum standardised values −0.113 / −0.130 / −0.120, the BMI-FV trait association still null, and no socioeconomic moderation (Δχ²(2) = 0.55, p = 0.76). The tables are <code>tables/bmi_sensitivity_*.csv</code>, rendered in S6.</p>
+</section>
 <section id="covariate-adjusted-refit" class="level2">
 <h2 class="anchored" data-anchor-id="covariate-adjusted-refit">Covariate-adjusted refit</h2>
-<p>A secondary model regresses the random intercepts on female, baseline age, and the medication count. These fits use <code>fixed.x = TRUE</code>: treating binary covariates as stochastic under FIML yields a degenerate joint distribution and a non-positive-definite starting covariance, so the covariates are conditioned on rather than modelled. The focal pattern is unchanged under adjustment.</p>
+<p>A secondary model regresses the random intercepts on female, age at first observed wave, and the medication count. These fits use <code>fixed.x = TRUE</code>: treating binary covariates as stochastic under FIML yields a degenerate joint distribution and a non-positive-definite starting covariance, so the covariates are conditioned on rather than modelled. The focal pattern is unchanged under adjustment.</p>
 </section>
 <section id="what-gets-written" class="level2">
 <h2 class="anchored" data-anchor-id="what-gets-written">What gets written</h2>
-<p>Every table the article reports is written to <code>tables/</code> as CSV during the render: fit comparisons, between-person covariances, pooled and per-group dynamics, focal covariances with bootstrap bounds, the two likelihood-ratio tests, and the covariate effects. Vignette 06 renders each of them.</p>
+<p>Every table the article reports is written to <code>tables/</code> as CSV during the render: fit comparisons, between-person covariances, pooled and per-group dynamics, focal covariances with bootstrap bounds, the two likelihood-ratio tests, the covariate effects, the four full parameter tables, and the three sensitivity tables. S6 renders each of them.</p>
 
 
 </section>

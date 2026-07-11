@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>02 · Building the panel – Reciprocal health dynamics</title>
+<title>S2 · Building the panel – Reciprocal health dynamics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-building-the-panel.html">02 · Building the panel</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-building-the-panel.html">S2 · Building the panel</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -146,49 +146,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reciprocal health dynamics: a guided tour</span></a>
+ <span class="menu-text">Online supplementary material: a guided tour</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-data-acquisition-with-lissr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">01 · Data acquisition with lissr</span></a>
+ <span class="menu-text">S1 · Data acquisition with lissr</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-building-the-panel.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">02 · Building the panel</span></a>
+ <span class="menu-text">S2 · Building the panel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-sample-selection-with-weasel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03 · Sample selection with weasel</span></a>
+ <span class="menu-text">S3 · Sample selection with weasel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-measures-and-cleaning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">04 · Measures and cleaning</span></a>
+ <span class="menu-text">S4 · Measures and cleaning</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-models-and-inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">05 · Models and inference</span></a>
+ <span class="menu-text">S5 · Models and inference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-results-and-reproduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06 · Results and reproduction</span></a>
+ <span class="menu-text">S6 · Results and reproduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./run_all.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis transcript (run_all)</span></a>
+ <span class="menu-text">S7 · Analysis transcript (run_all)</span></a>
   </div>
 </li>
     </ul>
@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#route-a-the-committed-merged-panel-published-results" id="toc-route-a-the-committed-merged-panel-published-results" class="nav-link active" data-scroll-target="#route-a-the-committed-merged-panel-published-results">Route A: the committed merged panel (published results)</a></li>
+  <li><a href="#route-a-the-frozen-merged-panel-published-results" id="toc-route-a-the-frozen-merged-panel-published-results" class="nav-link active" data-scroll-target="#route-a-the-frozen-merged-panel-published-results">Route A: the frozen merged panel (published results)</a></li>
   <li><a href="#route-b-recipe-driven-merging-with-lissr-forward-path" id="toc-route-b-recipe-driven-merging-with-lissr-forward-path" class="nav-link" data-scroll-target="#route-b-recipe-driven-merging-with-lissr-forward-path">Route B: recipe-driven merging with lissr (forward path)</a></li>
   <li><a href="#income-cleaning-as-rules-not-edits" id="toc-income-cleaning-as-rules-not-edits" class="nav-link" data-scroll-target="#income-cleaning-as-rules-not-edits">Income cleaning as rules, not edits</a></li>
   </ul>
@@ -212,7 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">02 · Building the panel</h1>
+<h1 class="title">S2 · Building the panel</h1>
 </div>
 
 
@@ -230,11 +230,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>The analysis reads one file, <code>liss_merged_long.sav</code>: a long panel with one row per respondent per wave, carrying <code>nomem_encr</code>, <code>nohouse_encr</code>, <code>wavenr</code>, the focal measures (<code>bmi</code>, <code>frve</code>, <code>sport</code>), demographics (<code>gender</code>, <code>leeftijd</code>, <code>oplmet</code>, <code>aantalhh</code>, <code>aantalki</code>), medication (<code>medicine</code>), smoking (<code>smoke</code>), and net household income (<code>nethh</code>). Two routes produce it.</p>
-<section id="route-a-the-committed-merged-panel-published-results" class="level2">
-<h2 class="anchored" data-anchor-id="route-a-the-committed-merged-panel-published-results">Route A: the committed merged panel (published results)</h2>
-<p>The published estimates come from four thematic extracts (<code>liss_health.sav</code>, <code>liss_sport.sav</code>, <code>liss_income.sav</code>, <code>liss_background.sav</code>) that were cleaned and merged into <code>liss_merged_long.sav</code>, and that committed file is the operative Route A input: place it in <code>data/</code> and the analysis reads it directly. <code>scripts/01_build_panel.R</code> (default route) checks that it is in place.</p>
-<p>The construction itself is preserved verbatim in <code>scripts/build_liss_merged.R</code>: it joins the extracts on <code>nomem_encr</code> and the wave column, harmonises the income variables (<code>ci00a339</code>, <code>ci00a229</code>, <code>ci00a001</code> become <code>nethh</code>, <code>nethh_min</code>, <code>positiehh</code>), and repairs implausible <code>nethh</code> values per household through an explicit correction loop (order-of-magnitude checks against a household’s own income history, per-wave case review, monotone repair of decimal-shift errors) before writing the merged file. It is a documented record rather than a live builder: it targets the original extract schema, and the extract vintage now in circulation has drifted from it (the current <code>liss_income.sav</code> carries <code>wavenr</code> but not the <code>wave</code> column its background-income join expects), so sourcing it against today’s <code>data/</code> stops at that join by design. Holders of the frozen original extracts can run it via <code>RHD_BUILD_ROUTE=provenance</code>, and <code>scripts/verify_liss_merged.R</code> then reconstructs the panel with writing disabled and compares it cell by cell against the committed file.</p>
-<p>One consequence matters for anyone regenerating the inputs from scratch: in these extracts, <code>bmi</code> and the fruit-and-vegetable composite <code>frve</code> (scored 1 to 3) were already derived. The raw health module instead carries two 1-to-6 frequency items, vegetables (<code>chXXa196</code>) and fruit (<code>chXXa197</code>). The composite rule lives in the archived extract, so any raw-item reconstruction must be validated wave by wave against the extract before it is substituted.</p>
+<section id="route-a-the-frozen-merged-panel-published-results" class="level2">
+<h2 class="anchored" data-anchor-id="route-a-the-frozen-merged-panel-published-results">Route A: the frozen merged panel (published results)</h2>
+<p>The published estimates come from four thematic extracts (<code>liss_health.sav</code>, <code>liss_sport.sav</code>, <code>liss_income.sav</code>, <code>liss_background.sav</code>) that were cleaned and merged into <code>liss_merged_long.sav</code>. That frozen, author-archived file is the operative Route A input: place it in <code>data/</code> and the analysis reads it directly. <code>scripts/01_build_panel.R</code> (default route) checks that it is in place, and <code>data/CHECKSUMS.txt</code> pins all five frozen inputs by SHA-256 so any copy can be verified before use.</p>
+<p>The construction logic is preserved in <code>scripts/build_liss_merged.R</code>: it joins the extracts on <code>nomem_encr</code> and the wave column, harmonises the income variables (<code>ci00a339</code>, <code>ci00a229</code>, <code>ci00a001</code> become <code>nethh</code>, <code>nethh_min</code>, <code>positiehh</code>), repairs implausible <code>nethh</code> values per household through an explicit correction loop, and derives and cleans <code>bmi</code> from the extract’s raw height and weight items (unit-error repairs, person-level height smoothing, filling of isolated missing inputs; S4 quantifies the footprint). It is a documented record rather than a live builder, and it is a near-verbatim reconstruction rather than a byte-faithful one: two divergences from the frozen file are known and documented. The height and weight correction flags the record creates (<code>cm_imp</code>, <code>kg_imp</code>, <code>cm_outs</code>, <code>kg_outs</code>) are not present in the frozen panel, and the record’s sign recode of education codes 7 to 9 is not reflected there either (the frozen file stores positive codes throughout, which is what the SES mapping expects). The record also targets the original extract schema, and the extract vintage now in circulation has drifted from it (the current <code>liss_income.sav</code> carries <code>wavenr</code> but not the <code>wave</code> column its background-income join expects), so sourcing it against today’s <code>data/</code> stops at that join by design. Holders of the frozen original extracts can run it via <code>RHD_BUILD_ROUTE=provenance</code>, and <code>scripts/verify_liss_merged.R</code> then reconstructs the panel with writing disabled and compares it cell by cell against the frozen file.</p>
+<p>Because the audit trail matters more than the reconstruction, <code>scripts/05_bmi_construction_audit.R</code> (<code>make audit</code>) compares the frozen panel’s <code>bmi</code> against a raw, uncleaned recomputation from the per-wave health modules and releases per-wave counts (<code>output/bmi_construction_audit_summary.csv</code>). One coverage consequence surfaced by that audit belongs here: 5,802 person-waves with a computable raw BMI, 2,200 of them in wave 1, have no row in the merged panel at all (<code>output/bmi_construction_audit_rawonly.csv</code>). The pattern is consistent with the construction attaching demographics through an inner join on the background snapshot of each wave’s main fieldwork month, which drops respondents without that month’s record; wave 1’s February 2008 mop-up group is the clearest case. For the analysis this means such person-waves are absent entirely, rather than present with a missing BMI, and wave-1 coverage is correspondingly the lowest.</p>
+<p>One further consequence matters for anyone regenerating the inputs from scratch: in these extracts the fruit-and-vegetable composite <code>frve</code> (scored 1 to 3) was already derived, whereas <code>bmi</code> is derived inside the construction record. The raw health module carries two 1-to-6 frequency items, vegetables (<code>chXXa196</code>) and fruit (<code>chXXa197</code>); the composite is empirically a sum-based cut of the two (S4), with nine legacy person-waves deviating from the rule. Any raw-item reconstruction must be validated wave by wave against the extract before it is substituted.</p>
 </section>
 <section id="route-b-recipe-driven-merging-with-lissr-forward-path" class="level2">
 <h2 class="anchored" data-anchor-id="route-b-recipe-driven-merging-with-lissr-forward-path">Route B: recipe-driven merging with lissr (forward path)</h2>
@@ -253,8 +254,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">join_by =</span> <span class="fu">c</span>(<span class="st">"nomem_encr"</span>, <span class="st">"wave_year"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>merge_liss_panel()</code> joins on the calendar year the recipes assign to each wave (<code>ch07a</code> is 2007, <code>cs08a</code> is 2008), so the leisure series pairs with the health wave of the same calendar year and <code>ch07a</code> has no leisure partner. The archived extract’s alignment of the sport series to the seven panel waves is the reference; verify it against this year-based join before substituting Route B for Route A.</p>
-<p>Demographics are then attached from the monthly Background Variables files, which the module downloader does not fetch: obtain the seven November files listed in vignette 01 and unzip them anywhere under <code>data/</code> (flat, an <code>avars/</code> subfolder, or the per-zip subfolders an unzip tool creates; the code locates each <code>.sav</code> recursively). Each wave joins to the background snapshot of its main fieldwork month, keyed on <code>nomem_encr</code> plus the calendar year, never on <code>nohouse_encr</code>:</p>
+<p><code>merge_liss_panel()</code> joins on the calendar year the recipes assign to each wave (<code>ch07a</code> is 2007, <code>cs08a</code> is 2008), so the leisure series pairs with the health wave of the same calendar year and <code>ch07a</code> has no leisure partner. The archived extract instead aligns each leisure wave with the preceding autumn’s health wave: the wave-1 rows of <code>liss_sport.sav</code> are exactly the 7,369 respondents of the raw <code>cs08a</code> file with identical hours, verified respondent by respondent. Any Route B substitution must reproduce that alignment before it replaces Route A.</p>
+<p>Demographics are then attached from the monthly Background Variables files, which the module downloader does not fetch: obtain the seven November files listed in S1 and unzip them anywhere under <code>data/</code> (flat, an <code>avars/</code> subfolder, or the per-zip subfolders an unzip tool creates; the code locates each <code>.sav</code> recursively). Each wave joins to the background snapshot of its main fieldwork month, keyed on <code>nomem_encr</code> plus the calendar year, never on <code>nohouse_encr</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>avars_stems <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"avars_200711"</span>, <span class="st">"avars_200811"</span>, <span class="st">"avars_200911"</span>, <span class="st">"avars_201011"</span>,</span>
@@ -276,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">prev_wave_id =</span> <span class="st">"ch24q"</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>scripts/01_build_panel.R</code> sits behind the <code>RHD_BUILD_ROUTE</code> environment variable: the default <code>historical</code> route checks the committed merged file is in place, <code>provenance</code> sources the preserved construction record for holders of the original extracts, and <code>lissr</code> runs the recipe-driven merge above.</p>
+<p><code>scripts/01_build_panel.R</code> sits behind the <code>RHD_BUILD_ROUTE</code> environment variable: the default <code>historical</code> route checks the frozen merged file is in place, <code>provenance</code> sources the preserved construction record for holders of the original extracts, and <code>lissr</code> runs the recipe-driven merge above.</p>
 </section>
 <section id="income-cleaning-as-rules-not-edits" class="level2">
 <h2 class="anchored" data-anchor-id="income-cleaning-as-rules-not-edits">Income cleaning as rules, not edits</h2>

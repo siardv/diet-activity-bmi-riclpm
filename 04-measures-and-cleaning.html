@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>04 · Measures and cleaning – Reciprocal health dynamics</title>
+<title>S4 · Measures and cleaning – Reciprocal health dynamics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-measures-and-cleaning.html">04 · Measures and cleaning</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-measures-and-cleaning.html">S4 · Measures and cleaning</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -146,49 +146,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reciprocal health dynamics: a guided tour</span></a>
+ <span class="menu-text">Online supplementary material: a guided tour</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-data-acquisition-with-lissr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">01 · Data acquisition with lissr</span></a>
+ <span class="menu-text">S1 · Data acquisition with lissr</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-building-the-panel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">02 · Building the panel</span></a>
+ <span class="menu-text">S2 · Building the panel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-sample-selection-with-weasel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03 · Sample selection with weasel</span></a>
+ <span class="menu-text">S3 · Sample selection with weasel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-measures-and-cleaning.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">04 · Measures and cleaning</span></a>
+ <span class="menu-text">S4 · Measures and cleaning</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-models-and-inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">05 · Models and inference</span></a>
+ <span class="menu-text">S5 · Models and inference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-results-and-reproduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06 · Results and reproduction</span></a>
+ <span class="menu-text">S6 · Results and reproduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./run_all.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis transcript (run_all)</span></a>
+ <span class="menu-text">S7 · Analysis transcript (run_all)</span></a>
   </div>
 </li>
     </ul>
@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">04 · Measures and cleaning</h1>
+<h1 class="title">S4 · Measures and cleaning</h1>
 </div>
 
 
@@ -230,21 +230,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This vignette records every measurement and cleaning decision between the merged panel and the model frame, in pipeline order.</p>
+<p>This vignette records every measurement and cleaning decision, including the construction stage between the raw modules and the merged panel; the audit quantifying that stage is <code>scripts/05_bmi_construction_audit.R</code> (<code>make audit</code>), and its outputs render in S6.</p>
 <section id="focal-constructs" class="level2">
 <h2 class="anchored" data-anchor-id="focal-constructs">Focal constructs</h2>
-<p><strong>BMI.</strong> Self-reported height and weight, <code>weight / height^2</code>, taken as delivered by the merged panel; observed values lie in a plausible range and no analysis-stage filter is applied. A reporting bias that is stable within persons is absorbed by the random intercept.</p>
-<p><strong>Physical activity.</strong> Weekly hours of sports participation behind a participation gate; non-participants are zero. A plausibility ceiling is applied before the analysis subset so it propagates everywhere:</p>
+<p><strong>BMI.</strong> Self-reported height and weight (“How tall are you?”, 1 to 300 cm; “How much do you weigh, without clothes and shoes?”, 1 to 1000 kg; items <code>chXXa016</code>/<code>chXXa017</code>), combined as weight / height². The values the analysis reads are those of the frozen merged panel, which embeds construction-stage processing preserved in <code>scripts/build_liss_merged.R</code>: unit-error repairs (implausible heights and weights shifted by the offending factor, plus a handful of documented id-level corrections), person-level height smoothing (a respondent’s height set to their across-wave median or mean where reports varied), and filling of isolated missing inputs. The audit against the raw modules gives the footprint for waves 1 to 7: 87.3% of carried values match the raw computation exactly, 12.58% differ (49.6% of those by less than 0.5 kg/m², 41.9% by 0.5 to 2, and 8.5% by 2 or more, the unit-error repairs), and 0.11% were filled where the raw items yield no value (<code>output/bmi_construction_audit_summary.csv</code>, <code>output/bmi_construction_audit_magnitudes.csv</code>). A further 5,802 person-waves with a computable raw BMI are absent from the merged panel altogether (S2). No additional plausibility filter is applied at the analysis stage, and a robustness refit with every altered or filled value set missing reproduces the article’s conclusions (S5, S6; <code>tables/bmi_sensitivity_*.csv</code>). A reporting bias that is stable within persons is absorbed by the random intercept.</p>
+<p><strong>Physical activity.</strong> Weekly hours of sports participation behind a participation gate (“Do you practice sports?”; if yes, “How many hours do you spend on sports per week, on average?”, 0 to 168; items <code>csXXa104</code>/<code>csXXa105</code>); non-participants are zero hours. The construction record contains a person-mean imputation branch for participants with missing hours; the raw modules contain zero such cases in waves 1 to 7, so no analysed PA value is imputed. A plausibility ceiling is applied before the analysis subset so it propagates everywhere:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pa_ceiling <span class="ot">&lt;-</span> <span class="dv">40</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>liss <span class="sc">%&lt;&gt;%</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">pa =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(pa <span class="sc">&gt;</span> pa_ceiling, <span class="cn">NA_real_</span>, pa))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Values above forty hours per week exceed any plausible general-population sport load and are set missing, then handled by FIML like all other missingness.</p>
-<p><strong>Fruit and vegetable consumption.</strong> A two-item composite (vegetable and fruit frequency), scored 1 to 3, delivered pre-derived in the historical extract (see vignette 02 for the raw-item caveat).</p>
+<p>Values above forty hours per week exceed any plausible general-population sport load (the raw wave-1 maximum is 150) and are set missing, then handled by FIML like all other missingness.</p>
+<p><strong>Fruit and vegetable consumption.</strong> A two-item composite of the vegetable and fruit frequency items (“Do you eat raw or cooked vegetables?”, “Do you eat fruit?”, items <code>chXXa196</code>/<code>chXXa197</code>, six categories from “never” to “every day”), delivered pre-derived in the historical extract. The empirical mapping (<code>output/frve_mapping.csv</code>) is a sum-based cut of the two items: level 1 for a summed frequency of 8 or below, level 2 for 9 to 11, and level 3 for 12, so the top level means both vegetables and fruit eaten daily. Nine person-waves of 34,723 deviate from this rule, legacy anomalies of the archived extract (<code>output/frve_mapping_deterministic.txt</code>). Because the rule is not an item-wise recode, internal consistency is indexed on the two raw six-point items: pooled Spearman-Brown 0.428, per-wave 0.407 to 0.457 (<code>output/frve_reliability_raw.csv</code>, <code>output/frve_reliability_pooled.csv</code>).</p>
 </section>
 <section id="the-education-based-ses-strata" class="level2">
 <h2 class="anchored" data-anchor-id="the-education-based-ses-strata">The education-based SES strata</h2>
-<p>Education arrives as <code>oplmet</code> in the Background Variables. The pipeline recodes it in two steps.</p>
+<p>Education arrives as <code>oplmet</code> in the Background Variables (“Highest level of education with diploma”). The pipeline recodes it in two steps.</p>
 <p>First, categories collapse to four levels: primary (with <code>other</code> and <code>not yet started or completed</code> assigned lowest), vmbo with havo/vwo, mbo, and hbo with wo:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>educ <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
@@ -254,6 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>The frozen panel stores these codes as positive values 1 to 9, so the mapping operates exactly as written; 367 of the 5,676 analysis respondents reported an <code>other</code> or <code>not (yet) completed or started</code> category at their first observed wave (<code>output/educ_other_count.txt</code>).</p>
 <p>Second, the household maximum is taken per wave (households with no observed education yield <code>NA</code>), and the four levels collapse to three by merging the two lowest, so the strata read: lower (up to general secondary), intermediate (mbo), higher (hbo or wo). The value at each respondent’s first observed wave defines the stratum, treated as time-invariant thereafter. Resulting sizes: 1,914 / 1,449 / 2,313, no missing values.</p>
 <p>General secondary schooling is preparatory rather than qualifying in the Dutch system; as a highest completed level it indicates that no subsequent vocational or tertiary qualification was obtained, which is why it sits with the lower stratum.</p>
 </section>
@@ -271,11 +272,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ok <span class="ot">&lt;-</span> <span class="fu">is.finite</span>(liss<span class="sc">$</span>stand_inc) <span class="sc">&amp;</span> <span class="fu">is.finite</span>(eq)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">isTRUE</span>(<span class="fu">all.equal</span>(liss<span class="sc">$</span>stand_inc[ok], eq[ok])))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>liss_equivalise_income()</code> also offers <code>scale = "oecd_modified"</code> (divisor <code>1 + 0.5 * (adults - 1) + 0.3 * children</code>) and <code>scale = "sqrt"</code> (square root of household size), which makes scale-choice robustness a one-argument change. Income does not define the SES strata; the equivalised variable is retained for description and sensitivity analysis.</p>
+<p><code>liss_equivalise_income()</code> also offers <code>scale = "oecd_modified"</code> (divisor <code>1 + 0.5 * (adults - 1) + 0.3 * children</code>) and <code>scale = "sqrt"</code> (square root of household size), which makes scale-choice robustness a one-argument change. Income does not define the SES strata and does not enter the reported models; the equivalised variable is retained for description and for possible income-based extensions.</p>
 </section>
 <section id="covariates" class="level2">
 <h2 class="anchored" data-anchor-id="covariates">Covariates</h2>
-<p>Gender (female = 1), age at baseline, and a Mokken-validated medication count (0 to 5) enter as time-invariant predictors of the random intercepts in the covariate-augmented model only; the focal estimates come from the unadjusted model. Smoking is excluded by design for the collider-bias reasons set out in the article’s Methods.</p>
+<p>Gender (female = 1, from <code>geslacht</code>, coded 1 male and 2 female throughout the study window), age at each respondent’s first observed wave, and the medication count enter as time-invariant predictors of the random intercepts in the covariate-augmented model only; the focal estimates come from the unadjusted model. The medication count sums a reversed “I do not take any medicine” indicator and four category items from the health module’s “Are you currently taking medicine at least once a week for:” battery (high blood cholesterol, high blood pressure, heart or brain infarction, diabetes), range 0 to 5. Mokken scale analysis on the frozen extract supports the article’s threshold: pooled H = 0.721, per-wave H 0.702 to 0.730, no monotonicity violations (<code>output/medication_mokken.csv</code>, regenerable with <code>make mokken</code>). Smoking is excluded by design for the collider-bias reasons set out in the article’s Methods.</p>
 
 
 </section>

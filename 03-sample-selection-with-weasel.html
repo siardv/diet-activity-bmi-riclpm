@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>03 · Sample selection with weasel – Reciprocal health dynamics</title>
+<title>S3 · Sample selection with weasel – Reciprocal health dynamics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sample-selection-with-weasel.html">03 · Sample selection with weasel</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-sample-selection-with-weasel.html">S3 · Sample selection with weasel</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -146,49 +146,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reciprocal health dynamics: a guided tour</span></a>
+ <span class="menu-text">Online supplementary material: a guided tour</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-data-acquisition-with-lissr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">01 · Data acquisition with lissr</span></a>
+ <span class="menu-text">S1 · Data acquisition with lissr</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-building-the-panel.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">02 · Building the panel</span></a>
+ <span class="menu-text">S2 · Building the panel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-sample-selection-with-weasel.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">03 · Sample selection with weasel</span></a>
+ <span class="menu-text">S3 · Sample selection with weasel</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-measures-and-cleaning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">04 · Measures and cleaning</span></a>
+ <span class="menu-text">S4 · Measures and cleaning</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-models-and-inference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">05 · Models and inference</span></a>
+ <span class="menu-text">S5 · Models and inference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-results-and-reproduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">06 · Results and reproduction</span></a>
+ <span class="menu-text">S6 · Results and reproduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./run_all.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis transcript (run_all)</span></a>
+ <span class="menu-text">S7 · Analysis transcript (run_all)</span></a>
   </div>
 </li>
     </ul>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">03 · Sample selection with weasel</h1>
+<h1 class="title">S3 · Sample selection with weasel</h1>
 </div>
 
 
@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_max =</span> <span class="dv">5</span>L</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>Attrition selectivity.</strong> <code>weasel_selectivity()</code> compares retained and excluded respondents on covariates via standardised mean differences, the empirical check on whether completeness-based selection skews the sample that the missing-at-random discussion in the article leans on:</p>
+<p><strong>Attrition selectivity.</strong> <code>weasel_selectivity()</code> compares retained and excluded respondents on covariates via standardised mean differences, the empirical check on whether completeness-based selection skews the sample that the missing-at-random discussion in the article leans on. The pipeline attaches age, gender, the three focal variables, and the SES stratum, so the released comparison speaks to selection on the study’s own outcomes (excluded respondents are younger and slightly lighter; gender and activity are balanced):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">weasel_selectivity</span>(ws_plan, <span class="st">"min3_of7"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
