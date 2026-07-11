@@ -1,14 +1,19 @@
 ---
-title: "Reciprocal health dynamics: a guided tour"
+title: "Online supplementary material: a guided tour"
 ---
 
-This compendium documents, in order, every step from an empty `data/` folder to the tables in the article. Each vignette is self-contained; together they are deliberately exhaustive.
+This compendium is the online supplementary material for *Socioeconomic Variations in the Reciprocal Relationships Between Diet Quality, Physical Activity, and Body Mass Index*. It documents, in order, every step from an empty `data/` folder to the tables in the article. Sections are numbered S1 to S7 as cited from the manuscript; each is self-contained, and together they are deliberately exhaustive.
 
-1. **Data acquisition with lissr.** Registering, authenticating, browsing the archive, and downloading exactly the files the study needs.
-2. **Building the panel.** The historical extract route that produced the published inputs, and the recipe-driven lissr route that replaces it going forward.
-3. **Sample selection with weasel.** The minimum-three-of-seven-waves rule as an explicit scenario, with sensitivity and selectivity audits. Contains a fully executed demonstration on synthetic data.
-4. **Measures and cleaning.** Construct definitions, the physical-activity plausibility ceiling, the education mapping behind the SES strata, and income equivalisation and cleaning.
-5. **Models and inference.** The CLPM and RI-CLPM specifications, estimation settings, the boundary-constraint rationale for the model comparison, invariance checks, and the moderation test.
-6. **Results and reproduction.** Every released table rendered from `tables/`, plus the exact reproduction ladder. Renders without any LISS data.
+1. **S1 · Data acquisition with lissr.** Registering, authenticating, browsing the archive, and downloading exactly the files the study needs.
+2. **S2 · Building the panel.** The historical extract route that produced the published inputs (with its preserved construction record, known divergences, and checksums), and the recipe-driven lissr route that replaces it going forward.
+3. **S3 · Sample selection with weasel.** The minimum-three-of-seven-waves rule as an explicit scenario, with sensitivity and selectivity audits. Contains a fully executed demonstration on synthetic data.
+4. **S4 · Measures and cleaning.** Construct definitions with item wording, the construction-stage BMI processing and its audit, the physical-activity plausibility ceiling, the composite rule behind the diet measure, the education mapping behind the SES strata, and income equivalisation.
+5. **S5 · Models and inference.** The CLPM and RI-CLPM specifications, estimation settings, the boundary-constraint rationale for the model comparison, invariance checks, the moderation test, and the construction-audit sensitivity refit.
+6. **S6 · Results and reproduction.** Every released table rendered from `tables/` and `output/`, including the full parameter tables and the sensitivity refit, plus the exact reproduction ladder. Renders without any LISS data.
+7. **S7 · Analysis transcript (run_all).** The chunk-by-chunk pipeline: code, output, and a closing `sessionInfo()`.
+
+## Where the article's tables live
+
+Article Table 1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Table 2 comes from `tables/clpm_vs_riclpm_fit.csv` and `tables/clpm_vs_riclpm_fit_grouped.csv`. Table 3 combines `tables/focal_covariance_by_ses.csv`, `tables/focal_covariance_boot.csv`, and `tables/moderation_lrt.csv`. Table 4 is `tables/riclpm_covariate_effects.csv`. Appendix Table A1 is `tables/riclpm_dynamics_coefficients.csv`, and the pooled time-invariant dynamics reported in the results text are `tables/riclpm_dynamics_coefficients_pooled.csv`. The measurement-structure statistics of the article's Section 4.2 appear in the transcript's longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence is `tables/bmi_sensitivity_between.csv`, `tables/bmi_sensitivity_focal_by_ses.csv`, and `tables/bmi_sensitivity_moderation_lrt.csv`, with the underlying audit in `output/bmi_construction_audit_*.csv`. All of these render in S6.
 
 Chunks that require LISS microdata are marked `eval: false` and mirror the pipeline verbatim; everything else executes at render time.

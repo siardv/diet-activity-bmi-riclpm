@@ -1,5 +1,5 @@
 ---
-title: "03 · Sample selection with weasel"
+title: "S3 · Sample selection with weasel"
 ---
 
 The analytic sample keeps every respondent observed on at least three of the seven analysis waves, and estimates under full-information maximum likelihood. This vignette expresses that rule as an explicit, named, auditable scenario with [`weasel`](https://github.com/siardv/weasel), shows the audit outputs the article draws on, and demonstrates the machinery live on synthetic data.
@@ -56,7 +56,7 @@ weasel::weasel_sensitivity(
 )
 ```
 
-**Attrition selectivity.** `weasel_selectivity()` compares retained and excluded respondents on covariates via standardised mean differences, the empirical check on whether completeness-based selection skews the sample that the missing-at-random discussion in the article leans on:
+**Attrition selectivity.** `weasel_selectivity()` compares retained and excluded respondents on covariates via standardised mean differences, the empirical check on whether completeness-based selection skews the sample that the missing-at-random discussion in the article leans on. The pipeline attaches age, gender, the three focal variables, and the SES stratum, so the released comparison speaks to selection on the study's own outcomes (excluded respondents are younger and slightly lighter; gender and activity are balanced):
 
 ```{r}
 #| eval: false

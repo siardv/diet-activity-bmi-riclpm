@@ -1,16 +1,18 @@
 ---
-title: "02 · Building the panel"
+title: "S2 · Building the panel"
 ---
 
 The analysis reads one file, `liss_merged_long.sav`: a long panel with one row per respondent per wave, carrying `nomem_encr`, `nohouse_encr`, `wavenr`, the focal measures (`bmi`, `frve`, `sport`), demographics (`gender`, `leeftijd`, `oplmet`, `aantalhh`, `aantalki`), medication (`medicine`), smoking (`smoke`), and net household income (`nethh`). Two routes produce it.
 
-## Route A: the committed merged panel (published results)
+## Route A: the frozen merged panel (published results)
 
-The published estimates come from four thematic extracts (`liss_health.sav`, `liss_sport.sav`, `liss_income.sav`, `liss_background.sav`) that were cleaned and merged into `liss_merged_long.sav`, and that committed file is the operative Route A input: place it in `data/` and the analysis reads it directly. `scripts/01_build_panel.R` (default route) checks that it is in place.
+The published estimates come from four thematic extracts (`liss_health.sav`, `liss_sport.sav`, `liss_income.sav`, `liss_background.sav`) that were cleaned and merged into `liss_merged_long.sav`. That frozen, author-archived file is the operative Route A input: place it in `data/` and the analysis reads it directly. `scripts/01_build_panel.R` (default route) checks that it is in place, and `data/CHECKSUMS.txt` pins all five frozen inputs by SHA-256 so any copy can be verified before use.
 
-The construction itself is preserved verbatim in `scripts/build_liss_merged.R`: it joins the extracts on `nomem_encr` and the wave column, harmonises the income variables (`ci00a339`, `ci00a229`, `ci00a001` become `nethh`, `nethh_min`, `positiehh`), and repairs implausible `nethh` values per household through an explicit correction loop (order-of-magnitude checks against a household's own income history, per-wave case review, monotone repair of decimal-shift errors) before writing the merged file. It is a documented record rather than a live builder: it targets the original extract schema, and the extract vintage now in circulation has drifted from it (the current `liss_income.sav` carries `wavenr` but not the `wave` column its background-income join expects), so sourcing it against today's `data/` stops at that join by design. Holders of the frozen original extracts can run it via `RHD_BUILD_ROUTE=provenance`, and `scripts/verify_liss_merged.R` then reconstructs the panel with writing disabled and compares it cell by cell against the committed file.
+The construction logic is preserved in `scripts/build_liss_merged.R`: it joins the extracts on `nomem_encr` and the wave column, harmonises the income variables (`ci00a339`, `ci00a229`, `ci00a001` become `nethh`, `nethh_min`, `positiehh`), repairs implausible `nethh` values per household through an explicit correction loop, and derives and cleans `bmi` from the extract's raw height and weight items (unit-error repairs, person-level height smoothing, filling of isolated missing inputs; S4 quantifies the footprint). It is a documented record rather than a live builder, and it is a near-verbatim reconstruction rather than a byte-faithful one: two divergences from the frozen file are known and documented. The height and weight correction flags the record creates (`cm_imp`, `kg_imp`, `cm_outs`, `kg_outs`) are not present in the frozen panel, and the record's sign recode of education codes 7 to 9 is not reflected there either (the frozen file stores positive codes throughout, which is what the SES mapping expects). The record also targets the original extract schema, and the extract vintage now in circulation has drifted from it (the current `liss_income.sav` carries `wavenr` but not the `wave` column its background-income join expects), so sourcing it against today's `data/` stops at that join by design. Holders of the frozen original extracts can run it via `RHD_BUILD_ROUTE=provenance`, and `scripts/verify_liss_merged.R` then reconstructs the panel with writing disabled and compares it cell by cell against the frozen file.
 
-One consequence matters for anyone regenerating the inputs from scratch: in these extracts, `bmi` and the fruit-and-vegetable composite `frve` (scored 1 to 3) were already derived. The raw health module instead carries two 1-to-6 frequency items, vegetables (`chXXa196`) and fruit (`chXXa197`). The composite rule lives in the archived extract, so any raw-item reconstruction must be validated wave by wave against the extract before it is substituted.
+Because the audit trail matters more than the reconstruction, `scripts/05_bmi_construction_audit.R` (`make audit`) compares the frozen panel's `bmi` against a raw, uncleaned recomputation from the per-wave health modules and releases per-wave counts (`output/bmi_construction_audit_summary.csv`). One coverage consequence surfaced by that audit belongs here: 5,802 person-waves with a computable raw BMI, 2,200 of them in wave 1, have no row in the merged panel at all (`output/bmi_construction_audit_rawonly.csv`). The pattern is consistent with the construction attaching demographics through an inner join on the background snapshot of each wave's main fieldwork month, which drops respondents without that month's record; wave 1's February 2008 mop-up group is the clearest case. For the analysis this means such person-waves are absent entirely, rather than present with a missing BMI, and wave-1 coverage is correspondingly the lowest.
+
+One further consequence matters for anyone regenerating the inputs from scratch: in these extracts the fruit-and-vegetable composite `frve` (scored 1 to 3) was already derived, whereas `bmi` is derived inside the construction record. The raw health module carries two 1-to-6 frequency items, vegetables (`chXXa196`) and fruit (`chXXa197`); the composite is empirically a sum-based cut of the two (S4), with nine legacy person-waves deviating from the rule. Any raw-item reconstruction must be validated wave by wave against the extract before it is substituted.
 
 ## Route B: recipe-driven merging with lissr (forward path)
 
@@ -32,9 +34,9 @@ panel <- lissr::merge_liss_panel(
 )
 ```
 
-`merge_liss_panel()` joins on the calendar year the recipes assign to each wave (`ch07a` is 2007, `cs08a` is 2008), so the leisure series pairs with the health wave of the same calendar year and `ch07a` has no leisure partner. The archived extract's alignment of the sport series to the seven panel waves is the reference; verify it against this year-based join before substituting Route B for Route A.
+`merge_liss_panel()` joins on the calendar year the recipes assign to each wave (`ch07a` is 2007, `cs08a` is 2008), so the leisure series pairs with the health wave of the same calendar year and `ch07a` has no leisure partner. The archived extract instead aligns each leisure wave with the preceding autumn's health wave: the wave-1 rows of `liss_sport.sav` are exactly the 7,369 respondents of the raw `cs08a` file with identical hours, verified respondent by respondent. Any Route B substitution must reproduce that alignment before it replaces Route A.
 
-Demographics are then attached from the monthly Background Variables files, which the module downloader does not fetch: obtain the seven November files listed in vignette 01 and unzip them anywhere under `data/` (flat, an `avars/` subfolder, or the per-zip subfolders an unzip tool creates; the code locates each `.sav` recursively). Each wave joins to the background snapshot of its main fieldwork month, keyed on `nomem_encr` plus the calendar year, never on `nohouse_encr`:
+Demographics are then attached from the monthly Background Variables files, which the module downloader does not fetch: obtain the seven November files listed in S1 and unzip them anywhere under `data/` (flat, an `avars/` subfolder, or the per-zip subfolders an unzip tool creates; the code locates each `.sav` recursively). Each wave joins to the background snapshot of its main fieldwork month, keyed on `nomem_encr` plus the calendar year, never on `nohouse_encr`:
 
 ```{r}
 #| eval: false
@@ -62,7 +64,7 @@ lissr::onboard_new_wave(
 )
 ```
 
-`scripts/01_build_panel.R` sits behind the `RHD_BUILD_ROUTE` environment variable: the default `historical` route checks the committed merged file is in place, `provenance` sources the preserved construction record for holders of the original extracts, and `lissr` runs the recipe-driven merge above.
+`scripts/01_build_panel.R` sits behind the `RHD_BUILD_ROUTE` environment variable: the default `historical` route checks the frozen merged file is in place, `provenance` sources the preserved construction record for holders of the original extracts, and `lissr` runs the recipe-driven merge above.
 
 ## Income cleaning as rules, not edits
 

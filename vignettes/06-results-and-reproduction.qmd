@@ -1,11 +1,12 @@
 ---
-title: "06 · Results and reproduction"
+title: "S6 · Results and reproduction"
 ---
 
-This vignette renders every released table from `tables/` and closes with the exact reproduction ladder. It requires no LISS data.
+This vignette renders every released table from `tables/` and `output/`, and closes with the exact reproduction ladder. It requires no LISS data.
 
 ```{r}
 tbl <- function(f) utils::read.csv(file.path("..", "tables", f), check.names = FALSE)
+out <- function(f) utils::read.csv(file.path("..", "output", f), check.names = FALSE)
 k <- function(x, ...) knitr::kable(x, digits = 3, ...)
 ```
 
@@ -54,6 +55,59 @@ k(tbl("moderation_lrt.csv"), caption = "Free versus equal across strata (scaled 
 
 The focal covariance is negative and significant in every stratum, tightly clustered, and a model holding it equal is preferred: no socioeconomic moderation.
 
+## Construction audit and robustness
+
+The audit of the construction-stage BMI processing (S4) and the sensitivity refit that excludes every affected observation (S5):
+
+```{r}
+k(out("bmi_construction_audit_summary.csv"),
+  caption = "Construction audit: per-wave person-wave counts by category")
+k(out("bmi_construction_audit_magnitudes.csv"),
+  caption = "Size bands of the altered values (kg/m²)")
+k(out("bmi_construction_audit_rawonly.csv"),
+  caption = "Raw-only person-waves: absent from the merged panel, by wave")
+k(tbl("bmi_sensitivity_between.csv"),
+  caption = "Sensitivity: between-person (co)variances, flagged BMI set missing")
+k(tbl("bmi_sensitivity_focal_by_ses.csv"),
+  caption = "Sensitivity: standardised trait BMI-PA covariance by stratum")
+k(tbl("bmi_sensitivity_moderation_lrt.csv"),
+  caption = "Sensitivity: moderation test (scaled LRT)")
+```
+
+The sensitivity estimates reproduce the primary analysis throughout: the article's conclusions do not depend on the corrected or filled values.
+
+## Measurement evidence
+
+```{r}
+k(out("medication_mokken.csv"),
+  caption = "Mokken scale analysis of the medication count, per wave and pooled")
+k(out("frve_reliability_raw.csv"),
+  caption = "FV items: per-wave correlation and Spearman-Brown (raw six-point items)")
+k(out("frve_reliability_pooled.csv"), caption = "FV items: pooled reliability")
+k(out("baseline_correlations.csv"), caption = "Baseline (wave 1) correlations")
+k(out("adjacent_wave_stability.csv"),
+  caption = "Adjacent-wave stabilities (lag-1 Pearson r): mean and range")
+```
+
+```{r}
+cat(readLines(file.path("..", "output", "educ_other_count.txt")), sep = "\n")
+cat(readLines(file.path("..", "output", "frve_mapping_deterministic.txt")), sep = "\n")
+```
+
+## Full parameter tables
+
+Every parameter of the four fitted models, with standard errors, z statistics, p values, confidence intervals, and standardised values, ships as CSV; the pooled RI-CLPM is previewed here and the others are summarised by size.
+
+```{r}
+fp <- c(
+  "full_parameters_riclpm_pooled.csv", "full_parameters_riclpm_grouped.csv",
+  "full_parameters_riclpm_covariates.csv", "full_parameters_clpm_pooled.csv"
+)
+for (f in fp) cat(sprintf("- %s: %d parameter rows\n", f, nrow(tbl(f))))
+k(head(tbl("full_parameters_riclpm_pooled.csv"), 12),
+  caption = "Preview: pooled RI-CLPM parameters (first 12 of the full CSV)")
+```
+
 ## Supporting tests and per-group detail
 
 ```{r}
@@ -68,11 +122,12 @@ k(tbl("riclpm_covariate_effects.csv"),
 ## Reproduction ladder
 
 1. `remotes::install_deps()` from the compendium root (pulls `lissr` and `weasel` from GitHub per `DESCRIPTION`).
-2. Obtain LISS access, then `make acquire` and `make panel` (vignettes 01 and 02), or place an existing `liss_merged_long.sav` in `data/`.
-3. `make sample` for the standalone weasel audit; `make analysis` to render `analysis/run_all.md`, the chunk-by-chunk transcript ending in `sessionInfo()`.
-4. First render takes roughly two hours, dominated by the bootstrap; the seeded, fingerprint-guarded cache makes subsequent renders take minutes.
+2. Obtain LISS access, then `make acquire` and `make panel` (S1 and S2), or place an existing `liss_merged_long.sav` in `data/` and verify it: `(cd data && shasum -a 256 -c CHECKSUMS.txt)`.
+3. `make sample` for the standalone weasel audit (it also writes the id list the reliability script needs), then `make frve`, `make audit`, and `make mokken` for the measurement and construction evidence.
+4. `make analysis` renders `analysis/run_all.md`, the chunk-by-chunk transcript ending in `sessionInfo()`; `make release-tables` syncs the released `tables/`. The first render takes roughly two hours, dominated by the bootstrap; the seeded, fingerprint-guarded cache makes subsequent renders take minutes.
+5. `sh scripts/publish_site.sh` re-renders this site with the current transcript and publishes it.
 
-Two assertions run inside the pipeline on every render: the `lissr` equivalisation must equal the in-line formula, and the `weasel` scenario must select exactly the pipeline's 5,676 respondents. A failed assertion stops the render rather than silently diverging.
+Two assertions run inside the pipeline on every render: the `lissr` equivalisation must equal the in-line formula, and the `weasel` scenario must select exactly the pipeline's 5,676 respondents. A failed assertion stops the render rather than silently diverging, and the render driver additionally fails hard if the transcript completed without rewriting its result tables.
 
 ```{r}
 sessionInfo()

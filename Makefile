@@ -1,6 +1,6 @@
 R := Rscript
 
-.PHONY: all acquire panel sample frve audit mokken analysis release-tables vignettes clean
+.PHONY: all acquire panel sample frve audit mokken analysis release-tables vignettes publish clean
 
 all: analysis vignettes
 
@@ -32,6 +32,9 @@ release-tables:
 
 vignettes:
 	quarto render vignettes
+
+publish:
+	sh scripts/publish_site.sh
 
 # remove rendered site output, quarto caches, and per-render analysis
 # intermediates; released artefacts in output/ and tables/ are never touched

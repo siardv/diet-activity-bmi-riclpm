@@ -53,6 +53,9 @@ drafts/
 # policy; add an explicit negation with a written justification if a shell
 # file ever needs tracking for academic reasons
 *sh
+# tracked exception: the site publish path is part of the compendium's
+# reproducibility claims (syncs the served transcript, renders, deploys)
+!scripts/publish_site.sh
 
 # patches, backups, temporary and packaging files
 *.patch

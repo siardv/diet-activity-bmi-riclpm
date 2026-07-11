@@ -1,5 +1,5 @@
 ---
-title: "01 · Data acquisition with lissr"
+title: "S1 · Data acquisition with lissr"
 ---
 
 The study uses three ingredients from the LISS Data Archive: the health module (`ch`), the leisure module that carries weekly sport hours (`cs`), and the monthly Background Variables (`avars`) that supply demographics, education, income, and household composition. This vignette walks the acquisition end to end with [`lissr`](https://github.com/siardv/lissr).

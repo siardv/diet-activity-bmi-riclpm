@@ -1,14 +1,14 @@
 ---
-title: "04 · Measures and cleaning"
+title: "S4 · Measures and cleaning"
 ---
 
-This vignette records every measurement and cleaning decision between the merged panel and the model frame, in pipeline order.
+This vignette records every measurement and cleaning decision, including the construction stage between the raw modules and the merged panel; the audit quantifying that stage is `scripts/05_bmi_construction_audit.R` (`make audit`), and its outputs render in S6.
 
 ## Focal constructs
 
-**BMI.** Self-reported height and weight, `weight / height^2`, taken as delivered by the merged panel; observed values lie in a plausible range and no analysis-stage filter is applied. A reporting bias that is stable within persons is absorbed by the random intercept.
+**BMI.** Self-reported height and weight ("How tall are you?", 1 to 300 cm; "How much do you weigh, without clothes and shoes?", 1 to 1000 kg; items `chXXa016`/`chXXa017`), combined as weight / height². The values the analysis reads are those of the frozen merged panel, which embeds construction-stage processing preserved in `scripts/build_liss_merged.R`: unit-error repairs (implausible heights and weights shifted by the offending factor, plus a handful of documented id-level corrections), person-level height smoothing (a respondent's height set to their across-wave median or mean where reports varied), and filling of isolated missing inputs. The audit against the raw modules gives the footprint for waves 1 to 7: 87.3% of carried values match the raw computation exactly, 12.58% differ (49.6% of those by less than 0.5 kg/m², 41.9% by 0.5 to 2, and 8.5% by 2 or more, the unit-error repairs), and 0.11% were filled where the raw items yield no value (`output/bmi_construction_audit_summary.csv`, `output/bmi_construction_audit_magnitudes.csv`). A further 5,802 person-waves with a computable raw BMI are absent from the merged panel altogether (S2). No additional plausibility filter is applied at the analysis stage, and a robustness refit with every altered or filled value set missing reproduces the article's conclusions (S5, S6; `tables/bmi_sensitivity_*.csv`). A reporting bias that is stable within persons is absorbed by the random intercept.
 
-**Physical activity.** Weekly hours of sports participation behind a participation gate; non-participants are zero. A plausibility ceiling is applied before the analysis subset so it propagates everywhere:
+**Physical activity.** Weekly hours of sports participation behind a participation gate ("Do you practice sports?"; if yes, "How many hours do you spend on sports per week, on average?", 0 to 168; items `csXXa104`/`csXXa105`); non-participants are zero hours. The construction record contains a person-mean imputation branch for participants with missing hours; the raw modules contain zero such cases in waves 1 to 7, so no analysed PA value is imputed. A plausibility ceiling is applied before the analysis subset so it propagates everywhere:
 
 ```{r}
 #| eval: false
@@ -16,13 +16,13 @@ pa_ceiling <- 40
 liss %<>% dplyr::mutate(pa = dplyr::if_else(pa > pa_ceiling, NA_real_, pa))
 ```
 
-Values above forty hours per week exceed any plausible general-population sport load and are set missing, then handled by FIML like all other missingness.
+Values above forty hours per week exceed any plausible general-population sport load (the raw wave-1 maximum is 150) and are set missing, then handled by FIML like all other missingness.
 
-**Fruit and vegetable consumption.** A two-item composite (vegetable and fruit frequency), scored 1 to 3, delivered pre-derived in the historical extract (see vignette 02 for the raw-item caveat).
+**Fruit and vegetable consumption.** A two-item composite of the vegetable and fruit frequency items ("Do you eat raw or cooked vegetables?", "Do you eat fruit?", items `chXXa196`/`chXXa197`, six categories from "never" to "every day"), delivered pre-derived in the historical extract. The empirical mapping (`output/frve_mapping.csv`) is a sum-based cut of the two items: level 1 for a summed frequency of 8 or below, level 2 for 9 to 11, and level 3 for 12, so the top level means both vegetables and fruit eaten daily. Nine person-waves of 34,723 deviate from this rule, legacy anomalies of the archived extract (`output/frve_mapping_deterministic.txt`). Because the rule is not an item-wise recode, internal consistency is indexed on the two raw six-point items: pooled Spearman-Brown 0.428, per-wave 0.407 to 0.457 (`output/frve_reliability_raw.csv`, `output/frve_reliability_pooled.csv`).
 
 ## The education-based SES strata
 
-Education arrives as `oplmet` in the Background Variables. The pipeline recodes it in two steps.
+Education arrives as `oplmet` in the Background Variables ("Highest level of education with diploma"). The pipeline recodes it in two steps.
 
 First, categories collapse to four levels: primary (with `other` and `not yet started or completed` assigned lowest), vmbo with havo/vwo, mbo, and hbo with wo:
 
@@ -35,6 +35,8 @@ educ = dplyr::case_when(
   TRUE ~ NA_real_
 )
 ```
+
+The frozen panel stores these codes as positive values 1 to 9, so the mapping operates exactly as written; 367 of the 5,676 analysis respondents reported an `other` or `not (yet) completed or started` category at their first observed wave (`output/educ_other_count.txt`).
 
 Second, the household maximum is taken per wave (households with no observed education yield `NA`), and the four levels collapse to three by merging the two lowest, so the strata read: lower (up to general secondary), intermediate (mbo), higher (hbo or wo). The value at each respondent's first observed wave defines the stratum, treated as time-invariant thereafter. Resulting sizes: 1,914 / 1,449 / 2,313, no missing values.
 
@@ -60,8 +62,8 @@ ok <- is.finite(liss$stand_inc) & is.finite(eq)
 stopifnot(isTRUE(all.equal(liss$stand_inc[ok], eq[ok])))
 ```
 
-`liss_equivalise_income()` also offers `scale = "oecd_modified"` (divisor `1 + 0.5 * (adults - 1) + 0.3 * children`) and `scale = "sqrt"` (square root of household size), which makes scale-choice robustness a one-argument change. Income does not define the SES strata; the equivalised variable is retained for description and sensitivity analysis.
+`liss_equivalise_income()` also offers `scale = "oecd_modified"` (divisor `1 + 0.5 * (adults - 1) + 0.3 * children`) and `scale = "sqrt"` (square root of household size), which makes scale-choice robustness a one-argument change. Income does not define the SES strata and does not enter the reported models; the equivalised variable is retained for description and for possible income-based extensions.
 
 ## Covariates
 
-Gender (female = 1), age at baseline, and a Mokken-validated medication count (0 to 5) enter as time-invariant predictors of the random intercepts in the covariate-augmented model only; the focal estimates come from the unadjusted model. Smoking is excluded by design for the collider-bias reasons set out in the article's Methods.
+Gender (female = 1, from `geslacht`, coded 1 male and 2 female throughout the study window), age at each respondent's first observed wave, and the medication count enter as time-invariant predictors of the random intercepts in the covariate-augmented model only; the focal estimates come from the unadjusted model. The medication count sums a reversed "I do not take any medicine" indicator and four category items from the health module's "Are you currently taking medicine at least once a week for:" battery (high blood cholesterol, high blood pressure, heart or brain infarction, diabetes), range 0 to 5. Mokken scale analysis on the frozen extract supports the article's threshold: pooled H = 0.721, per-wave H 0.702 to 0.730, no monotonicity violations (`output/medication_mokken.csv`, regenerable with `make mokken`). Smoking is excluded by design for the collider-bias reasons set out in the article's Methods.
