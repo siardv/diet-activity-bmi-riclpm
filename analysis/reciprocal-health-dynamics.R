@@ -404,7 +404,7 @@ presence <- liss %>%
     !is.na(bmi) | !is.na(fv) | !is.na(pa)
   )
 ws_plan <- weasel::weasel_plan(
-  presence[c("id", "t", "female", "age")],
+  presence[c("id", "t", "female", "age", "bmi", "fv", "pa", "ses")],
   id = "id", wave = "t", span = "full",
   scenarios = data.frame(
     scenario = "min3_of7",
@@ -1155,7 +1155,6 @@ rds_file_name <- paste0(
   "all_model_fits_",
   gsub("[-.: ]", "_", Sys.time()), ".Rds"
 )
-cli::cli_alert_info("Saving model fits to {rds_file_name}")
 
 # ---- cb190 ---- save model fits to disk
 saveRDS(all_model_fits, file = rds_file_name)
@@ -1273,6 +1272,17 @@ fit_stats <- extract_fit(
   ))
 
 # ---- cb208 ---- longitudinal invariance fit table
+# extract_fit reports npar but not model df, and its chisq column is the
+# standard (unscaled) statistic; add df and the scaled chi-square so the table
+# is self-documenting and matches what the article reports
+fit_stats$df <- vapply(
+  list(configural_model, weak_model, strong_model, strict_model),
+  function(m) unname(lavaan::fitMeasures(m, "df")), numeric(1)
+)
+fit_stats$chisq_scaled <- vapply(
+  list(configural_model, weak_model, strong_model, strict_model),
+  function(m) unname(lavaan::fitMeasures(m, "chisq.scaled")), numeric(1)
+)
 fit_stats %>%
   mutate(across(where(is.double), ~ round(.x, 3))) %>%
   as.data.frame() %>%
@@ -1312,12 +1322,14 @@ model_parameters <- c(
   "residual.covariances"
 )
 
+# under the ri-clpm parameterisation the loadings are fixed (metric equality
+# is automatic) and the observed residual variances and covariances are fixed
+# to zero, so "strict" and "residual" levels would constrain nothing; the one
+# real constraint beyond the configural model is the structural level with the
+# regressions held equal across groups
 ses_models <- list(
   config = NULL,
-  metric = model_parameters[1],
-  scalar = model_parameters[1:2],
-  strict = model_parameters[1:3],
-  residu = model_parameters
+  equal_regressions = model_parameters[1:2]
 )
 
 # ---- cb214 ---- fit configural model across SES
@@ -1454,12 +1466,12 @@ fit <- lapply(names(ses_models), function(i) {
 names(fit) <- names(ses_models)
 
 # ---- cb226 ---- across-SES invariance: fit by level and the focal structural test
-# robust fit at each constraint level. levels: config (nothing equal), metric
-# (loadings, automatic under unit loadings), scalar (loadings + regressions),
-# strict (+ residuals), residu (+ residual covariances). built from base
-# lavaan::fitMeasures to sidestep the semTools/lavaan version skew.
+# robust fit at each constraint level. levels: config (nothing equal) and
+# equal_regressions (loadings + regressions; the loadings are fixed anyway, so
+# the regressions carry the constraint). built from base lavaan::fitMeasures
+# to sidestep the semTools/lavaan version skew.
 ses_inv_fit <- as.data.frame(t(sapply(
-  fit[c("config", "metric", "scalar", "strict", "residu")],
+  fit[c("config", "equal_regressions")],
   function(m) {
     lavaan::fitMeasures(m, c(
       "npar", "chisq.scaled", "df.scaled",
@@ -1476,7 +1488,7 @@ knitr::kable(
 # focal cross-group structural test: can the within-person regression paths be
 # held equal across SES (configural vs equal regressions; metric is automatic).
 ses_struct_lrt <- lavaan::lavTestLRT(
-  fit$config, fit$scalar,
+  fit$config, fit$equal_regressions,
   method = "satorra.2000",
   model.names = c("configural", "equal regressions")
 )

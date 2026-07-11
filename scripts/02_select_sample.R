@@ -30,7 +30,7 @@ presence <- frame %>%
   )
 
 ws_plan <- weasel::weasel_plan(
-  presence[c("id", "t", "female", "age")],
+  presence[c("id", "t", "female", "age", "bmi", "fv", "pa")],
   id = "id", wave = "t", span = "full",
   scenarios = data.frame(
     scenario = "min3_of7",

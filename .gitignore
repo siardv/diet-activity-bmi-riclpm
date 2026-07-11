@@ -18,11 +18,14 @@ Thumbs.db
 *_cache/
 /_site/
 
-# raw liss microdata and codebooks: never committed (centerdata licence)
+# raw liss microdata and codebooks: never committed (centerdata licence);
+# the checksum manifest of the frozen inputs is the one tracked exception
 data/*
 !data/README.md
+!data/CHECKSUMS.txt
 
-# statistical data containers anywhere in the tree
+# statistical data containers anywhere in the tree (all capitalisations git
+# treats as distinct on case-sensitive systems)
 *.sav
 *.zsav
 *.dta
@@ -31,6 +34,7 @@ data/*
 *.rda
 *.RData
 *.RDS
+*.Rds
 
 # person-level derived artefacts (panel identifiers, subject-level subsets)
 sample_ids*
@@ -61,3 +65,6 @@ drafts/
 *.tar
 *.tar.gz
 vignettes/_site/
+
+# private working notes for the revision process
+reviews/

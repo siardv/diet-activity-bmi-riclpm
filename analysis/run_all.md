@@ -14,67 +14,64 @@ RI-CLPM analysis transcript
     grouping](#26-derive-the-three-level-ses-grouping)
   - [2.7 select analysis columns and
     describe](#27-select-analysis-columns-and-describe)
-  - [2.8 wave-scope helper functions](#28-wave-scope-helper-functions)
-  - [2.9 rename long-frame columns](#29-rename-long-frame-columns)
-  - [2.10 configure the wave scope and
-    pivot](#210-configure-the-wave-scope-and-pivot)
-  - [2.11 build the wave-pattern view](#211-build-the-wave-pattern-view)
-  - [2.12 show the wave-pattern view](#212-show-the-wave-pattern-view)
-  - [2.13 physical-activity plausibility
-    filter](#213-physical-activity-plausibility-filter)
-  - [2.14 select the analysis sample (at least 3 of waves 1 to
-    7)](#214-select-the-analysis-sample-at-least-3-of-waves-1-to-7)
-  - [2.15 reshape long to wide, one row per
-    respondent](#215-reshape-long-to-wide-one-row-per-respondent)
-  - [2.16 finalise SES labels and
-    columns](#216-finalise-ses-labels-and-columns)
-  - [2.17 covariate inclusion flags](#217-covariate-inclusion-flags)
-  - [2.18 CLPM model syntax](#218-clpm-model-syntax)
-  - [2.19 CLPM syntax with covariates](#219-clpm-syntax-with-covariates)
-  - [2.20 RI-CLPM model syntax](#220-ri-clpm-model-syntax)
-  - [2.21 RI-CLPM syntax with
-    covariates](#221-ri-clpm-syntax-with-covariates)
-  - [2.22 fit pooled CLPM](#222-fit-pooled-clpm)
-  - [2.23 fit grouped CLPM](#223-fit-grouped-clpm)
-  - [2.24 fit grouped CLPM by SES
-    group](#224-fit-grouped-clpm-by-ses-group)
-  - [2.25 fit grouped CLPM with
-    covariates](#225-fit-grouped-clpm-with-covariates)
-  - [2.26 fit grouped covariate CLPM by SES
-    group](#226-fit-grouped-covariate-clpm-by-ses-group)
-  - [2.27 fit pooled RI-CLPM](#227-fit-pooled-ri-clpm)
-  - [2.28 fit grouped RI-CLPM](#228-fit-grouped-ri-clpm)
-  - [2.29 fit grouped RI-CLPM by SES
-    group](#229-fit-grouped-ri-clpm-by-ses-group)
-  - [2.30 fit grouped RI-CLPM with
-    covariates](#230-fit-grouped-ri-clpm-with-covariates)
-  - [2.31 fit grouped covariate RI-CLPM by SES
-    group](#231-fit-grouped-covariate-ri-clpm-by-ses-group)
-  - [2.32 assemble all model fits](#232-assemble-all-model-fits)
-  - [2.33 load lavaan](#233-load-lavaan)
-  - [2.34 load minvariance](#234-load-minvariance)
-  - [2.35 variables for measurement
-    invariance](#235-variables-for-measurement-invariance)
-  - [2.36 invariance levels](#236-invariance-levels)
-  - [2.37 fit the configural model](#237-fit-the-configural-model)
-  - [2.38 extract invariance fit
-    statistics](#238-extract-invariance-fit-statistics)
-  - [2.39 longitudinal invariance fit
-    table](#239-longitudinal-invariance-fit-table)
-  - [2.40 invariance parameters to
-    compare](#240-invariance-parameters-to-compare)
-  - [2.41 across-SES invariance of the within-person
-    dynamics](#241-across-ses-invariance-of-the-within-person-dynamics)
-  - [2.42 name the SES invariance
-    fits](#242-name-the-ses-invariance-fits)
-  - [2.43 across-SES invariance: fit by level and the focal structural
-    test](#243-across-ses-invariance-fit-by-level-and-the-focal-structural-test)
+  - [2.8 rename long-frame columns](#28-rename-long-frame-columns)
+  - [2.9 physical-activity plausibility
+    filter](#29-physical-activity-plausibility-filter)
+  - [2.10 select the analysis sample (at least 3 of waves 1 to
+    7)](#210-select-the-analysis-sample-at-least-3-of-waves-1-to-7)
+  - [2.11 reshape long to wide, one row per
+    respondent](#211-reshape-long-to-wide-one-row-per-respondent)
+  - [2.12 finalise SES labels and
+    columns](#212-finalise-ses-labels-and-columns)
+  - [2.13 covariate inclusion flags](#213-covariate-inclusion-flags)
+  - [2.14 CLPM model syntax](#214-clpm-model-syntax)
+  - [2.15 CLPM syntax with covariates](#215-clpm-syntax-with-covariates)
+  - [2.16 RI-CLPM model syntax](#216-ri-clpm-model-syntax)
+  - [2.17 RI-CLPM syntax with
+    covariates](#217-ri-clpm-syntax-with-covariates)
+  - [2.18 fit pooled CLPM](#218-fit-pooled-clpm)
+  - [2.19 fit grouped CLPM](#219-fit-grouped-clpm)
+  - [2.20 fit grouped CLPM by SES
+    group](#220-fit-grouped-clpm-by-ses-group)
+  - [2.21 fit grouped CLPM with
+    covariates](#221-fit-grouped-clpm-with-covariates)
+  - [2.22 fit grouped covariate CLPM by SES
+    group](#222-fit-grouped-covariate-clpm-by-ses-group)
+  - [2.23 fit pooled RI-CLPM](#223-fit-pooled-ri-clpm)
+  - [2.24 fit grouped RI-CLPM](#224-fit-grouped-ri-clpm)
+  - [2.25 fit grouped RI-CLPM by SES
+    group](#225-fit-grouped-ri-clpm-by-ses-group)
+  - [2.26 fit grouped RI-CLPM with
+    covariates](#226-fit-grouped-ri-clpm-with-covariates)
+  - [2.27 fit grouped covariate RI-CLPM by SES
+    group](#227-fit-grouped-covariate-ri-clpm-by-ses-group)
+  - [2.28 assemble all model fits](#228-assemble-all-model-fits)
+  - [2.29 load lavaan](#229-load-lavaan)
+  - [2.30 load minvariance](#230-load-minvariance)
+  - [2.31 variables for measurement
+    invariance](#231-variables-for-measurement-invariance)
+  - [2.32 invariance levels](#232-invariance-levels)
+  - [2.33 fit the configural model](#233-fit-the-configural-model)
+  - [2.34 extract invariance fit
+    statistics](#234-extract-invariance-fit-statistics)
+  - [2.35 longitudinal invariance fit
+    table](#235-longitudinal-invariance-fit-table)
+  - [2.36 invariance parameters to
+    compare](#236-invariance-parameters-to-compare)
+  - [2.37 across-SES invariance of the within-person
+    dynamics](#237-across-ses-invariance-of-the-within-person-dynamics)
+  - [2.38 name the SES invariance
+    fits](#238-name-the-ses-invariance-fits)
+  - [2.39 across-SES invariance: fit by level and the focal structural
+    test](#239-across-ses-invariance-fit-by-level-and-the-focal-structural-test)
 - [3 result tables](#3-result-tables)
 - [4 measurement invariance
   (interpretation)](#4-measurement-invariance-interpretation)
 - [5 moderation test](#5-moderation-test)
 - [6 RI-CLPM coefficients](#6-ri-clpm-coefficients)
-- [7 session information](#7-session-information)
+- [7 bmi construction-audit
+  sensitivity](#7-bmi-construction-audit-sensitivity)
+- [8 session information](#8-session-information)
 
 ## 1 data
 
@@ -84,12 +81,13 @@ data_dir <- liss_data_dir()
 # seed the long frame from the merged backbone.
 liss <- read_liss("liss_merged_long.sav", data_dir = data_dir)
 
-# data provenance: birth times of the merged backbone and the source extracts it
-# was assembled from. fall back to modification time on volumes that do not
-# record a birth time; missing files surface as NA age.
+# data provenance: file times of the merged backbone and the four source
+# extracts it was assembled from. on archived copies these record the copy,
+# not the original construction; the authoritative pin for the frozen inputs
+# is data/CHECKSUMS.txt.
 sav_files <- c(
   "liss_merged_long.sav", "liss_health.sav", "liss_sport.sav",
-  "liss_income.sav", "liss_background.sav", "liss_personality.sav"
+  "liss_income.sav", "liss_background.sav"
 )
 fs::file_info(fs::path(data_dir, sav_files)) %>%
   dplyr::transmute(
@@ -101,15 +99,14 @@ fs::file_info(fs::path(data_dir, sav_files)) %>%
   dplyr::arrange(created)
 ```
 
-    #> # A tibble: 6 × 4
+    #> # A tibble: 5 × 4
     #>   file                 time_source created             age_days
     #>   <chr>                <chr>       <dttm>                 <dbl>
-    #> 1 liss_merged_long.sav birth       2026-07-04 16:37:50        0
-    #> 2 liss_health.sav      birth       2026-07-04 16:37:50        0
-    #> 3 liss_sport.sav       birth       2026-07-04 16:37:50        0
-    #> 4 liss_income.sav      birth       2026-07-04 16:37:50        0
-    #> 5 liss_background.sav  birth       2026-07-04 16:37:50        0
-    #> 6 liss_personality.sav modified    NA                        NA
+    #> 1 liss_background.sav  birth       2026-07-07 23:13:43        4
+    #> 2 liss_health.sav      birth       2026-07-07 23:13:43        4
+    #> 3 liss_income.sav      birth       2026-07-07 23:13:43        4
+    #> 4 liss_merged_long.sav birth       2026-07-07 23:13:43        4
+    #> 5 liss_sport.sav       birth       2026-07-07 23:13:43        4
 
 ## 2 analysis steps
 
@@ -1448,227 +1445,7 @@ Lilliefors (Kolmogorov-Smirnov) Test
 
 </table>
 
-### 2.8 wave-scope helper functions
-
-``` r
-check_scope <- function(kill = FALSE) {
-  # checks that scope exists
-  if (!exists("weasel_env", globalenv(), mode = "environment")) {
-    msg <- paste(
-      "No scope has been set. Please use the", dQuote("scope()"),
-      "function to define a scope before proceeding."
-    )
-    if (kill) stop(msg, call. = FALSE)
-    return(FALSE)
-  }
-  return(TRUE)
-}
-create_scope <- function(data,
-                         id,
-                         wave,
-                         size = NULL,
-                         lower = NULL,
-                         upper = NULL,
-                         gap = 0,
-                         n_gap = 0,
-                         override = TRUE) {
-  # create analysis scope
-  scope_exists <- check_scope(kill = FALSE)
-  if (scope_exists & !override) {
-    yes <- utils::askYesNo("Override current scope?")
-  } else {
-    yes <- TRUE
-  }
-  if (yes) {
-    mget(names(formals()), envir = environment()) %>%
-      list2env() %>%
-      assign(x = "weasel_env", envir = globalenv())
-  }
-}
-
-if_null_then <- function(x, new) {
-  # replace NULL with default value
-  if (length(x) == 0 || is.null(x)) {
-    new
-  } else {
-    x
-  }
-}
-
-bounds_to_seq <- function(x) {
-  # create sequence from range
-  range(x, na.rm = TRUE) %>%
-    sequence(nvec = diff(.) + 1)
-}
-
-eval_scope <- function() {
-  # evaluate scope parameters
-  with(weasel_env, {
-    bounds <- bounds_to_seq(data[[wave]])
-    size %<>% `[`(. >= 3) %<>%
-      if_null_then(3:max(bounds, na.rm = TRUE))
-    lower %<>% if_null_then(head(bounds, 1))
-    upper %<>% if_null_then(tail(bounds, 1))
-    n_gap <- ifelse(gap > 0, 1, 0)
-  })
-}
-
-make_set <- function() {
-  # generate all wave combinations
-  check_scope(kill = TRUE)
-  with(weasel_env, {
-    set <- lapply(size, combn,
-      x = c(lower:upper), simplify = FALSE
-    ) %>%
-      unlist(recursive = FALSE)
-  })
-}
-
-as_string <- function(x, na.rm = FALSE) {
-  # collapse vector to space-separated string
-  `if`(na.rm, x[!is.na(x)], x) %>%
-    unlist() %>%
-    paste0(collapse = " ")
-}
-
-as_sequence <- function(x) {
-  # convert string to numeric sequence
-  if (is.character(x)) {
-    suppressWarnings(as.numeric(strsplit(x, " ")[[1]]))
-  } else {
-    x
-  }
-}
-
-gap_to_na <- function(x) {
-  # replace missing values with NA
-  x[match(bounds_to_seq(x), x, nomatch = NA)]
-}
-
-complete_seq <- function(x) {
-  # replace missing values in sequence to make it complete
-  s <- as_sequence(x)
-  bounds_to_seq(s) -> r
-  lapply(list(replace(
-    r,
-    which(is.na(s)), NA
-  ), s), paste0, collapse = " ") %>%
-    Reduce(f = identical) %>%
-    `if`(r, s)
-}
-
-count_gaps <- function(x) {
-  # count gaps in a sequence
-  g <- rle(is.na(gap_to_na(x)))
-  c(gap = max(c(0, g$lengths[g$values])), n_gap = sum(g$values))
-}
-
-filter_gaps <- function(s, r) {
-  # filter wave combinations by gap criteria
-  x <- count_gaps(s)
-  if ((x[1] <= r[1]) && (x[2] <= r[2])) {
-    return(gap_to_na(s))
-  }
-}
-
-filter_set <- function() {
-  # filter wave combinations
-  with(weasel_env, {
-    refs <- c(gap, n_gap)
-    set <- Filter(lapply(set, filter_gaps, refs), f = length)
-  })
-}
-
-max0 <- function(x) {
-  # replace 0 with NA
-  if (length(x[!is.na(x)]) == 0) NA else max(x, na.rm = TRUE)
-}
-
-pivot <- function() {
-  # pivot data frame
-  check_scope(kill = TRUE)
-  cli::cli_alert_info("Gathering data matching scope criteria.")
-  with(weasel_env, {
-    pivot <- dplyr::select(data, !!id, !!wave) %>%
-      tidyr::pivot_wider(names_from = !!wave, values_from = !!wave) %>%
-      dplyr::group_split(dplyr::across(!!id), .keep = TRUE) %>%
-      purrr::map_df(~ purrr::map_if(.x, is.numeric, max0)) %>%
-      `[`(c(1, order(as.numeric(names(.)[-1])) + 1)) %>%
-      dplyr::slice(which(rowSums(!is.na(dplyr::select(., -1))) >= 3))
-  })
-}
-
-build_view <- function() {
-  # build summary
-  cli::cli_alert_info("Creating summary view.")
-  with(weasel_env, {
-    p <- pivot[, !colnames(pivot) %in% c(id, "waves")]
-    s <- vapply(set, as_string, character(1)) %>% unique()
-    pivot$waves <- vapply(asplit(p, 1), as_string, character(1))
-    pivot %<>%
-      dplyr::rowwise() %>%
-      dplyr::mutate(waves = stringr::str_extract_all(waves, s) %>%
-        Filter(f = length) %>% list()) %>%
-      dplyr::ungroup()
-
-    view <- dplyr::pull(pivot, waves) %>%
-      unlist() %>%
-      table() %>%
-      stack() %>%
-      dplyr::mutate(
-        n = stringr::str_count(ind, "[0-9]+|NA"),
-        ids = values, waves = ind
-      ) %>%
-      `[`(c("waves", "n", "ids"))
-
-    view %<>% as.data.frame() %>%
-      format(width = 5) %>%
-      dplyr::arrange(desc(n)) %>%
-      data.table::as.data.table()
-  })
-}
-
-filter_view <- function(n_range = NULL, ids_range = NULL) {
-  # filtering view
-  filter_data <- function(x, n, ids) {
-    .f <- function(x, y, z) {
-      dplyr::filter(x, as.numeric(x[[y]]) %in% bounds_to_seq(z))
-    }
-    `if`(length(n) >= 2, .f(x, "n", n), x) -> v
-    `if`(length(ids) >= 2, .f(v, "ids", ids), v)
-  }
-  fdf <- filter_data(with(weasel_env, view), n_range, ids_range)
-  fdf[order(fdf$ids, decreasing = TRUE), ]
-}
-
-get_row <- function(i = NULL) {
-  # get subset of data for a view row
-  if (is.null(i)) {
-    cli::cli_alert_warning(
-      "No row selected, returning entire view."
-    )
-    return(weasel_env$view)
-  }
-  assign("row", ifelse(is.null(i), 1, i),
-    envir = get("weasel_env", mode = "environment")
-  )
-  with(weasel_env, {
-    t_to_keep <- stringr::str_squish(
-      view[row, waves]
-    ) %>% list(as_sequence(.))
-    ids_to_keep <- pivot[pivot$waves %>%
-      sapply(function(r) any(t_to_keep[[1]] %in% r)), ]$id
-
-    tbl_from_row <- dplyr::filter(
-      data,
-      id %in% ids_to_keep & t %in% t_to_keep[[2]]
-    )
-    return(tbl_from_row)
-  })
-}
-```
-
-### 2.9 rename long-frame columns
+### 2.8 rename long-frame columns
 
 ``` r
 liss %<>%
@@ -2898,57 +2675,7 @@ Lilliefors (Kolmogorov-Smirnov) Test
 
 </table>
 
-### 2.10 configure the wave scope and pivot
-
-``` r
-# create a scope environment to define parameters
-create_scope(
-  data = liss,
-  id = "id", # column name for unique subject IDs
-  wave = "t", # column name for time/wave indicator
-  gap = 0, # maximum allowed gap between waves
-  size = 7, # range of number of waves per subject (id)
-  upper = 11, # upper bound on wave number
-  override = TRUE # override any existing scope environment
-)
-
-eval_scope()
-```
-
-    #> Warning in sequence.default(., nvec = diff(.) + 1): length(nvec) 1 < 2 = max(length(from), length(by)) -- future R`s default
-    #> 'recycle = TRUE' will recycle 'nvec'
-
-``` r
-make_set()
-filter_set()
-pivot()
-```
-
-    #> ℹ Gathering data matching scope criteria.
-
-### 2.11 build the wave-pattern view
-
-``` r
-build_view()
-```
-
-    #> ℹ Creating summary view.
-
-### 2.12 show the wave-pattern view
-
-``` r
-filter_view()
-```
-
-    #>              waves      n    ids
-    #>             <AsIs> <AsIs> <AsIs>
-    #> 1:   3 4 5 6 7 8 9      7   2616
-    #> 2:  4 5 6 7 8 9 10      7   2456
-    #> 3:   2 3 4 5 6 7 8      7   2410
-    #> 4:   1 2 3 4 5 6 7      7   2396
-    #> 5: 5 6 7 8 9 10 11      7   2323
-
-### 2.13 physical-activity plausibility filter
+### 2.9 physical-activity plausibility filter
 
 ``` r
 # set implausible sport hours to missing before the analysis subset, so the
@@ -2960,7 +2687,7 @@ pa_ceiling <- 40
 liss %<>% dplyr::mutate(pa = dplyr::if_else(pa > pa_ceiling, NA_real_, pa))
 ```
 
-### 2.14 select the analysis sample (at least 3 of waves 1 to 7)
+### 2.10 select the analysis sample (at least 3 of waves 1 to 7)
 
 ``` r
 # retain partial respondents: keep everyone observed on at least min_waves of
@@ -4202,7 +3929,7 @@ presence <- liss %>%
     !is.na(bmi) | !is.na(fv) | !is.na(pa)
   )
 ws_plan <- weasel::weasel_plan(
-  presence[c("id", "t", "female", "age")],
+  presence[c("id", "t", "female", "age", "bmi", "fv", "pa", "ses")],
   id = "id", wave = "t", span = "full",
   scenarios = data.frame(
     scenario = "min3_of7",
@@ -4231,16 +3958,24 @@ weasel::weasel_print_table(
 )
 ```
 
-    #> ── sample size by minimum-wave tolerance ────────────────────────────────────────────────────────────────────────────────────
+    #> ── sample size by minimum-wave tolerance ─────────────────────────────────────────────────
 
-    #>  require_endpoints max_missing n_gap_max max_gap_max n_ids prop_ids mean_prop_present
-    #>              FALSE           0         5           5  2396    0.330             1.000
-    #>              FALSE           1         5           5  3250    0.448             0.962
-    #>              FALSE           2         5           5  4222    0.582             0.905
-    #>              FALSE           3         5           5  4965    0.685             0.855
-    #>              FALSE           4         5           5  5676    0.783             0.802
-    #>              FALSE           5         5           5  7097    0.979             0.699
-    #>              FALSE           6         5           5  7250    1.000             0.687
+    #>  require_endpoints max_missing n_gap_max max_gap_max n_ids prop_ids
+    #>              FALSE           0         5           5  2396    0.330
+    #>              FALSE           1         5           5  3250    0.448
+    #>              FALSE           2         5           5  4222    0.582
+    #>              FALSE           3         5           5  4965    0.685
+    #>              FALSE           4         5           5  5676    0.783
+    #>              FALSE           5         5           5  7097    0.979
+    #>              FALSE           6         5           5  7250    1.000
+    #>  mean_prop_present
+    #>              1.000
+    #>              0.962
+    #>              0.905
+    #>              0.855
+    #>              0.802
+    #>              0.699
+    #>              0.687
 
 ``` r
 weasel::weasel_print_table(
@@ -4249,11 +3984,15 @@ weasel::weasel_print_table(
 )
 ```
 
-    #> ── retained vs excluded respondents ─────────────────────────────────────────────────────────────────────────────────────────
+    #> ── retained vs excluded respondents ──────────────────────────────────────────────────────
 
     #>  variable n_retained n_excluded mean_retained mean_excluded   diff    smd
     #>       age       5676       1574        46.208        42.358  3.850  0.217
+    #>       bmi       5676       1574        25.124        24.580  0.544  0.132
+    #>       ses       5676       1574         2.070         2.128 -0.057 -0.068
+    #>        fv       5676       1574         1.904         1.859  0.045  0.064
     #>    female       5676       1574         0.532         0.539 -0.007 -0.014
+    #>        pa       5675       1572         2.249         2.283 -0.034 -0.011
 
 ``` r
 cat(weasel::weasel_justify_subset(ws_plan, "min3_of7"), "\n")
@@ -4261,7 +4000,7 @@ cat(weasel::weasel_justify_subset(ws_plan, "min3_of7"), "\n")
 
     #> To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 5676 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. In the resulting subset, mean within-window coverage was 0.802, endpoint coverage was 0.508. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.
 
-### 2.15 reshape long to wide, one row per respondent
+### 2.11 reshape long to wide, one row per respondent
 
 ``` r
 transform_to_wide <- function(long_data) {
@@ -5881,7 +5620,7 @@ Lilliefors (Kolmogorov-Smirnov) Test
 
 </table>
 
-### 2.16 finalise SES labels and columns
+### 2.12 finalise SES labels and columns
 
 ``` r
 wide$ses <- paste0("ses", wide$ses)
@@ -5891,7 +5630,7 @@ wide <- wide[, grep(paste0(cols_to_keep, collapse = "|"),
 )]
 ```
 
-### 2.17 covariate inclusion flags
+### 2.13 covariate inclusion flags
 
 ``` r
 # Covariate Specification
@@ -5900,7 +5639,7 @@ med <- TRUE
 age <- TRUE
 ```
 
-### 2.18 CLPM model syntax
+### 2.14 CLPM model syntax
 
 ``` r
 clpm_syntax <- "
@@ -5992,7 +5731,7 @@ PA7 ~~ PA7
 "
 ```
 
-### 2.19 CLPM syntax with covariates
+### 2.15 CLPM syntax with covariates
 
 ``` r
 comment <- "
@@ -6030,7 +5769,7 @@ clpm_covar_syntax <- paste0(
 )
 ```
 
-### 2.20 RI-CLPM model syntax
+### 2.16 RI-CLPM model syntax
 
 ``` r
 ri_clpm_syntax <- "
@@ -6177,7 +5916,7 @@ FV7  ~~ 0*FV7
 "
 ```
 
-### 2.21 RI-CLPM syntax with covariates
+### 2.17 RI-CLPM syntax with covariates
 
 ``` r
 comment <- paste0(
@@ -6217,7 +5956,7 @@ ri_clpm_covar_syntax <- paste0(
 )
 ```
 
-### 2.22 fit pooled CLPM
+### 2.18 fit pooled CLPM
 
 ``` r
 (clpm_pooled_fit <-
@@ -6253,7 +5992,7 @@ ri_clpm_covar_syntax <- paste0(
     #>   Scaling correction factor                                  1.641
     #>     Yuan-Bentler correction (Mplus variant)
 
-### 2.23 fit grouped CLPM
+### 2.19 fit grouped CLPM
 
 ``` r
 (clpm_grouped_fit <-
@@ -6301,7 +6040,7 @@ ri_clpm_covar_syntax <- paste0(
     #>     ses2                                      1129.024    1129.024
     #>     ses3                                      2027.678    2027.678
 
-### 2.24 fit grouped CLPM by SES group
+### 2.20 fit grouped CLPM by SES group
 
 ``` r
 # by group
@@ -6322,7 +6061,7 @@ clpm_grouped_fit.g <-
   })
 ```
 
-### 2.25 fit grouped CLPM with covariates
+### 2.21 fit grouped CLPM with covariates
 
 ``` r
 (clpm_grouped_covar_fit <-
@@ -6370,7 +6109,7 @@ clpm_grouped_fit.g <-
     #>     ses2                                      1380.610    1380.610
     #>     ses3                                      2390.793    2390.793
 
-### 2.26 fit grouped covariate CLPM by SES group
+### 2.22 fit grouped covariate CLPM by SES group
 
 ``` r
 # by group
@@ -6391,7 +6130,7 @@ clpm_grouped_covar_fit.g <-
   })
 ```
 
-### 2.27 fit pooled RI-CLPM
+### 2.23 fit pooled RI-CLPM
 
 ``` r
 (ri_clpm_pooled_fit <-
@@ -6427,7 +6166,7 @@ clpm_grouped_covar_fit.g <-
     #>   Scaling correction factor                                  1.504
     #>     Yuan-Bentler correction (Mplus variant)
 
-### 2.28 fit grouped RI-CLPM
+### 2.24 fit grouped RI-CLPM
 
 ``` r
 (ri_clpm_grouped_fit <-
@@ -6475,7 +6214,7 @@ clpm_grouped_covar_fit.g <-
     #>     ses2                                       244.664     244.664
     #>     ses3                                       280.684     280.684
 
-### 2.29 fit grouped RI-CLPM by SES group
+### 2.25 fit grouped RI-CLPM by SES group
 
 ``` r
 # by group
@@ -6496,7 +6235,7 @@ ri_clpm_grouped_fit.g <-
   })
 ```
 
-### 2.30 fit grouped RI-CLPM with covariates
+### 2.26 fit grouped RI-CLPM with covariates
 
 ``` r
 (ri_clpm_grouped_covar_fit <-
@@ -6544,7 +6283,7 @@ ri_clpm_grouped_fit.g <-
     #>     ses2                                       376.725     376.725
     #>     ses3                                       457.827     457.827
 
-### 2.31 fit grouped covariate RI-CLPM by SES group
+### 2.27 fit grouped covariate RI-CLPM by SES group
 
 ``` r
 ri_clpm_grouped_covar_fit.g <-
@@ -6564,7 +6303,7 @@ ri_clpm_grouped_covar_fit.g <-
   })
 ```
 
-### 2.32 assemble all model fits
+### 2.28 assemble all model fits
 
 ``` r
 all_model_fits <- list(
@@ -6599,12 +6338,9 @@ rds_file_name <- paste0(
   "all_model_fits_",
   gsub("[-.: ]", "_", Sys.time()), ".Rds"
 )
-cli::cli_alert_info("Saving model fits to {rds_file_name}")
 ```
 
-    #> ℹ Saving model fits to all_model_fits_2026_07_04_18_03_39_507341.Rds
-
-### 2.33 load lavaan
+### 2.29 load lavaan
 
 ``` r
 library(lavaan)
@@ -6613,7 +6349,7 @@ library(lavaan)
     #> This is lavaan 0.6-21
     #> lavaan is FREE software! Please report any bugs.
 
-### 2.34 load minvariance
+### 2.30 load minvariance
 
 ``` r
 library(minvariance)
@@ -6632,7 +6368,7 @@ library(dplyr)
     #> 
     #>     intersect, setdiff, setequal, union
 
-### 2.35 variables for measurement invariance
+### 2.31 variables for measurement invariance
 
 ``` r
 var_list <- list(
@@ -6642,7 +6378,7 @@ var_list <- list(
 )
 ```
 
-### 2.36 invariance levels
+### 2.32 invariance levels
 
 ``` r
 model_types <- c("configural", "weak", "strong", "strict")
@@ -6662,7 +6398,7 @@ purrr::iwalk(model_types, ~ {
 
     #> Strict Invariance Model (Error Variance Invariance, Residual Invariance)
 
-### 2.37 fit the configural model
+### 2.33 fit the configural model
 
 ``` r
 configural_model <- cfa(configural_syntax, data = wide,
@@ -6682,7 +6418,7 @@ strict_model <- cfa(strict_syntax, data = wide,
     #> Warning: lavaan->lav_object_post_check():  
     #>    some estimated lv variances are negative
 
-### 2.38 extract invariance fit statistics
+### 2.34 extract invariance fit statistics
 
 ``` r
 fit_stats <- extract_fit(
@@ -6699,23 +6435,34 @@ fit_stats <- extract_fit(
   ))
 ```
 
-### 2.39 longitudinal invariance fit table
+### 2.35 longitudinal invariance fit table
 
 ``` r
+# extract_fit reports npar but not model df, and its chisq column is the
+# standard (unscaled) statistic; add df and the scaled chi-square so the table
+# is self-documenting and matches what the article reports
+fit_stats$df <- vapply(
+  list(configural_model, weak_model, strong_model, strict_model),
+  function(m) unname(lavaan::fitMeasures(m, "df")), numeric(1)
+)
+fit_stats$chisq_scaled <- vapply(
+  list(configural_model, weak_model, strong_model, strict_model),
+  function(m) unname(lavaan::fitMeasures(m, "chisq.scaled")), numeric(1)
+)
 fit_stats %>%
   mutate(across(where(is.double), ~ round(.x, 3))) %>%
   as.data.frame() %>%
   knitr::kable(format = "markdown", digits = 3, align = "l")
 ```
 
-| model      | chisq     | npar | aic      | bic      | cfi   | rmsea | srmr  | tli   | converged |
-|:-----------|:----------|:-----|:---------|:---------|:------|:------|:------|:------|:----------|
-| configural | 5201.109  | 87   | 322243.8 | 322821.8 | 0.947 | 0.073 | 0.025 | 0.933 | TRUE      |
-| weak       | 5658.557  | 75   | 322677.3 | 323175.6 | 0.943 | 0.074 | 0.040 | 0.932 | TRUE      |
-| strong     | 5868.491  | 63   | 322863.2 | 323281.8 | 0.940 | 0.073 | 0.045 | 0.934 | TRUE      |
-| strict     | 52364.661 | 49   | 369331.4 | 369656.9 | 0.453 | 0.213 | 0.606 | 0.435 | TRUE      |
+| model | chisq | npar | aic | bic | cfi | rmsea | srmr | tli | converged | df | chisq_scaled |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| configural | 5201.109 | 87 | 322243.8 | 322821.8 | 0.947 | 0.073 | 0.025 | 0.933 | TRUE | 165 | 3284.129 |
+| weak | 5658.557 | 75 | 322677.3 | 323175.6 | 0.943 | 0.074 | 0.040 | 0.932 | TRUE | 177 | 3361.206 |
+| strong | 5868.491 | 63 | 322863.2 | 323281.8 | 0.940 | 0.073 | 0.045 | 0.934 | TRUE | 189 | 3521.518 |
+| strict | 52364.661 | 49 | 369331.4 | 369656.9 | 0.453 | 0.213 | 0.606 | 0.435 | TRUE | 203 | 37115.806 |
 
-### 2.40 invariance parameters to compare
+### 2.36 invariance parameters to compare
 
 ``` r
 model_parameters <- c(
@@ -6725,16 +6472,18 @@ model_parameters <- c(
   "residual.covariances"
 )
 
+# under the ri-clpm parameterisation the loadings are fixed (metric equality
+# is automatic) and the observed residual variances and covariances are fixed
+# to zero, so "strict" and "residual" levels would constrain nothing; the one
+# real constraint beyond the configural model is the structural level with the
+# regressions held equal across groups
 ses_models <- list(
   config = NULL,
-  metric = model_parameters[1],
-  scalar = model_parameters[1:2],
-  strict = model_parameters[1:3],
-  residu = model_parameters
+  equal_regressions = model_parameters[1:2]
 )
 ```
 
-### 2.41 across-SES invariance of the within-person dynamics
+### 2.37 across-SES invariance of the within-person dynamics
 
 ``` r
 # within-wave residual covariances, freed across groups (the error structure is
@@ -6785,27 +6534,24 @@ fit <- lapply(names(ses_models), function(i) {
 })
 ```
 
-    #> ℹ config✔ config [6ms]
-    #> ℹ metric✔ metric [7ms]
-    #> ℹ scalar✔ scalar [4ms]
-    #> ℹ strict✔ strict [4ms]
-    #> ℹ residu✔ residu [4ms]
+    #> ℹ config[K✔ config [5ms][K
+    #> ℹ equal_regressions[K✔ equal_regressions [5ms][K
 
-### 2.42 name the SES invariance fits
+### 2.38 name the SES invariance fits
 
 ``` r
 names(fit) <- names(ses_models)
 ```
 
-### 2.43 across-SES invariance: fit by level and the focal structural test
+### 2.39 across-SES invariance: fit by level and the focal structural test
 
 ``` r
-# robust fit at each constraint level. levels: config (nothing equal), metric
-# (loadings, automatic under unit loadings), scalar (loadings + regressions),
-# strict (+ residuals), residu (+ residual covariances). built from base
-# lavaan::fitMeasures to sidestep the semTools/lavaan version skew.
+# robust fit at each constraint level. levels: config (nothing equal) and
+# equal_regressions (loadings + regressions; the loadings are fixed anyway, so
+# the regressions carry the constraint). built from base lavaan::fitMeasures
+# to sidestep the semTools/lavaan version skew.
 ses_inv_fit <- as.data.frame(t(sapply(
-  fit[c("config", "metric", "scalar", "strict", "residu")],
+  fit[c("config", "equal_regressions")],
   function(m) {
     lavaan::fitMeasures(m, c(
       "npar", "chisq.scaled", "df.scaled",
@@ -6823,10 +6569,7 @@ knitr::kable(
 | level | npar | chisq.scaled | df.scaled | cfi.robust | tli.robust | rmsea.robust | srmr | aic | bic |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | config | 369 | 837.190 | 387 | 0.993 | 0.988 | 0.035 | 0.030 | 317055.2 | 319506.9 |
-| metric | 369 | 837.190 | 387 | 0.993 | 0.988 | 0.035 | 0.030 | 317055.2 | 319506.9 |
-| scalar | 261 | 956.961 | 495 | 0.992 | 0.990 | 0.033 | 0.031 | 317116.7 | 318850.8 |
-| strict | 261 | 956.961 | 495 | 0.992 | 0.990 | 0.033 | 0.031 | 317116.7 | 318850.8 |
-| residu | 261 | 956.961 | 495 | 0.992 | 0.990 | 0.033 | 0.031 | 317116.7 | 318850.8 |
+| equal_regressions | 261 | 956.961 | 495 | 0.992 | 0.990 | 0.033 | 0.031 | 317116.7 | 318850.8 |
 
 across-SES invariance of the within-person dynamics: robust fit by level
 
@@ -6834,7 +6577,7 @@ across-SES invariance of the within-person dynamics: robust fit by level
 # focal cross-group structural test: can the within-person regression paths be
 # held equal across SES (configural vs equal regressions; metric is automatic).
 ses_struct_lrt <- lavaan::lavTestLRT(
-  fit$config, fit$scalar,
+  fit$config, fit$equal_regressions,
   method = "satorra.2000",
   model.names = c("configural", "equal regressions")
 )
@@ -6868,8 +6611,7 @@ cat(sprintf(
 dir.create("tables", showWarnings = FALSE)
 # missing-data accounting under FIML: the effective N actually used by the
 # likelihood, the realised coverage of the analysis variables, and the listwise
-# N it replaces. paste inside the {r tables} chunk, right after
-# dir.create("tables", showWarnings = FALSE) and before the CLPM vs RI-CLPM block.
+# N it replaces.
 analysis_vars <- c(paste0("BMI", 1:7), paste0("PA", 1:7), paste0("FV", 1:7))
 listwise_n <- sum(complete.cases(wide[analysis_vars]))
 
@@ -6892,10 +6634,12 @@ cat(sprintf(
 
 ``` r
 # preliminary: CLPM vs RI-CLPM on an identical lag structure.
-# both models now carry the same autoregressive and cross-lagged paths and
-# differ only in that the RI-CLPM partitions stable between-person variance into
-# random intercepts, so the two are not nested. compare on robust descriptive
-# fit indices and on AIC and BIC, not on a chi-square difference test.
+# the CLPM is nested in the RI-CLPM as the boundary case with the three
+# random-intercept variances (and with them their covariances) fixed to zero;
+# because that constraint sits on the boundary of the parameter space, the
+# scaled chi-square difference test does not follow its nominal distribution
+# (Stoel et al., 2006). compare on robust descriptive fit indices and on AIC
+# and BIC instead.
 fit_msrs <- c("cfi.robust", "tli.robust", "rmsea.robust", "srmr", "aic", "bic")
 
 fit_compare <- function(clpm, riclpm) {
@@ -6975,6 +6719,25 @@ knitr::kable(between, row.names = FALSE, caption = "between-person (co)variances
 | riPA  | riFV  |  0.1089910 | 0.0186913 |  5.831102 | 0.0000000 |
 
 between-person (co)variances
+
+``` r
+# full parameter tables: every estimate with SE, z, p, 95% CI, and standardised
+# values, for the pooled and grouped RI-CLPM, the covariate model, and the
+# pooled CLPM benchmark (the tables the article's supplementary-material
+# statement promises)
+dump_params <- function(fit, file) {
+  pe <- lavaan::parameterEstimates(fit, standardized = TRUE)
+  utils::write.csv(pe, file.path("tables", file), row.names = FALSE)
+  invisible(pe)
+}
+dump_params(all_model_fits$pooled$ri_clpm_pooled_fit, "full_parameters_riclpm_pooled.csv")
+dump_params(all_model_fits$grouped$ri_clpm_grouped_fit, "full_parameters_riclpm_grouped.csv")
+dump_params(all_model_fits$grouped$ri_clpm_grouped_covar_fit, "full_parameters_riclpm_covariates.csv")
+dump_params(all_model_fits$pooled$clpm_pooled_fit, "full_parameters_clpm_pooled.csv")
+cat("full parameter tables written to tables/full_parameters_*.csv\n")
+```
+
+    #> full parameter tables written to tables/full_parameters_*.csv
 
 ``` r
 # path estimates compared across SES groups
@@ -7062,10 +6825,25 @@ if (requireNamespace("report", quietly = TRUE)) {
 list.files("tables")
 ```
 
-    #> [1] "between_person_covariances.csv" "clpm_vs_riclpm_fit_grouped.csv"
-    #> [3] "clpm_vs_riclpm_fit.csv"         "descriptives.html"             
-    #> [5] "ri_clpm_fit_indices.md"         "ri_clpm_fit_parameters.html"   
-    #> [7] "ses_group_estimates.csv"
+    #>  [1] "between_person_covariances.csv"         
+    #>  [2] "clpm_vs_riclpm_fit_grouped.csv"         
+    #>  [3] "clpm_vs_riclpm_fit.csv"                 
+    #>  [4] "descriptives.html"                      
+    #>  [5] "focal_covariance_boot.csv"              
+    #>  [6] "focal_covariance_boot.fingerprint"      
+    #>  [7] "focal_covariance_by_ses.csv"            
+    #>  [8] "full_parameters_clpm_pooled.csv"        
+    #>  [9] "full_parameters_riclpm_covariates.csv"  
+    #> [10] "full_parameters_riclpm_grouped.csv"     
+    #> [11] "full_parameters_riclpm_pooled.csv"      
+    #> [12] "moderation_lrt.csv"                     
+    #> [13] "ri_clpm_fit_indices.md"                 
+    #> [14] "ri_clpm_fit_parameters.html"            
+    #> [15] "riclpm_covariate_effects.csv"           
+    #> [16] "riclpm_dynamics_coefficients_pooled.csv"
+    #> [17] "riclpm_dynamics_coefficients.csv"       
+    #> [18] "ses_group_estimates.csv"                
+    #> [19] "time_invariance_lrt.csv"
 
 ## 4 measurement invariance (interpretation)
 
@@ -7224,10 +7002,7 @@ if (reuse_cache) {
 }
 ```
 
-    #> Running the bootstrap (no cache present, or the fit fingerprint changed).
-
-    #> Warning: lavaan->lavBootstrap():  
-    #>    1 bootstrap runs resulted in nonadmissible solutions.
+    #> Reusing cached bootstrap CIs (fit fingerprint matched).
 
 ``` r
 focal_out <- focal[c("SES", "est.std", "ci.lower", "ci.upper", "boot.lower", "boot.upper", "n_boot")]
@@ -7442,25 +7217,19 @@ ri_clpm_syntax_ti_pooled <- sub(lagged_free, lagged_ti_pooled, ri_clpm_syntax, f
 
 free_fit_ti_pooled <- NULL
 if (grepl("bb*wBMI", ri_clpm_syntax_ti_pooled, fixed = TRUE)) {
+  # scalar labels across groups intentionally impose the cross-group equality
+  # that pools the coefficients; lavaan's advisory warning about single labels
+  # in a multigroup model is expected here and suppressed as such
   free_fit_ti_pooled <- tryCatch(
-    lavaan::lavaan(
+    suppressWarnings(lavaan::lavaan(
       model = ri_clpm_syntax_ti_pooled, fixed.x = FALSE, data = wide, group = "ses",
       group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
       meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
-    ),
+    )),
     error = function(e) NULL
   )
 }
-```
 
-    #> Warning: lavaan->lavParTable():  
-    #>    using a single label per parameter in a multiple group setting implies 
-    #>    imposing equality constraints across all the groups; If this is not 
-    #>    intended, either remove the label(s), or use a vector of labels (one 
-    #>    for each group); See the Multiple groups section in the man page of 
-    #>    model.syntax.
-
-``` r
 if (!is.null(free_fit_ti_pooled) && isTRUE(lavaan::lavInspect(free_fit_ti_pooled, "converged"))) {
   pool <- lavaan::parameterEstimates(free_fit_ti_pooled)
   pool <- pool[pool$op == "~" & pool$label %in% names(lab_map), ]
@@ -7660,7 +7429,121 @@ if (!is.null(covar_fit) && isTRUE(lavaan::lavInspect(covar_fit, "converged"))) {
 covariate effects on the random intercepts by SES group (standardised,
 fixed.x = TRUE)
 
-## 7 session information
+## 7 bmi construction-audit sensitivity
+
+The frozen input’s BMI underwent construction-stage processing
+(unit-error repairs, person-level height smoothing, and rare filling of
+missing inputs); `scripts/05_bmi_construction_audit.R` quantifies this
+against the raw health modules and writes person-wave flags. Here the
+flagged observations (categories `value_changed` and `merged_only`) are
+set missing and the focal models are refit; agreement with the primary
+estimates shows the conclusions do not ride on the corrected values. The
+chunk skips gracefully when the flags file is absent, since creating it
+requires the raw LISS modules.
+
+``` r
+flags_file <- fs::path(liss_data_dir(), "bmi_construction_flags.csv")
+if (!file.exists(flags_file)) {
+  cat("bmi_construction_flags.csv not found; run scripts/05_bmi_construction_audit.R first. skipping.\n")
+} else {
+  fl <- utils::read.csv(flags_file)
+  fl <- fl[fl$category %in% c("value_changed", "merged_only"), ]
+  wide_sens <- wide
+  n_blanked <- 0L
+  for (w in 1:7) {
+    ids_w <- fl$nomem_encr[fl$wavenr == w]
+    hit <- wide_sens$id %in% ids_w
+    n_blanked <- n_blanked + sum(hit & !is.na(wide_sens[[paste0("BMI", w)]]))
+    wide_sens[hit, paste0("BMI", w)] <- NA_real_
+  }
+  cat(sprintf(
+    "blanked %d flagged BMI person-waves (of %d flag rows) in the analysis frame\n",
+    n_blanked, nrow(fl)
+  ))
+
+  sens_pooled <- lavaan::lavaan(
+    model = ri_clpm_syntax, fixed.x = FALSE, data = wide_sens,
+    int.ov.free = TRUE, meanstructure = TRUE,
+    estimator = "MLR", se = "robust", missing = "fiml"
+  )
+  pe_s <- lavaan::parameterEstimates(sens_pooled)
+  bp_s <- pe_s[pe_s$op == "~~" & pe_s$lhs %in% c("riBMI", "riPA", "riFV") &
+    pe_s$rhs %in% c("riBMI", "riPA", "riFV"),
+  c("lhs", "rhs", "est", "se", "z", "pvalue")]
+  utils::write.csv(bp_s, "tables/bmi_sensitivity_between.csv", row.names = FALSE)
+  print(knitr::kable(bp_s,
+    row.names = FALSE, digits = 3,
+    caption = "sensitivity: between-person (co)variances with flagged BMI set missing"
+  ))
+
+  sens_grouped <- lavaan::lavaan(
+    model = ri_clpm_syntax, fixed.x = FALSE, data = wide_sens, group = "ses",
+    group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
+    meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
+  )
+  std_s <- lavaan::standardizedSolution(sens_grouped, level = 0.95)
+  foc_s <- std_s[std_s$op == "~~" &
+    ((std_s$lhs == "riBMI" & std_s$rhs == "riPA") |
+      (std_s$lhs == "riPA" & std_s$rhs == "riBMI")),
+  c("group", "est.std", "se", "ci.lower", "ci.upper", "pvalue")]
+  foc_s$SES <- paste0("ses", foc_s$group)
+  utils::write.csv(foc_s, "tables/bmi_sensitivity_focal_by_ses.csv", row.names = FALSE)
+  print(knitr::kable(foc_s[c("SES", "est.std", "se", "ci.lower", "ci.upper", "pvalue")],
+    row.names = FALSE, digits = 3,
+    caption = "sensitivity: standardised BMI-PA random-intercept covariance by SES"
+  ))
+
+  sens_eq <- lavaan::lavaan(
+    model = sub("riBMI ~~ riPA", "riBMI ~~ c(rc, rc, rc)*riPA", ri_clpm_syntax, fixed = TRUE),
+    data = wide_sens, group = "ses", group.label = c("ses1", "ses2", "ses3"),
+    int.ov.free = TRUE, meanstructure = TRUE,
+    estimator = "MLR", se = "robust", missing = "fiml"
+  )
+  sens_lrt <- lavaan::lavTestLRT(sens_grouped, sens_eq,
+    method = "satorra.2000",
+    model.names = c("riBMI~~riPA free", "riBMI~~riPA equal")
+  )
+  sens_lrt_df <- cbind(model = rownames(sens_lrt), as.data.frame(sens_lrt))
+  utils::write.csv(sens_lrt_df, "tables/bmi_sensitivity_moderation_lrt.csv", row.names = FALSE)
+  print(knitr::kable(sens_lrt_df,
+    row.names = FALSE, digits = 3,
+    caption = "sensitivity: moderation test with flagged BMI set missing"
+  ))
+}
+```
+
+    #> blanked 3969 flagged BMI person-waves (of 4421 flag rows) in the analysis frame
+    #> 
+    #> 
+    #> Table: sensitivity: between-person (co)variances with flagged BMI set missing
+    #> 
+    #> |lhs   |rhs   |    est|    se|      z| pvalue|
+    #> |:-----|:-----|------:|-----:|------:|------:|
+    #> |riBMI |riBMI | 17.324| 0.511| 33.892|  0.000|
+    #> |riPA  |riPA  |  4.168| 0.259| 16.075|  0.000|
+    #> |riFV  |riFV  |  0.269| 0.005| 52.923|  0.000|
+    #> |riBMI |riPA  | -1.131| 0.127| -8.917|  0.000|
+    #> |riBMI |riFV  | -0.046| 0.033| -1.386|  0.166|
+    #> |riPA  |riFV  |  0.108| 0.019|  5.808|  0.000|
+    #> 
+    #> 
+    #> Table: sensitivity: standardised BMI-PA random-intercept covariance by SES
+    #> 
+    #> |SES  | est.std|    se| ci.lower| ci.upper| pvalue|
+    #> |:----|-------:|-----:|--------:|--------:|------:|
+    #> |ses1 |  -0.113| 0.021|   -0.155|   -0.072|      0|
+    #> |ses2 |  -0.130| 0.032|   -0.193|   -0.067|      0|
+    #> |ses3 |  -0.120| 0.024|   -0.167|   -0.073|      0|
+    #> 
+    #> 
+    #> Table: sensitivity: moderation test with flagged BMI set missing
+    #> 
+    #> |model             |  Df|      AIC|      BIC|    Chisq| Chisq diff| Df diff| Pr(>Chisq)|
+    #> |:-----------------|---:|--------:|--------:|--------:|----------:|-------:|----------:|
+    #> |riBMI~~riPA free  | 387| 302474.1| 304925.7| 1094.003|          —|       —|          —|
+    #> |riBMI~~riPA equal | 389| 302470.4| 304908.7| 1094.253|      0.549|       2|       0.76|
+
+## 8 session information
 
 ``` r
 sessionInfo()
@@ -7671,11 +7554,11 @@ sessionInfo()
     #> Running under: macOS Tahoe 26.5.1
     #> 
     #> Matrix products: default
-    #> BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib 
+    #> BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
     #> LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
     #> 
     #> locale:
-    #> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    #> [1] C.UTF-8/UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
     #> 
     #> time zone: Europe/Amsterdam
     #> tzcode source: internal
@@ -7690,37 +7573,35 @@ sessionInfo()
     #> loaded via a namespace (and not attached):
     #>   [1] mnormt_2.1.2        gld_2.6.8           remotes_2.5.0      
     #>   [4] sandwich_3.1-1      readxl_1.4.5        rlang_1.2.0        
-    #>   [7] weasel_0.3.0        multcomp_1.4-29     otel_0.2.0         
+    #>   [7] weasel_0.3.1        multcomp_1.4-29     otel_0.2.0         
     #>  [10] e1071_1.7-17        compiler_4.6.1      systemfonts_1.3.2  
     #>  [13] vctrs_0.7.3         quadprog_1.5-8      pkgconfig_2.0.3    
     #>  [16] fastmap_1.2.0       report_0.6.3        backports_1.5.1    
     #>  [19] labeling_0.4.3      pbivnorm_0.6.0      utf8_1.2.6         
     #>  [22] rmarkdown_2.31      tzdb_0.5.0          haven_2.5.5        
-    #>  [25] lissr_1.2.0         purrr_1.2.2         xfun_0.57          
-    #>  [28] styler_1.11.0       psych_2.6.3         broom_1.0.12       
-    #>  [31] parallel_4.6.1      DescTools_0.99.60   R6_2.6.1           
-    #>  [34] stringi_1.8.7       RColorBrewer_1.1-3  boot_1.3-32        
-    #>  [37] cellranger_1.1.0    estimability_1.5.1  Rcpp_1.1.1-1.1     
-    #>  [40] knitr_1.51          audio_0.1-12        zoo_1.8-15         
-    #>  [43] parameters_0.28.3   R.utils_2.13.0      readr_2.2.0        
-    #>  [46] Matrix_1.7-5        splines_4.6.1       R.cache_0.17.0     
-    #>  [49] tidyselect_1.2.1    rstudioapi_0.18.0   dichromat_2.0-0.1  
-    #>  [52] yaml_2.3.12         codetools_0.2-20    sjlabelled_1.2.0   
-    #>  [55] lattice_0.22-9      tibble_3.3.1        S7_0.2.2           
-    #>  [58] withr_3.0.3         bayestestR_0.17.0   coda_0.19-4.1      
-    #>  [61] evaluate_1.0.5      survival_3.8-6      proxy_0.4-29       
-    #>  [64] xml2_1.6.0          pillar_1.11.1       stats4_4.6.1       
-    #>  [67] insight_1.5.0       generics_0.1.4      rprojroot_2.1.1    
-    #>  [70] ggplot2_4.0.3       hms_1.1.4           scales_1.4.0       
-    #>  [73] rootSolve_1.8.2.4   xtable_1.8-4        class_7.3-23       
-    #>  [76] glue_1.8.1          emmeans_2.0.3       lmom_3.2           
-    #>  [79] tools_4.6.1         data.table_1.18.2.1 beepr_2.0          
-    #>  [82] forcats_1.0.1       Exact_3.3           fs_2.1.0           
-    #>  [85] mvtnorm_1.3-7       grid_4.6.1          tidyr_1.3.2        
-    #>  [88] datawizard_1.3.1    nlme_3.1-169        performance_0.16.0 
-    #>  [91] cli_3.6.6           kableExtra_1.4.0    textshaping_1.0.5  
-    #>  [94] expm_1.0-0          viridisLite_0.4.3   svglite_2.2.2      
-    #>  [97] gtable_0.3.6        R.methodsS3_1.8.2   digest_0.6.39      
-    #> [100] TH.data_1.1-5       farver_2.1.2        htmltools_0.5.9    
-    #> [103] R.oo_1.27.1         lifecycle_1.0.5     httr_1.4.8         
-    #> [106] here_1.0.2          MASS_7.3-65
+    #>  [25] lissr_1.3.2         purrr_1.2.2         xfun_0.57          
+    #>  [28] psych_2.6.3         broom_1.0.12        parallel_4.6.1     
+    #>  [31] DescTools_0.99.60   R6_2.6.1            stringi_1.8.7      
+    #>  [34] RColorBrewer_1.1-3  boot_1.3-32         cellranger_1.1.0   
+    #>  [37] estimability_1.5.1  Rcpp_1.1.1-1.1      knitr_1.51         
+    #>  [40] zoo_1.8-15          parameters_0.28.3   readr_2.2.0        
+    #>  [43] Matrix_1.7-5        splines_4.6.1       tidyselect_1.2.1   
+    #>  [46] rstudioapi_0.18.0   dichromat_2.0-0.1   yaml_2.3.12        
+    #>  [49] codetools_0.2-20    sjlabelled_1.2.0    lattice_0.22-9     
+    #>  [52] tibble_3.3.1        S7_0.2.2            withr_3.0.3        
+    #>  [55] bayestestR_0.17.0   coda_0.19-4.1       evaluate_1.0.5     
+    #>  [58] survival_3.8-6      proxy_0.4-29        xml2_1.6.0         
+    #>  [61] pillar_1.11.1       stats4_4.6.1        insight_1.5.0      
+    #>  [64] generics_0.1.4      rprojroot_2.1.1     hms_1.1.4          
+    #>  [67] ggplot2_4.0.3       scales_1.4.0        rootSolve_1.8.2.4  
+    #>  [70] xtable_1.8-4        class_7.3-23        glue_1.8.1         
+    #>  [73] emmeans_2.0.3       lmom_3.2            tools_4.6.1        
+    #>  [76] data.table_1.18.2.1 forcats_1.0.1       Exact_3.3          
+    #>  [79] fs_2.1.0            mvtnorm_1.3-7       grid_4.6.1         
+    #>  [82] tidyr_1.3.2         datawizard_1.3.1    nlme_3.1-169       
+    #>  [85] performance_0.16.0  cli_3.6.6           kableExtra_1.4.0   
+    #>  [88] textshaping_1.0.5   expm_1.0-0          viridisLite_0.4.3  
+    #>  [91] svglite_2.2.2       gtable_0.3.6        digest_0.6.39      
+    #>  [94] TH.data_1.1-5       farver_2.1.2        htmltools_0.5.9    
+    #>  [97] lifecycle_1.0.5     httr_1.4.8          here_1.0.2         
+    #> [100] MASS_7.3-65

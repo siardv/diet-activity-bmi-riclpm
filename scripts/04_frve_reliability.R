@@ -58,6 +58,15 @@ deterministic <- all(n_rules$n_frve_values == 1)
 cat("\n== (veg, fruit) -> frve mapping ==\n")
 print(as.data.frame(map_tab), row.names = FALSE)
 cat("deterministic mapping:", deterministic, "\n")
+n_anomalous <- sum(map_tab$n) -
+  sum(tapply(map_tab$n, paste(map_tab$veg, map_tab$fruit), max))
+writeLines(
+  sprintf(
+    "deterministic mapping: %s (%d anomalous person-waves of %d)",
+    deterministic, n_anomalous, nrow(j)
+  ),
+  file.path("output", "frve_mapping_deterministic.txt")
+)
 utils::write.csv(map_tab, file.path("output", "frve_mapping.csv"),
   row.names = FALSE
 )
@@ -132,6 +141,16 @@ utils::write.csv(raw_rel$per_wave,
   file.path("output", "frve_reliability_raw.csv"),
   row.names = FALSE
 )
+utils::write.csv(
+  data.frame(
+    pooled_r = raw_rel$pooled_r,
+    pooled_spearman_brown = raw_rel$pooled_sb,
+    sb_min = min(raw_rel$per_wave$spearman_brown),
+    sb_max = max(raw_rel$per_wave$spearman_brown)
+  ),
+  file.path("output", "frve_reliability_pooled.csv"),
+  row.names = FALSE
+)
 
 # 4. oplmet 7-9 count at first observed wave (analysis sample) ----------------
 educ_first <- merged %>%
@@ -143,10 +162,19 @@ cat(sprintf(
   "\nrespondents with oplmet in {7, 8, 9} at first observed wave: %d of %d\n",
   n_other, nrow(educ_first)
 ))
+writeLines(
+  sprintf(
+    "respondents with oplmet in {7, 8, 9} at first observed wave: %d of %d",
+    n_other, nrow(educ_first)
+  ),
+  file.path("output", "educ_other_count.txt")
+)
 
 # 5. baseline correlations and adjacent-wave stabilities (analysis sample) ----
 # raw observed descriptives that back the cross-sectional and stability
 # sentences; pa uses the same 40 h/week plausibility ceiling as the pipeline
+# (cb111), defined here because this script runs standalone
+pa_ceiling <- 40
 foc <- merged %>%
   dplyr::filter(nomem_encr %in% sample_ids, wavenr %in% 1:7) %>%
   dplyr::transmute(
@@ -161,6 +189,10 @@ cat("\n== baseline (wave 1) pearson correlations ==\n")
 print(round(stats::cor(w1[c("bmi", "pa", "fv")],
   use = "pairwise.complete.obs"
 ), 3))
+utils::write.csv(
+  round(stats::cor(w1[c("bmi", "pa", "fv")], use = "pairwise.complete.obs"), 3),
+  file.path("output", "baseline_correlations.csv")
+)
 
 stability <- function(v) {
   r <- vapply(1:6, function(k) {

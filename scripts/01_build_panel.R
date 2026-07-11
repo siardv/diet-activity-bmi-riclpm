@@ -2,9 +2,9 @@
 # provide the merged long panel the analysis reads
 #
 # routes (RHD_BUILD_ROUTE):
-#   historical (default)  the committed liss_merged_long.sav is the canonical,
-#                         audit-pinned analysis input; this route checks it is
-#                         in place
+#   historical (default)  the frozen, author-archived liss_merged_long.sav is
+#                         the canonical, audit-pinned analysis input (sha256 in
+#                         data/CHECKSUMS.txt); this route checks it is in place
 #   provenance            sources scripts/build_liss_merged.R, the preserved
 #                         record of the original construction; runs only
 #                         against the original extract schema (see its header)
@@ -18,12 +18,14 @@ if (route == "historical") {
   merged <- file.path(data_dir, "liss_merged_long.sav")
   if (file.exists(merged)) {
     message("canonical input in place: ", merged)
+    message("verify the copy: (cd ", data_dir, " && shasum -a 256 -c CHECKSUMS.txt)")
     message("optional: scripts/02_select_sample.R runs the standalone selection audit in minutes")
     message("then scripts/03_run_analysis.R renders the full analysis")
   } else {
     stop(
       "liss_merged_long.sav not found in ", data_dir, "\n",
-      "  copy the committed file there; it is the canonical analysis input.\n",
+      "  place a copy of the frozen file there; it is the canonical analysis\n",
+      "  input (author-archived, never committed; sha256 in data/CHECKSUMS.txt).\n",
       "  regenerating it from the current extracts is out of scope by design:\n",
       "  scripts/build_liss_merged.R is a preserved construction record that\n",
       "  targets the original extract schema (see its header). holders of the\n",
@@ -54,7 +56,9 @@ if (route == "historical") {
   saveRDS(panel, file.path("output", "ch_cs_panel.rds"))
 
   # note: the published analysis consumed the archived extracts, in which the
-  # fruit-and-vegetable composite (frve) and bmi were already derived; deriving
-  # them from the raw items is documented in vignette 02 and must be validated
-  # against the extract before substitution
+  # fruit-and-vegetable composite (frve) was already derived; deriving it from
+  # the raw items is documented in vignette 02 and must be validated against
+  # the extract before substitution. bmi is derived (and cleaned) inside the
+  # preserved construction record, not in the extracts; see
+  # scripts/05_bmi_construction_audit.R for the audit of that step.
 }

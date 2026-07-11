@@ -15,7 +15,14 @@ knitr::opts_chunk$set(
   comment = "#>", fig.path = "run_all_files/figure-gfm/"
 )
 library(magrittr) # %>%, %<>%, %$%
-invisible(lapply(list.files("R", pattern = "[.][Rr]$", full.names = TRUE), source))
+# source the compendium helpers robustly: knitr evaluates this document with
+# the working directory set to analysis/, so R/ sits one level up. fail loudly
+# rather than degrading to whatever helper definitions the calling session
+# happens to carry.
+helper_dir <- if (dir.exists("R")) "R" else file.path("..", "R")
+helper_files <- list.files(helper_dir, pattern = "[.][Rr]$", full.names = TRUE)
+stopifnot(length(helper_files) > 0)
+invisible(lapply(helper_files, source))
 
 # pull the validated chunks out of reciprocal-health-dynamics.R by their
 # "# ---- cb<id> ----" headers, in the order they should run.
@@ -28,7 +35,7 @@ chunk <- function(id) {
   src[(hdr[k] + 1L):(bounds[k + 1L] - 1L)]
 }
 run_ids <- c(
-  51:57, 106:111, 112:115, 117, 119, 122, 124,
+  51:57, 107, 111, 112:115, 117, 119, 122, 124,
   125, 135, 137, 146, 148, 157, 167, 169, 178, 180, 189,
   194:197, 206:208, 213, 224:226
 )
@@ -42,12 +49,13 @@ data_dir <- liss_data_dir()
 # seed the long frame from the merged backbone.
 liss <- read_liss("liss_merged_long.sav", data_dir = data_dir)
 
-# data provenance: birth times of the merged backbone and the source extracts it
-# was assembled from. fall back to modification time on volumes that do not
-# record a birth time; missing files surface as NA age.
+# data provenance: file times of the merged backbone and the four source
+# extracts it was assembled from. on archived copies these record the copy,
+# not the original construction; the authoritative pin for the frozen inputs
+# is data/CHECKSUMS.txt.
 sav_files <- c(
   "liss_merged_long.sav", "liss_health.sav", "liss_sport.sav",
-  "liss_income.sav", "liss_background.sav", "liss_personality.sav"
+  "liss_income.sav", "liss_background.sav"
 )
 fs::file_info(fs::path(data_dir, sav_files)) %>%
   dplyr::transmute(
@@ -93,8 +101,7 @@ cat(sprintf(
 dir.create("tables", showWarnings = FALSE)
 # missing-data accounting under FIML: the effective N actually used by the
 # likelihood, the realised coverage of the analysis variables, and the listwise
-# N it replaces. paste inside the {r tables} chunk, right after
-# dir.create("tables", showWarnings = FALSE) and before the CLPM vs RI-CLPM block.
+# N it replaces.
 analysis_vars <- c(paste0("BMI", 1:7), paste0("PA", 1:7), paste0("FV", 1:7))
 listwise_n <- sum(complete.cases(wide[analysis_vars]))
 
@@ -112,10 +119,12 @@ cat(sprintf(
 ))
 
 # preliminary: CLPM vs RI-CLPM on an identical lag structure.
-# both models now carry the same autoregressive and cross-lagged paths and
-# differ only in that the RI-CLPM partitions stable between-person variance into
-# random intercepts, so the two are not nested. compare on robust descriptive
-# fit indices and on AIC and BIC, not on a chi-square difference test.
+# the CLPM is nested in the RI-CLPM as the boundary case with the three
+# random-intercept variances (and with them their covariances) fixed to zero;
+# because that constraint sits on the boundary of the parameter space, the
+# scaled chi-square difference test does not follow its nominal distribution
+# (Stoel et al., 2006). compare on robust descriptive fit indices and on AIC
+# and BIC instead.
 fit_msrs <- c("cfi.robust", "tli.robust", "rmsea.robust", "srmr", "aic", "bic")
 
 fit_compare <- function(clpm, riclpm) {
@@ -163,6 +172,21 @@ between <- ppe[
 ]
 utils::write.csv(between, "tables/between_person_covariances.csv", row.names = FALSE)
 knitr::kable(between, row.names = FALSE, caption = "between-person (co)variances")
+
+# full parameter tables: every estimate with SE, z, p, 95% CI, and standardised
+# values, for the pooled and grouped RI-CLPM, the covariate model, and the
+# pooled CLPM benchmark (the tables the article's supplementary-material
+# statement promises)
+dump_params <- function(fit, file) {
+  pe <- lavaan::parameterEstimates(fit, standardized = TRUE)
+  utils::write.csv(pe, file.path("tables", file), row.names = FALSE)
+  invisible(pe)
+}
+dump_params(all_model_fits$pooled$ri_clpm_pooled_fit, "full_parameters_riclpm_pooled.csv")
+dump_params(all_model_fits$grouped$ri_clpm_grouped_fit, "full_parameters_riclpm_grouped.csv")
+dump_params(all_model_fits$grouped$ri_clpm_grouped_covar_fit, "full_parameters_riclpm_covariates.csv")
+dump_params(all_model_fits$pooled$clpm_pooled_fit, "full_parameters_clpm_pooled.csv")
+cat("full parameter tables written to tables/full_parameters_*.csv\n")
 
 # path estimates compared across SES groups
 ses_estimates <- compare_ses_groups(
@@ -470,12 +494,15 @@ ri_clpm_syntax_ti_pooled <- sub(lagged_free, lagged_ti_pooled, ri_clpm_syntax, f
 
 free_fit_ti_pooled <- NULL
 if (grepl("bb*wBMI", ri_clpm_syntax_ti_pooled, fixed = TRUE)) {
+  # scalar labels across groups intentionally impose the cross-group equality
+  # that pools the coefficients; lavaan's advisory warning about single labels
+  # in a multigroup model is expected here and suppressed as such
   free_fit_ti_pooled <- tryCatch(
-    lavaan::lavaan(
+    suppressWarnings(lavaan::lavaan(
       model = ri_clpm_syntax_ti_pooled, fixed.x = FALSE, data = wide, group = "ses",
       group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
       meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
-    ),
+    )),
     error = function(e) NULL
   )
 }
@@ -614,7 +641,89 @@ if (!is.null(covar_fit) && isTRUE(lavaan::lavInspect(covar_fit, "converged"))) {
 }
 ```
 
-## 7 session information
+## 7 bmi construction-audit sensitivity
+
+The frozen input's BMI underwent construction-stage processing (unit-error
+repairs, person-level height smoothing, and rare filling of missing inputs);
+`scripts/05_bmi_construction_audit.R` quantifies this against the raw health
+modules and writes person-wave flags. Here the flagged observations (categories
+`value_changed` and `merged_only`) are set missing and the focal models are
+refit; agreement with the primary estimates shows the conclusions do not ride
+on the corrected values. The chunk skips gracefully when the flags file is
+absent, since creating it requires the raw LISS modules.
+
+```{r bmi-sensitivity}
+flags_file <- fs::path(liss_data_dir(), "bmi_construction_flags.csv")
+if (!file.exists(flags_file)) {
+  cat("bmi_construction_flags.csv not found; run scripts/05_bmi_construction_audit.R first. skipping.\n")
+} else {
+  fl <- utils::read.csv(flags_file)
+  fl <- fl[fl$category %in% c("value_changed", "merged_only"), ]
+  wide_sens <- wide
+  n_blanked <- 0L
+  for (w in 1:7) {
+    ids_w <- fl$nomem_encr[fl$wavenr == w]
+    hit <- wide_sens$id %in% ids_w
+    n_blanked <- n_blanked + sum(hit & !is.na(wide_sens[[paste0("BMI", w)]]))
+    wide_sens[hit, paste0("BMI", w)] <- NA_real_
+  }
+  cat(sprintf(
+    "blanked %d flagged BMI person-waves (of %d flag rows) in the analysis frame\n",
+    n_blanked, nrow(fl)
+  ))
+
+  sens_pooled <- lavaan::lavaan(
+    model = ri_clpm_syntax, fixed.x = FALSE, data = wide_sens,
+    int.ov.free = TRUE, meanstructure = TRUE,
+    estimator = "MLR", se = "robust", missing = "fiml"
+  )
+  pe_s <- lavaan::parameterEstimates(sens_pooled)
+  bp_s <- pe_s[pe_s$op == "~~" & pe_s$lhs %in% c("riBMI", "riPA", "riFV") &
+    pe_s$rhs %in% c("riBMI", "riPA", "riFV"),
+  c("lhs", "rhs", "est", "se", "z", "pvalue")]
+  utils::write.csv(bp_s, "tables/bmi_sensitivity_between.csv", row.names = FALSE)
+  print(knitr::kable(bp_s,
+    row.names = FALSE, digits = 3,
+    caption = "sensitivity: between-person (co)variances with flagged BMI set missing"
+  ))
+
+  sens_grouped <- lavaan::lavaan(
+    model = ri_clpm_syntax, fixed.x = FALSE, data = wide_sens, group = "ses",
+    group.label = c("ses1", "ses2", "ses3"), int.ov.free = TRUE,
+    meanstructure = TRUE, estimator = "MLR", se = "robust", missing = "fiml"
+  )
+  std_s <- lavaan::standardizedSolution(sens_grouped, level = 0.95)
+  foc_s <- std_s[std_s$op == "~~" &
+    ((std_s$lhs == "riBMI" & std_s$rhs == "riPA") |
+      (std_s$lhs == "riPA" & std_s$rhs == "riBMI")),
+  c("group", "est.std", "se", "ci.lower", "ci.upper", "pvalue")]
+  foc_s$SES <- paste0("ses", foc_s$group)
+  utils::write.csv(foc_s, "tables/bmi_sensitivity_focal_by_ses.csv", row.names = FALSE)
+  print(knitr::kable(foc_s[c("SES", "est.std", "se", "ci.lower", "ci.upper", "pvalue")],
+    row.names = FALSE, digits = 3,
+    caption = "sensitivity: standardised BMI-PA random-intercept covariance by SES"
+  ))
+
+  sens_eq <- lavaan::lavaan(
+    model = sub("riBMI ~~ riPA", "riBMI ~~ c(rc, rc, rc)*riPA", ri_clpm_syntax, fixed = TRUE),
+    data = wide_sens, group = "ses", group.label = c("ses1", "ses2", "ses3"),
+    int.ov.free = TRUE, meanstructure = TRUE,
+    estimator = "MLR", se = "robust", missing = "fiml"
+  )
+  sens_lrt <- lavaan::lavTestLRT(sens_grouped, sens_eq,
+    method = "satorra.2000",
+    model.names = c("riBMI~~riPA free", "riBMI~~riPA equal")
+  )
+  sens_lrt_df <- cbind(model = rownames(sens_lrt), as.data.frame(sens_lrt))
+  utils::write.csv(sens_lrt_df, "tables/bmi_sensitivity_moderation_lrt.csv", row.names = FALSE)
+  print(knitr::kable(sens_lrt_df,
+    row.names = FALSE, digits = 3,
+    caption = "sensitivity: moderation test with flagged BMI set missing"
+  ))
+}
+```
+
+## 8 session information
 
 ```{r session-info}
 sessionInfo()

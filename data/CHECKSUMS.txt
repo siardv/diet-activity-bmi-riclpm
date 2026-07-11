@@ -1,0 +1,13 @@
+# sha256 checksums of the frozen analysis inputs (recorded 2026-07-11).
+# these five files are author-archived and never committed (LISS licence);
+# verify a copy from the compendium root with:
+#   (cd data && shasum -a 256 -c CHECKSUMS.txt)
+# byte sizes, for a quick pre-check with ls -lL:
+#   liss_merged_long.sav 18067297 · liss_health.sav 49708035 ·
+#   liss_sport.sav 101140730 · liss_income.sav 4147870 ·
+#   liss_background.sav 50873987
+0b8ad0a918eeeed07810ad7888005341ead178624caf8e12b017aa1d80a84f38  liss_merged_long.sav
+525eda7940e7fd0b281237b26c24c59d2dc6224123522bb48b52245e59d5db0c  liss_health.sav
+24ed30cd8f095bde41525fab30f7c3748b6eed621da61936809c81fa46e9006e  liss_sport.sav
+baaf9ed8302f24a7f1d51794adfded7a8f9a17a41e9957f4d3056ed5dfee3eed  liss_income.sav
+14b516c479d160d02dabb4df693db9df63ad82c8dd7a4214bc7b056d99d6a19b  liss_background.sav

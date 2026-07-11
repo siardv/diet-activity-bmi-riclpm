@@ -1,0 +1,1 @@
+deterministic mapping: FALSE (9 anomalous person-waves of 34723)

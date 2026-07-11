@@ -31,4 +31,17 @@ if (!rmarkdown::pandoc_available()) {
   stop("pandoc not found: install pandoc or render run_all.Rmd inside RStudio")
 }
 rmarkdown::render("run_all.Rmd", envir = new.env(), quiet = TRUE)
+
+# the transcript records chunk errors and keeps going by design, so a broken
+# render can still return; verify that the render actually rewrote its result
+# tables within the last few minutes and fail hard otherwise
+out_tab <- file.path("tables", "clpm_vs_riclpm_fit.csv")
+if (!file.exists(out_tab) ||
+  difftime(Sys.time(), file.mtime(out_tab), units = "mins") > 10) {
+  stop(
+    "render finished without rewriting tables/: ",
+    "inspect run_all.md for captured chunk errors",
+    call. = FALSE
+  )
+}
 cat("wrote run_all.md and figures under run_all_files/\n")
