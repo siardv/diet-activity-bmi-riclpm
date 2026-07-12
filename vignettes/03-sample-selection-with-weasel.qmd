@@ -33,7 +33,7 @@ ws_plan <- weasel::weasel_plan(
     require_endpoints = FALSE,
     max_missing = 4L,
     n_gap_max = 5L,
-    max_gap_max = 5L
+    max_gap_len = 5L
   )
 )
 analysis_ids <- unique(weasel::weasel_apply(ws_plan, "min3_of7")$id)
@@ -52,7 +52,7 @@ Three diagnostics turn the rule from a stipulation into an argued choice.
 weasel::weasel_sensitivity(
   ws_plan,
   require_endpoints = FALSE, max_missing = 0:6,
-  n_gap_max = 5L, max_gap_max = 5L
+  n_gap_max = 5L, max_gap_len = 5L
 )
 ```
 
@@ -87,7 +87,7 @@ d <- do.call(rbind, lapply(1:400, function(i) {
 
 sc <- data.frame(
   scenario = "min3_of7", require_endpoints = FALSE,
-  max_missing = 4L, n_gap_max = 5L, max_gap_max = 5L
+  max_missing = 4L, n_gap_max = 5L, max_gap_len = 5L
 )
 p <- weasel::weasel_plan(d, id = "id", wave = "t", span = "full", scenarios = sc)
 p
@@ -97,7 +97,7 @@ p
 #| eval: !expr requireNamespace("weasel", quietly = TRUE)
 weasel::weasel_print_table(
   weasel::weasel_sensitivity(p, require_endpoints = FALSE, max_missing = 0:6,
-                             n_gap_max = 5L, max_gap_max = 5L),
+                             n_gap_max = 5L, max_gap_len = 5L),
   title = "sample size by minimum-wave tolerance"
 )
 weasel::weasel_print_table(
@@ -120,11 +120,11 @@ The final `identical()` is the same equivalence the pipeline asserts on the real
 
 ## Interactive exploration
 
-Before committing to any rule, the scope pipeline maps the participation landscape:
+Before committing to any rule, the scope pipeline maps the participation landscape. Since weasel 0.4.0 the scope shares the plan vocabulary (`max_gap_len`, `min_present`) and shows every respondent by default (`min_present = 1`); the call below pins the pre-0.4 exploration threshold of three observed waves explicitly:
 
 ```{r}
 #| eval: false
-weasel::set_weasel_scope(presence, "id", "t", gap = 1)
+weasel::set_weasel_scope(presence, "id", "t", max_gap_len = 1, min_present = 3)
 weasel::evaluate_weasel_scope()
 weasel::weasel_summarize_waves()
 weasel::weasel_print_table(weasel::weasel_filter_wave_summary(), n = 10)

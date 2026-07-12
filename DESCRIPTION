@@ -30,10 +30,10 @@ Imports:
     purrr,
     rlang,
     rmarkdown,
-    weasel (>= 0.3.0),
-    lissr (>= 1.2.0)
+    weasel (>= 0.4.0),
+    lissr (>= 1.4.0)
 Remotes:
-    siardv/lissr,
-    siardv/weasel
+    siardv/lissr@v1.4.0,
+    siardv/weasel@v0.4.0
 Encoding: UTF-8
 URL: https://github.com/siardv/lissr, https://github.com/siardv/weasel

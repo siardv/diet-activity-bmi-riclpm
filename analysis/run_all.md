@@ -102,11 +102,11 @@ fs::file_info(fs::path(data_dir, sav_files)) %>%
     #> # A tibble: 5 × 4
     #>   file                 time_source created             age_days
     #>   <chr>                <chr>       <dttm>                 <dbl>
-    #> 1 liss_background.sav  birth       2026-07-07 23:13:43        4
-    #> 2 liss_health.sav      birth       2026-07-07 23:13:43        4
-    #> 3 liss_income.sav      birth       2026-07-07 23:13:43        4
-    #> 4 liss_merged_long.sav birth       2026-07-07 23:13:43        4
-    #> 5 liss_sport.sav       birth       2026-07-07 23:13:43        4
+    #> 1 liss_background.sav  birth       2026-07-07 23:13:43        5
+    #> 2 liss_health.sav      birth       2026-07-07 23:13:43        5
+    #> 3 liss_income.sav      birth       2026-07-07 23:13:43        5
+    #> 4 liss_merged_long.sav birth       2026-07-07 23:13:43        5
+    #> 5 liss_sport.sav       birth       2026-07-07 23:13:43        5
 
 ## 2 analysis steps
 
@@ -124,7 +124,12 @@ if (requireNamespace("lissr", quietly = TRUE)) {
     liss$nethh, liss$aantalhh, liss$aantalki, verbose = FALSE
   )
   ok <- is.finite(liss$stand_inc) & is.finite(eq)
-  stopifnot(isTRUE(all.equal(liss$stand_inc[ok], eq[ok])))
+  stopifnot(
+    isTRUE(all.equal(liss$stand_inc[ok], eq[ok])),
+    all(which(is.finite(liss$stand_inc) & !is.finite(eq)) %in%
+          which(liss$aantalhh < 1 | liss$aantalki < 0 |
+                  (liss$aantalhh - liss$aantalki) < 1))
+  )
 }
 ```
 
@@ -3936,7 +3941,7 @@ ws_plan <- weasel::weasel_plan(
     require_endpoints = FALSE,
     max_missing = length(analysis_waves) - min_waves,
     n_gap_max = 5L,
-    max_gap_max = 5L
+    max_gap_len = 5L
   )
 )
 ```
@@ -3952,15 +3957,15 @@ weasel::weasel_print_table(
   weasel::weasel_sensitivity(
     ws_plan,
     require_endpoints = FALSE, max_missing = 0:6,
-    n_gap_max = 5L, max_gap_max = 5L
+    n_gap_max = 5L, max_gap_len = 5L
   ),
   title = "sample size by minimum-wave tolerance"
 )
 ```
 
-    #> ── sample size by minimum-wave tolerance ─────────────────────────────────────────────────
+    #> ── sample size by minimum-wave tolerance ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-    #>  require_endpoints max_missing n_gap_max max_gap_max n_ids prop_ids
+    #>  require_endpoints max_missing n_gap_max max_gap_len n_ids prop_ids
     #>              FALSE           0         5           5  2396    0.330
     #>              FALSE           1         5           5  3250    0.448
     #>              FALSE           2         5           5  4222    0.582
@@ -3984,7 +3989,7 @@ weasel::weasel_print_table(
 )
 ```
 
-    #> ── retained vs excluded respondents ──────────────────────────────────────────────────────
+    #> ── retained vs excluded respondents ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
     #>  variable n_retained n_excluded mean_retained mean_excluded   diff    smd
     #>       age       5676       1574        46.208        42.358  3.850  0.217
@@ -3998,7 +4003,7 @@ weasel::weasel_print_table(
 cat(weasel::weasel_justify_subset(ws_plan, "min3_of7"), "\n")
 ```
 
-    #> To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 5676 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. In the resulting subset, mean within-window coverage was 0.802, endpoint coverage was 0.508. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.
+    #> To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 5676 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. The planning population comprised 7250 respondent(s) observed at least once within the analysis window, out of 7250 distinct respondent(s) in the supplied data; retention figures are relative to this in-window population. In the resulting subset, mean within-window coverage was 0.802, endpoint coverage was 0.508. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.
 
 ### 2.11 reshape long to wide, one row per respondent
 
@@ -6534,7 +6539,7 @@ fit <- lapply(names(ses_models), function(i) {
 })
 ```
 
-    #> ℹ config[K✔ config [5ms][K
+    #> ℹ config[K✔ config [4ms][K
     #> ℹ equal_regressions[K✔ equal_regressions [5ms][K
 
 ### 2.38 name the SES invariance fits
@@ -6826,24 +6831,27 @@ list.files("tables")
 ```
 
     #>  [1] "between_person_covariances.csv"         
-    #>  [2] "clpm_vs_riclpm_fit_grouped.csv"         
-    #>  [3] "clpm_vs_riclpm_fit.csv"                 
-    #>  [4] "descriptives.html"                      
-    #>  [5] "focal_covariance_boot.csv"              
-    #>  [6] "focal_covariance_boot.fingerprint"      
-    #>  [7] "focal_covariance_by_ses.csv"            
-    #>  [8] "full_parameters_clpm_pooled.csv"        
-    #>  [9] "full_parameters_riclpm_covariates.csv"  
-    #> [10] "full_parameters_riclpm_grouped.csv"     
-    #> [11] "full_parameters_riclpm_pooled.csv"      
-    #> [12] "moderation_lrt.csv"                     
-    #> [13] "ri_clpm_fit_indices.md"                 
-    #> [14] "ri_clpm_fit_parameters.html"            
-    #> [15] "riclpm_covariate_effects.csv"           
-    #> [16] "riclpm_dynamics_coefficients_pooled.csv"
-    #> [17] "riclpm_dynamics_coefficients.csv"       
-    #> [18] "ses_group_estimates.csv"                
-    #> [19] "time_invariance_lrt.csv"
+    #>  [2] "bmi_sensitivity_between.csv"            
+    #>  [3] "bmi_sensitivity_focal_by_ses.csv"       
+    #>  [4] "bmi_sensitivity_moderation_lrt.csv"     
+    #>  [5] "clpm_vs_riclpm_fit_grouped.csv"         
+    #>  [6] "clpm_vs_riclpm_fit.csv"                 
+    #>  [7] "descriptives.html"                      
+    #>  [8] "focal_covariance_boot.csv"              
+    #>  [9] "focal_covariance_boot.fingerprint"      
+    #> [10] "focal_covariance_by_ses.csv"            
+    #> [11] "full_parameters_clpm_pooled.csv"        
+    #> [12] "full_parameters_riclpm_covariates.csv"  
+    #> [13] "full_parameters_riclpm_grouped.csv"     
+    #> [14] "full_parameters_riclpm_pooled.csv"      
+    #> [15] "moderation_lrt.csv"                     
+    #> [16] "ri_clpm_fit_indices.md"                 
+    #> [17] "ri_clpm_fit_parameters.html"            
+    #> [18] "riclpm_covariate_effects.csv"           
+    #> [19] "riclpm_dynamics_coefficients_pooled.csv"
+    #> [20] "riclpm_dynamics_coefficients.csv"       
+    #> [21] "ses_group_estimates.csv"                
+    #> [22] "time_invariance_lrt.csv"
 
 ## 4 measurement invariance (interpretation)
 
@@ -7573,13 +7581,13 @@ sessionInfo()
     #> loaded via a namespace (and not attached):
     #>   [1] mnormt_2.1.2        gld_2.6.8           remotes_2.5.0      
     #>   [4] sandwich_3.1-1      readxl_1.4.5        rlang_1.2.0        
-    #>   [7] weasel_0.3.1        multcomp_1.4-29     otel_0.2.0         
+    #>   [7] weasel_0.4.0        multcomp_1.4-29     otel_0.2.0         
     #>  [10] e1071_1.7-17        compiler_4.6.1      systemfonts_1.3.2  
     #>  [13] vctrs_0.7.3         quadprog_1.5-8      pkgconfig_2.0.3    
     #>  [16] fastmap_1.2.0       report_0.6.3        backports_1.5.1    
     #>  [19] labeling_0.4.3      pbivnorm_0.6.0      utf8_1.2.6         
     #>  [22] rmarkdown_2.31      tzdb_0.5.0          haven_2.5.5        
-    #>  [25] lissr_1.3.2         purrr_1.2.2         xfun_0.57          
+    #>  [25] lissr_1.4.0         purrr_1.2.2         xfun_0.57          
     #>  [28] psych_2.6.3         broom_1.0.12        parallel_4.6.1     
     #>  [31] DescTools_0.99.60   R6_2.6.1            stringi_1.8.7      
     #>  [34] RColorBrewer_1.1-3  boot_1.3-32         cellranger_1.1.0   

@@ -18,7 +18,12 @@ if (requireNamespace("lissr", quietly = TRUE)) {
     liss$nethh, liss$aantalhh, liss$aantalki, verbose = FALSE
   )
   ok <- is.finite(liss$stand_inc) & is.finite(eq)
-  stopifnot(isTRUE(all.equal(liss$stand_inc[ok], eq[ok])))
+  stopifnot(
+    isTRUE(all.equal(liss$stand_inc[ok], eq[ok])),
+    all(which(is.finite(liss$stand_inc) & !is.finite(eq)) %in%
+          which(liss$aantalhh < 1 | liss$aantalki < 0 |
+                  (liss$aantalhh - liss$aantalki) < 1))
+  )
 }
 
 # ---- cb52 ---- per-wave modal income
@@ -411,7 +416,7 @@ ws_plan <- weasel::weasel_plan(
     require_endpoints = FALSE,
     max_missing = length(analysis_waves) - min_waves,
     n_gap_max = 5L,
-    max_gap_max = 5L
+    max_gap_len = 5L
   )
 )
 stopifnot(setequal(
@@ -422,7 +427,7 @@ weasel::weasel_print_table(
   weasel::weasel_sensitivity(
     ws_plan,
     require_endpoints = FALSE, max_missing = 0:6,
-    n_gap_max = 5L, max_gap_max = 5L
+    n_gap_max = 5L, max_gap_len = 5L
   ),
   title = "sample size by minimum-wave tolerance"
 )

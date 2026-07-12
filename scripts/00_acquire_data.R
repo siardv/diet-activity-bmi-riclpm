@@ -18,8 +18,9 @@ print(lissr::liss_wave_matrix())
 #   yields ch07a to ch13g and cs08a to cs14g, whereas 7:13 would fetch
 #   2013 to 2020)
 #   file types: spss (.sav), optionally the english codebooks
-# note: confirming an empty selection returns NULL, and liss_download(NULL)
-# offers the entire archive; cancel and reselect instead
+# note: confirming an empty selection returns NULL; since lissr 1.4.0 a NULL
+# selection asks before offering the full archive (default no) and aborts in
+# non-interactive sessions; cancel and reselect instead
 selection <- lissr::liss_select()
 
 lissr::liss_download(selection, .dir = "data")

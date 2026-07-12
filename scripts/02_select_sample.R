@@ -37,7 +37,7 @@ ws_plan <- weasel::weasel_plan(
     require_endpoints = FALSE,
     max_missing = length(analysis_waves) - min_waves,
     n_gap_max = 5L,
-    max_gap_max = 5L
+    max_gap_len = 5L
   )
 )
 print(ws_plan)
@@ -46,7 +46,7 @@ weasel::weasel_print_table(
   weasel::weasel_sensitivity(
     ws_plan,
     require_endpoints = FALSE, max_missing = 0:6,
-    n_gap_max = 5L, max_gap_max = 5L
+    n_gap_max = 5L, max_gap_len = 5L
   ),
   title = "sample size by minimum-wave tolerance"
 )
