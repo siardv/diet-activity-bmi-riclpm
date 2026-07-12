@@ -341,11 +341,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>#&gt; # A tibble: 5 × 4
 #&gt;   file                 time_source created             age_days
 #&gt;   &lt;chr&gt;                &lt;chr&gt;       &lt;dttm&gt;                 &lt;dbl&gt;
-#&gt; 1 liss_background.sav  birth       2026-07-07 23:13:43        4
-#&gt; 2 liss_health.sav      birth       2026-07-07 23:13:43        4
-#&gt; 3 liss_income.sav      birth       2026-07-07 23:13:43        4
-#&gt; 4 liss_merged_long.sav birth       2026-07-07 23:13:43        4
-#&gt; 5 liss_sport.sav       birth       2026-07-07 23:13:43        4</code></pre>
+#&gt; 1 liss_background.sav  birth       2026-07-07 23:13:43        5
+#&gt; 2 liss_health.sav      birth       2026-07-07 23:13:43        5
+#&gt; 3 liss_income.sav      birth       2026-07-07 23:13:43        5
+#&gt; 4 liss_merged_long.sav birth       2026-07-07 23:13:43        5
+#&gt; 5 liss_sport.sav       birth       2026-07-07 23:13:43        5</code></pre>
 </section>
 <section id="analysis-steps" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-steps">2 analysis steps</h2>
@@ -362,8 +362,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    liss<span class="sc">$</span>nethh, liss<span class="sc">$</span>aantalhh, liss<span class="sc">$</span>aantalki, <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ok <span class="ot">&lt;-</span> <span class="fu">is.finite</span>(liss<span class="sc">$</span>stand_inc) <span class="sc">&amp;</span> <span class="fu">is.finite</span>(eq)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">isTRUE</span>(<span class="fu">all.equal</span>(liss<span class="sc">$</span>stand_inc[ok], eq[ok])))</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">isTRUE</span>(<span class="fu">all.equal</span>(liss<span class="sc">$</span>stand_inc[ok], eq[ok])),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">all</span>(<span class="fu">which</span>(<span class="fu">is.finite</span>(liss<span class="sc">$</span>stand_inc) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.finite</span>(eq)) <span class="sc">%in%</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">which</span>(liss<span class="sc">$</span>aantalhh <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">|</span> liss<span class="sc">$</span>aantalki <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">|</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                  (liss<span class="sc">$</span>aantalhh <span class="sc">-</span> liss<span class="sc">$</span>aantalki) <span class="sc">&lt;</span> <span class="dv">1</span>))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="per-wave-modal-income" class="level3">
 <h3 class="anchored" data-anchor-id="per-wave-modal-income">2.2 per-wave modal income</h3>
@@ -2668,7 +2673,7 @@ age
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">require_endpoints =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_missing =</span> <span class="fu">length</span>(analysis_waves) <span class="sc">-</span> min_waves,</span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gap_max =</span> <span class="dv">5</span>L,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_gap_max =</span> <span class="dv">5</span>L</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_gap_len =</span> <span class="dv">5</span>L</span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>#&gt; ✔ plan ready: span 1:7 (full, L = 7)</code></pre>
@@ -2680,13 +2685,13 @@ age
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  weasel<span class="sc">::</span><span class="fu">weasel_sensitivity</span>(</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    ws_plan,</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">require_endpoints =</span> <span class="cn">FALSE</span>, <span class="at">max_missing =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_max =</span> <span class="dv">5</span>L</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_len =</span> <span class="dv">5</span>L</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"sample size by minimum-wave tolerance"</span></span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>#&gt; ── sample size by minimum-wave tolerance ─────────────────────────────────────────────────
+<pre><code>#&gt; ── sample size by minimum-wave tolerance ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-#&gt;  require_endpoints max_missing n_gap_max max_gap_max n_ids prop_ids
+#&gt;  require_endpoints max_missing n_gap_max max_gap_len n_ids prop_ids
 #&gt;              FALSE           0         5           5  2396    0.330
 #&gt;              FALSE           1         5           5  3250    0.448
 #&gt;              FALSE           2         5           5  4222    0.582
@@ -2706,7 +2711,7 @@ age
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  weasel<span class="sc">::</span><span class="fu">weasel_selectivity</span>(ws_plan, <span class="st">"min3_of7"</span>),</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"retained vs excluded respondents"</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>#&gt; ── retained vs excluded respondents ──────────────────────────────────────────────────────
+<pre><code>#&gt; ── retained vs excluded respondents ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 #&gt;  variable n_retained n_excluded mean_retained mean_excluded   diff    smd
 #&gt;       age       5676       1574        46.208        42.358  3.850  0.217
@@ -2716,7 +2721,7 @@ age
 #&gt;    female       5676       1574         0.532         0.539 -0.007 -0.014
 #&gt;        pa       5675       1572         2.249         2.283 -0.034 -0.011</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(weasel<span class="sc">::</span><span class="fu">weasel_justify_subset</span>(ws_plan, <span class="st">"min3_of7"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>#&gt; To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 5676 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. In the resulting subset, mean within-window coverage was 0.802, endpoint coverage was 0.508. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.</code></pre>
+<pre><code>#&gt; To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 5676 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. The planning population comprised 7250 respondent(s) observed at least once within the analysis window, out of 7250 distinct respondent(s) in the supplied data; retention figures are relative to this in-window population. In the resulting subset, mean within-window coverage was 0.802, endpoint coverage was 0.508. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.</code></pre>
 </section>
 <section id="reshape-long-to-wide-one-row-per-respondent" class="level3">
 <h3 class="anchored" data-anchor-id="reshape-long-to-wide-one-row-per-respondent">2.11 reshape long to wide, one row per respondent</h3>
@@ -4631,7 +4636,7 @@ PA7
 <span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a>  cli<span class="sc">::</span><span class="fu">cli_progress_step</span>(i)</span>
 <span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(.fit)</span>
 <span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>#&gt; ℹ config[K✔ config [5ms][K
+<pre><code>#&gt; ℹ config[K✔ config [4ms][K
 #&gt; ℹ equal_regressions[K✔ equal_regressions [5ms][K</code></pre>
 </section>
 <section id="name-the-ses-invariance-fits" class="level3">
@@ -5552,24 +5557,27 @@ PA7
 <span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">"tables"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>#&gt;  [1] "between_person_covariances.csv"         
-#&gt;  [2] "clpm_vs_riclpm_fit_grouped.csv"         
-#&gt;  [3] "clpm_vs_riclpm_fit.csv"                 
-#&gt;  [4] "descriptives.html"                      
-#&gt;  [5] "focal_covariance_boot.csv"              
-#&gt;  [6] "focal_covariance_boot.fingerprint"      
-#&gt;  [7] "focal_covariance_by_ses.csv"            
-#&gt;  [8] "full_parameters_clpm_pooled.csv"        
-#&gt;  [9] "full_parameters_riclpm_covariates.csv"  
-#&gt; [10] "full_parameters_riclpm_grouped.csv"     
-#&gt; [11] "full_parameters_riclpm_pooled.csv"      
-#&gt; [12] "moderation_lrt.csv"                     
-#&gt; [13] "ri_clpm_fit_indices.md"                 
-#&gt; [14] "ri_clpm_fit_parameters.html"            
-#&gt; [15] "riclpm_covariate_effects.csv"           
-#&gt; [16] "riclpm_dynamics_coefficients_pooled.csv"
-#&gt; [17] "riclpm_dynamics_coefficients.csv"       
-#&gt; [18] "ses_group_estimates.csv"                
-#&gt; [19] "time_invariance_lrt.csv"</code></pre>
+#&gt;  [2] "bmi_sensitivity_between.csv"            
+#&gt;  [3] "bmi_sensitivity_focal_by_ses.csv"       
+#&gt;  [4] "bmi_sensitivity_moderation_lrt.csv"     
+#&gt;  [5] "clpm_vs_riclpm_fit_grouped.csv"         
+#&gt;  [6] "clpm_vs_riclpm_fit.csv"                 
+#&gt;  [7] "descriptives.html"                      
+#&gt;  [8] "focal_covariance_boot.csv"              
+#&gt;  [9] "focal_covariance_boot.fingerprint"      
+#&gt; [10] "focal_covariance_by_ses.csv"            
+#&gt; [11] "full_parameters_clpm_pooled.csv"        
+#&gt; [12] "full_parameters_riclpm_covariates.csv"  
+#&gt; [13] "full_parameters_riclpm_grouped.csv"     
+#&gt; [14] "full_parameters_riclpm_pooled.csv"      
+#&gt; [15] "moderation_lrt.csv"                     
+#&gt; [16] "ri_clpm_fit_indices.md"                 
+#&gt; [17] "ri_clpm_fit_parameters.html"            
+#&gt; [18] "riclpm_covariate_effects.csv"           
+#&gt; [19] "riclpm_dynamics_coefficients_pooled.csv"
+#&gt; [20] "riclpm_dynamics_coefficients.csv"       
+#&gt; [21] "ses_group_estimates.csv"                
+#&gt; [22] "time_invariance_lrt.csv"</code></pre>
 </section>
 <section id="measurement-invariance-interpretation" class="level2">
 <h2 class="anchored" data-anchor-id="measurement-invariance-interpretation">4 measurement invariance (interpretation)</h2>
@@ -7030,13 +7038,13 @@ PA7
 #&gt; loaded via a namespace (and not attached):
 #&gt;   [1] mnormt_2.1.2        gld_2.6.8           remotes_2.5.0      
 #&gt;   [4] sandwich_3.1-1      readxl_1.4.5        rlang_1.2.0        
-#&gt;   [7] weasel_0.3.1        multcomp_1.4-29     otel_0.2.0         
+#&gt;   [7] weasel_0.4.0        multcomp_1.4-29     otel_0.2.0         
 #&gt;  [10] e1071_1.7-17        compiler_4.6.1      systemfonts_1.3.2  
 #&gt;  [13] vctrs_0.7.3         quadprog_1.5-8      pkgconfig_2.0.3    
 #&gt;  [16] fastmap_1.2.0       report_0.6.3        backports_1.5.1    
 #&gt;  [19] labeling_0.4.3      pbivnorm_0.6.0      utf8_1.2.6         
 #&gt;  [22] rmarkdown_2.31      tzdb_0.5.0          haven_2.5.5        
-#&gt;  [25] lissr_1.3.2         purrr_1.2.2         xfun_0.57          
+#&gt;  [25] lissr_1.4.0         purrr_1.2.2         xfun_0.57          
 #&gt;  [28] psych_2.6.3         broom_1.0.12        parallel_4.6.1     
 #&gt;  [31] DescTools_0.99.60   R6_2.6.1            stringi_1.8.7      
 #&gt;  [34] RColorBrewer_1.1-3  boot_1.3-32         cellranger_1.1.0   

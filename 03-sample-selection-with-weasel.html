@@ -256,7 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">require_endpoints =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_missing =</span> <span class="dv">4</span>L,</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_gap_max =</span> <span class="dv">5</span>L,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_gap_max =</span> <span class="dv">5</span>L</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_gap_len =</span> <span class="dv">5</span>L</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>analysis_ids <span class="ot">&lt;-</span> <span class="fu">unique</span>(weasel<span class="sc">::</span><span class="fu">weasel_apply</span>(ws_plan, <span class="st">"min3_of7"</span>)<span class="sc">$</span>id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">weasel_sensitivity</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  ws_plan,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">require_endpoints =</span> <span class="cn">FALSE</span>, <span class="at">max_missing =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_max =</span> <span class="dv">5</span>L</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_len =</span> <span class="dv">5</span>L</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Attrition selectivity.</strong> <code>weasel_selectivity()</code> compares retained and excluded respondents on covariates via standardised mean differences, the empirical check on whether completeness-based selection skews the sample that the missing-at-random discussion in the article leans on. The pipeline attaches age, gender, the three focal variables, and the SES stratum, so the released comparison speaks to selection on the study’s own outcomes (excluded respondents are younger and slightly lighter; gender and activity are balanced):</p>
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">scenario =</span> <span class="st">"min3_of7"</span>, <span class="at">require_endpoints =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_missing =</span> <span class="dv">4</span>L, <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_max =</span> <span class="dv">5</span>L</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_missing =</span> <span class="dv">4</span>L, <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_len =</span> <span class="dv">5</span>L</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> weasel<span class="sc">::</span><span class="fu">weasel_plan</span>(d, <span class="at">id =</span> <span class="st">"id"</span>, <span class="at">wave =</span> <span class="st">"t"</span>, <span class="at">span =</span> <span class="st">"full"</span>, <span class="at">scenarios =</span> sc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -308,6 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>&lt;weasel_plan&gt;
   span: 1:7 (full, L = 7)
   respondents observed in span: 400
+  population: 400 of 400 distinct ids observed in span (denominator: observed_in_span)
  scenario n_ids mean_prop_present endpoint_rate score recommended
  min3_of7   297             0.696         0.549 2.396        TRUE
   data: 1604 row(s) attached</code></pre>
@@ -316,14 +317,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">weasel_print_table</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  weasel<span class="sc">::</span><span class="fu">weasel_sensitivity</span>(p, <span class="at">require_endpoints =</span> <span class="cn">FALSE</span>, <span class="at">max_missing =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_max =</span> <span class="dv">5</span>L),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">n_gap_max =</span> <span class="dv">5</span>L, <span class="at">max_gap_len =</span> <span class="dv">5</span>L),</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"sample size by minimum-wave tolerance"</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── sample size by minimum-wave tolerance ───────────────────────────────────────</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code> require_endpoints max_missing n_gap_max max_gap_max n_ids prop_ids
+<pre><code> require_endpoints max_missing n_gap_max max_gap_len n_ids prop_ids
              FALSE           0         5           5    56    0.140
              FALSE           1         5           5   103    0.258
              FALSE           2         5           5   165    0.412
@@ -354,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(weasel<span class="sc">::</span><span class="fu">weasel_justify_subset</span>(p, <span class="st">"min3_of7"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 297 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. In the resulting subset, mean within-window coverage was 0.696, endpoint coverage was 0.549. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.</code></pre>
+<pre><code>To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (R package weasel). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 297 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. The planning population comprised 400 respondent(s) observed at least once within the analysis window, out of 400 distinct respondent(s) in the supplied data; retention figures are relative to this in-window population. In the resulting subset, mean within-window coverage was 0.696, endpoint coverage was 0.549. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -371,9 +372,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="interactive-exploration" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-exploration">Interactive exploration</h2>
-<p>Before committing to any rule, the scope pipeline maps the participation landscape:</p>
+<p>Before committing to any rule, the scope pipeline maps the participation landscape. Since weasel 0.4.0 the scope shares the plan vocabulary (<code>max_gap_len</code>, <code>min_present</code>) and shows every respondent by default (<code>min_present = 1</code>); the call below pins the pre-0.4 exploration threshold of three observed waves explicitly:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">set_weasel_scope</span>(presence, <span class="st">"id"</span>, <span class="st">"t"</span>, <span class="at">gap =</span> <span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">set_weasel_scope</span>(presence, <span class="st">"id"</span>, <span class="st">"t"</span>, <span class="at">max_gap_len =</span> <span class="dv">1</span>, <span class="at">min_present =</span> <span class="dv">3</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">evaluate_weasel_scope</span>()</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">weasel_summarize_waves</span>()</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>weasel<span class="sc">::</span><span class="fu">weasel_print_table</span>(weasel<span class="sc">::</span><span class="fu">weasel_filter_wave_summary</span>(), <span class="at">n =</span> <span class="dv">10</span>)</span>
