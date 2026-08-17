@@ -132,3 +132,34 @@ Two assertions run inside the pipeline on every render: the `lissr` equivalisati
 ```{r}
 sessionInfo()
 ```
+
+## Smoking-adjusted sensitivity refit (Section 4.8)
+
+```{r}
+#| label: smoke-sensitivity-tables
+tbl_dir <- if (dir.exists("../tables")) "../tables" else "tables"
+
+smoke_focal <- utils::read.csv(file.path(tbl_dir, "smoke_sensitivity_focal_by_ses.csv"))
+knitr::kable(smoke_focal, digits = 3,
+  caption = "Standardised trait-level BMI-PA association by SES group, covariate model with baseline smoking added")
+
+smoke_cmp <- utils::read.csv(file.path(tbl_dir, "smoke_sensitivity_comparison.csv"))
+knitr::kable(smoke_cmp, digits = 3,
+  caption = "Focal standardised association: covariate model without versus with smoking")
+
+smoke_lrt <- utils::read.csv(file.path(tbl_dir, "smoke_sensitivity_moderation_lrt.csv"))
+knitr::kable(smoke_lrt, digits = 3,
+  caption = "Moderation test under smoking adjustment (Satorra-2000 scaled LRT)")
+
+smoke_eff <- utils::read.csv(file.path(tbl_dir, "smoke_covariate_effects.csv"))
+knitr::kable(smoke_eff, digits = 3,
+  caption = "Standardised smoking effects on the random intercepts, by SES group")
+
+smoke_between <- utils::read.csv(file.path(tbl_dir, "smoke_sensitivity_between.csv"))
+knitr::kable(
+  smoke_between[, c("lhs", "op", "rhs", "group", "est", "se", "z", "pvalue", "std.all")],
+  digits = 3,
+  caption = "Random-intercept covariances under smoking adjustment (unstandardised and standardised)")
+```
+
+The refit reproduces the article's focal pattern: the BMI-PA random-intercept association remains negative in every stratum, and the equality-constrained covariance model is preferred (article Section 4.8). Rounded values are shown here; the released CSV files carry full precision and all columns.
