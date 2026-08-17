@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6495a19aa3a96d24e06d370af9d69525.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-688947ef8e17ec34846c736dad635336.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -192,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This compendium is the online supplementary material for <em>Socioeconomic Variations in the Reciprocal Relationships Between Diet Quality, Physical Activity, and Body Mass Index</em>. It documents, in order, every step from an empty <code>data/</code> folder to the tables in the article. Sections are numbered S1 to S7 as cited from the manuscript; each is self-contained, and together they are deliberately exhaustive.</p>
+<p>This compendium is the online supplementary material for <em>Socioeconomic Variations in the Reciprocal Relationships Between Fruit and Vegetable Consumption, Physical Activity, and Body Mass Index: A Random-Intercept Cross-Lagged Panel Study</em>. It documents, in order, every step from an empty <code>data/</code> folder to the tables in the article. Sections are numbered S1 to S7 as cited from the manuscript; each is self-contained, and together they are deliberately exhaustive.</p>
 <ol type="1">
 <li><strong>S1 · Data acquisition with lissr.</strong> Registering, authenticating, browsing the archive, and downloading exactly the files the study needs.</li>
 <li><strong>S2 · Building the panel.</strong> The historical extract route that produced the published inputs (with its preserved construction record, known divergences, and checksums), and the recipe-driven lissr route that replaces it going forward.</li>
@@ -204,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <section id="where-the-articles-tables-live" class="level2">
 <h2 class="anchored" data-anchor-id="where-the-articles-tables-live">Where the article’s tables live</h2>
-<p>Article Table 1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Table 2 comes from <code>tables/clpm_vs_riclpm_fit.csv</code> and <code>tables/clpm_vs_riclpm_fit_grouped.csv</code>. Table 3 combines <code>tables/focal_covariance_by_ses.csv</code>, <code>tables/focal_covariance_boot.csv</code>, and <code>tables/moderation_lrt.csv</code>. Table 4 is <code>tables/riclpm_covariate_effects.csv</code>. Appendix Table A1 is <code>tables/riclpm_dynamics_coefficients.csv</code>, and the pooled time-invariant dynamics reported in the results text are <code>tables/riclpm_dynamics_coefficients_pooled.csv</code>. The measurement-structure statistics of the article’s Section 4.2 appear in the transcript’s longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence is <code>tables/bmi_sensitivity_between.csv</code>, <code>tables/bmi_sensitivity_focal_by_ses.csv</code>, and <code>tables/bmi_sensitivity_moderation_lrt.csv</code>, with the underlying audit in <code>output/bmi_construction_audit_*.csv</code>. All of these render in S6.</p>
+<p>Article Table 1 (the CLPM versus RI-CLPM fit comparison) comes from <code>tables/clpm_vs_riclpm_fit.csv</code> and <code>tables/clpm_vs_riclpm_fit_grouped.csv</code>. The pooled time-invariant dynamics reported in Section 4.5 and drawn in Figure 1 are <code>tables/riclpm_dynamics_coefficients_pooled.csv</code>; Figure 2 draws on <code>tables/focal_covariance_by_ses.csv</code> and <code>tables/focal_covariance_boot.csv</code>. Appendix Table A1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Appendix Table A2 (per-group dynamics) is <code>tables/riclpm_dynamics_coefficients.csv</code>. Appendix Table A3 combines <code>tables/focal_covariance_by_ses.csv</code>, <code>tables/focal_covariance_boot.csv</code>, and <code>tables/moderation_lrt.csv</code>. Appendix Table A4 is <code>tables/riclpm_covariate_effects.csv</code>. The measurement-structure statistics of the article’s Section 4.2 appear in the transcript’s longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence of Section 4.8 is <code>tables/bmi_sensitivity_between.csv</code>, <code>tables/bmi_sensitivity_focal_by_ses.csv</code>, and <code>tables/bmi_sensitivity_moderation_lrt.csv</code>, with the underlying audit in <code>output/bmi_construction_audit_*.csv</code>. All of these render in S6.</p>
 <p>Chunks that require LISS microdata are marked <code>eval: false</code> and mirror the pipeline verbatim; everything else executes at render time.</p>
 
 
@@ -618,7 +621,7 @@ ul.task-list li input[type="checkbox"] {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Research compendium: RI-CLPM analyses of diet quality, physical activity, and BMI (LISS panel)</p>
+<p>Research compendium: RI-CLPM analyses of fruit and vegetable consumption, physical activity, and BMI (LISS panel)</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
