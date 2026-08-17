@@ -3,7 +3,7 @@
 **Published site:** <https://siardv.github.io/diet-activity-bmi-riclpm/>
 
 Research compendium for **Socioeconomic Variations in the Reciprocal
-Relationships Between Diet Quality, Physical Activity, and Body Mass Index: A
+Relationships Between Fruit and Vegetable Consumption, Physical Activity, and Body Mass Index: A
 Random-Intercept Cross-Lagged Panel Study** (target journal: *Social Science &
 Medicine*). The compendium grew out of the working project "reciprocal health
 dynamics"; the package name (`reciprocal.health.dynamics`) and site title
