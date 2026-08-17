@@ -213,6 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#full-parameter-tables" id="toc-full-parameter-tables" class="nav-link" data-scroll-target="#full-parameter-tables">Full parameter tables</a></li>
   <li><a href="#supporting-tests-and-per-group-detail" id="toc-supporting-tests-and-per-group-detail" class="nav-link" data-scroll-target="#supporting-tests-and-per-group-detail">Supporting tests and per-group detail</a></li>
   <li><a href="#reproduction-ladder" id="toc-reproduction-ladder" class="nav-link" data-scroll-target="#reproduction-ladder">Reproduction ladder</a></li>
+  <li><a href="#smoking-adjusted-sensitivity-refit-section-4.8" id="toc-smoking-adjusted-sensitivity-refit-section-4.8" class="nav-link" data-scroll-target="#smoking-adjusted-sensitivity-refit-section-4.8">Smoking-adjusted sensitivity refit (Section 4.8)</a></li>
   </ul>
 </nav>
     </div>
@@ -2775,6 +2776,372 @@ loaded via a namespace (and not attached):
 [13] digest_0.6.39     rlang_1.2.0       evaluate_1.0.5   </code></pre>
 </div>
 </div>
+</section>
+<section id="smoking-adjusted-sensitivity-refit-section-4.8" class="level2">
+<h2 class="anchored" data-anchor-id="smoking-adjusted-sensitivity-refit-section-4.8">Smoking-adjusted sensitivity refit (Section 4.8)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tbl_dir <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">dir.exists</span>(<span class="st">"../tables"</span>)) <span class="st">"../tables"</span> <span class="cf">else</span> <span class="st">"tables"</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>smoke_focal <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">read.csv</span>(<span class="fu">file.path</span>(tbl_dir, <span class="st">"smoke_sensitivity_focal_by_ses.csv"</span>))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(smoke_focal, <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Standardised trait-level BMI-PA association by SES group, covariate model with baseline smoking added"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Standardised trait-level BMI-PA association by SES group, covariate model with baseline smoking added</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">group</th>
+<th style="text-align: right;">est.std</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: left;">SES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">-0.125</td>
+<td style="text-align: right;">-0.041</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ses1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.137</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">-0.199</td>
+<td style="text-align: right;">-0.076</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ses2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.110</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">-0.155</td>
+<td style="text-align: right;">-0.064</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ses3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>smoke_cmp <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">read.csv</span>(<span class="fu">file.path</span>(tbl_dir, <span class="st">"smoke_sensitivity_comparison.csv"</span>))</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(smoke_cmp, <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Focal standardised association: covariate model without versus with smoking"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Focal standardised association: covariate model without versus with smoking</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">group</th>
+<th style="text-align: right;">est.std_no_smoke</th>
+<th style="text-align: right;">est.std_smoke_adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.076</td>
+<td style="text-align: right;">-0.083</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.124</td>
+<td style="text-align: right;">-0.137</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.110</td>
+<td style="text-align: right;">-0.110</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>smoke_lrt <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">read.csv</span>(<span class="fu">file.path</span>(tbl_dir, <span class="st">"smoke_sensitivity_moderation_lrt.csv"</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(smoke_lrt, <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Moderation test under smoking adjustment (Satorra-2000 scaled LRT)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Moderation test under smoking adjustment (Satorra-2000 scaled LRT)</caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 5%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">model</th>
+<th style="text-align: right;">Df</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">Chisq</th>
+<th style="text-align: right;">Chisq.diff</th>
+<th style="text-align: right;">Df.diff</th>
+<th style="text-align: right;">Pr..Chisq.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">riBMI<sub></sub>riPA free</td>
+<td style="text-align: right;">603</td>
+<td style="text-align: right;">315501.7</td>
+<td style="text-align: right;">318192.5</td>
+<td style="text-align: right;">1754.003</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riBMI<sub></sub>riPA equal</td>
+<td style="text-align: right;">605</td>
+<td style="text-align: right;">315498.5</td>
+<td style="text-align: right;">318176.0</td>
+<td style="text-align: right;">1754.800</td>
+<td style="text-align: right;">1.405</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.495</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>smoke_eff <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">read.csv</span>(<span class="fu">file.path</span>(tbl_dir, <span class="st">"smoke_covariate_effects.csv"</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(smoke_eff, <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Standardised smoking effects on the random intercepts, by SES group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Standardised smoking effects on the random intercepts, by SES group</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">group</th>
+<th style="text-align: left;">lhs</th>
+<th style="text-align: right;">est.std</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">ci.lower</th>
+<th style="text-align: right;">ci.upper</th>
+<th style="text-align: right;">pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: right;">-0.032</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">-0.077</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.158</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">-0.141</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">-0.185</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">-0.194</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">-0.238</td>
+<td style="text-align: right;">-0.150</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: right;">-0.092</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">-0.141</td>
+<td style="text-align: right;">-0.043</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">-0.126</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">-0.182</td>
+<td style="text-align: right;">-0.069</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">-0.174</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">-0.226</td>
+<td style="text-align: right;">-0.121</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.690</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">-0.084</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">-0.150</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">-0.192</td>
+<td style="text-align: right;">-0.109</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>smoke_between <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">read.csv</span>(<span class="fu">file.path</span>(tbl_dir, <span class="st">"smoke_sensitivity_between.csv"</span>))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  smoke_between[, <span class="fu">c</span>(<span class="st">"lhs"</span>, <span class="st">"op"</span>, <span class="st">"rhs"</span>, <span class="st">"group"</span>, <span class="st">"est"</span>, <span class="st">"se"</span>, <span class="st">"z"</span>, <span class="st">"pvalue"</span>, <span class="st">"std.all"</span>)],</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Random-intercept covariances under smoking adjustment (unstandardised and standardised)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Random-intercept covariances under smoking adjustment (unstandardised and standardised)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">lhs</th>
+<th style="text-align: left;">op</th>
+<th style="text-align: left;">rhs</th>
+<th style="text-align: right;">group</th>
+<th style="text-align: right;">est</th>
+<th style="text-align: right;">se</th>
+<th style="text-align: right;">z</th>
+<th style="text-align: right;">pvalue</th>
+<th style="text-align: right;">std.all</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.724</td>
+<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">-3.670</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.083</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.192</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">-3.899</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.101</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">riPA</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.113</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">4.144</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.119</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-1.024</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">-4.035</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.137</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">-1.199</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">-0.038</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riPA</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;">0.034</td>
+<td style="text-align: right;">3.216</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.126</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riPA</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.798</td>
+<td style="text-align: right;">0.175</td>
+<td style="text-align: right;">-4.566</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">riBMI</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.092</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">-2.166</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.053</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">riPA</td>
+<td style="text-align: left;"><sub></sub></td>
+<td style="text-align: left;">riFV</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.145</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">5.311</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.154</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The refit reproduces the article’s focal pattern: the BMI-PA random-intercept association remains negative in every stratum, and the equality-constrained covariance model is preferred (article Section 4.8). Rounded values are shown here; the released CSV files carry full precision and all columns.</p>
 
 
 </section>

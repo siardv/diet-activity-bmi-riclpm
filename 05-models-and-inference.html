@@ -212,6 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#construction-audit-sensitivity" id="toc-construction-audit-sensitivity" class="nav-link" data-scroll-target="#construction-audit-sensitivity">Construction-audit sensitivity</a></li>
   <li><a href="#covariate-adjusted-refit" id="toc-covariate-adjusted-refit" class="nav-link" data-scroll-target="#covariate-adjusted-refit">Covariate-adjusted refit</a></li>
   <li><a href="#what-gets-written" id="toc-what-gets-written" class="nav-link" data-scroll-target="#what-gets-written">What gets written</a></li>
+  <li><a href="#smoking-adjusted-sensitivity-refit" id="toc-smoking-adjusted-sensitivity-refit" class="nav-link" data-scroll-target="#smoking-adjusted-sensitivity-refit">Smoking-adjusted sensitivity refit</a></li>
   </ul>
 </nav>
     </div>
@@ -289,6 +290,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="what-gets-written" class="level2">
 <h2 class="anchored" data-anchor-id="what-gets-written">What gets written</h2>
 <p>Every table the article reports is written to <code>tables/</code> as CSV during the render: fit comparisons, between-person covariances, pooled and per-group dynamics, focal covariances with bootstrap bounds, the two likelihood-ratio tests, the covariate effects, the four full parameter tables, and the three sensitivity tables. S6 renders each of them.</p>
+</section>
+<section id="smoking-adjusted-sensitivity-refit" class="level2">
+<h2 class="anchored" data-anchor-id="smoking-adjusted-sensitivity-refit">Smoking-adjusted sensitivity refit</h2>
+<p>The article’s covariate model deliberately excludes smoking from the primary specification (article Section 3.2): smoking is bidirectionally related to body weight and is itself patterned by the behaviours and the socioeconomic position under study, so without a formal causal diagram it could act as a confounder, a mediator, or a collider. As a robustness check, <code>analysis/smoking_sensitivity.R</code> refits the grouped covariate model with baseline smoking added: a 0/1 current-smoker indicator taken from the frozen panel’s <code>smoke</code> column (S2) at each respondent’s earliest wave with a non-missing report, mirroring how age, gender, and medication are anchored to the first observed wave. The script appends <code>riBMI ~ smoke</code>, <code>riPA ~ smoke</code>, and <code>riFV ~ smoke</code> to the covariate blocks, re-estimates the three-group RI-CLPM (MLR, FIML, <code>fixed.x = TRUE</code>), and repeats the focal moderation test by constraining <code>riBMI ~~ riPA</code> to equality across the SES groups with a Satorra-2000 scaled likelihood-ratio test. Outputs are written to <code>tables/smoke_sensitivity_between.csv</code>, <code>tables/smoke_sensitivity_focal_by_ses.csv</code>, <code>tables/smoke_sensitivity_comparison.csv</code>, <code>tables/smoke_sensitivity_moderation_lrt.csv</code>, and <code>tables/smoke_covariate_effects.csv</code>, and render in S6. The article reports this check in Section 4.8. Because the refit requires an analysis session in which the pipeline objects (<code>liss</code>, <code>wide</code>, <code>ri_clpm_syntax</code>, <code>all_model_fits</code>) exist, it is documented here and in the script header rather than executed at render time.</p>
 
 
 </section>
