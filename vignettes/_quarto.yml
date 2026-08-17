@@ -23,7 +23,7 @@ website:
       - text: "S7 · Analysis transcript (run_all)"
         href: run_all.md
   page-footer:
-    center: "Research compendium: RI-CLPM analyses of diet quality, physical activity, and BMI (LISS panel)"
+    center: "Research compendium: RI-CLPM analyses of fruit and vegetable consumption, physical activity, and BMI (LISS panel)"
 
 format:
   html:
