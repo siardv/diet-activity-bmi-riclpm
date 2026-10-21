@@ -4,9 +4,16 @@ project:
   type: website
   resources:
     - run_all_files
+    - figures
 
 website:
   title: "Reciprocal health dynamics"
+  description: "Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code."
+  image: figures/fig-model-diagram.png
+  image-alt: "CLPM and RI-CLPM specifications for BMI, physical activity, and fruit and vegetable consumption."
+  open-graph: true
+  twitter-card:
+    card-style: summary_large_image
   site-url: https://siardv.github.io/diet-activity-bmi-riclpm/
   repo-url: https://github.com/siardv/diet-activity-bmi-riclpm
   sidebar:

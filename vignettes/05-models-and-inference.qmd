@@ -21,6 +21,8 @@ BMI1 ~~ 0*BMI1
 
 Unit loadings define the random intercepts, observed residual variances are fixed to zero so all variance routes through the intercepts and the within components, wave-1 within covariances are freed, and the three random-intercept variances and three covariances are estimated. The complete parameter output of every fitted model (estimates, standard errors, z statistics, p values, confidence intervals, and standardised values) is released as `tables/full_parameters_*.csv` and rendered in S6.
 
+![CLPM and RI-CLPM specifications for BMI, physical activity (PA), and fruit and vegetable consumption (FV). The RI-CLPM separates stable between-person differences from within-person dynamics; the focal trait-level BMI–PA covariance is highlighted.](figures/fig-model-diagram.png){#fig-model-diagram width=650 fig-alt="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics."}
+
 ## Why the comparison is descriptive
 
 The CLPM is nested within the RI-CLPM: fixing the three random-intercept variances, and with them the covariances, to zero collapses one into the other. Because those constraints sit on the boundary of the admissible space, the scaled chi-square difference does not follow its nominal distribution (Stoel et al., 2006), so the models are compared on robust fit indices and information criteria. The verdict does not hinge on calibration: the RI-CLPM is superior on every index and preferred by margins of thousands of AIC and BIC points (S6 renders the tables).

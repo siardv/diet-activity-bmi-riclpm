@@ -1,8 +1,18 @@
 ---
 title: "Online supplementary material: a guided tour"
+image: figures/fig-model-diagram.png
+image-alt: "CLPM and RI-CLPM specifications for BMI, physical activity, and fruit and vegetable consumption."
+canonical-url: https://siardv.github.io/diet-activity-bmi-riclpm/
+header-includes: |
+  <meta property="og:url" content="https://siardv.github.io/diet-activity-bmi-riclpm/">
+  <meta property="og:type" content="website">
 ---
 
 This compendium is the online supplementary material for *Socioeconomic Variations in the Reciprocal Relationships Between Fruit and Vegetable Consumption, Physical Activity, and Body Mass Index: A Random-Intercept Cross-Lagged Panel Study*. It documents, in order, every step from an empty `data/` folder to the tables in the article. Sections are numbered S1 to S7 as cited from the manuscript; each is self-contained, and together they are deliberately exhaustive.
+
+![The models at a glance: the CLPM relates observed scores over time, while the RI-CLPM separates stable between-person differences from within-person dynamics. The focal trait-level BMI–physical activity covariance is highlighted. See [S5](05-models-and-inference.qmd#two-specifications-one-lag-structure) for the specifications.](figures/fig-model-diagram.png){#fig-model-overview width=480 fig-alt="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics."}
+
+## Explore the supplement
 
 1. **S1 · Data acquisition with lissr.** Registering, authenticating, browsing the archive, and downloading exactly the files the study needs.
 2. **S2 · Building the panel.** The historical extract route that produced the published inputs (with its preserved construction record, known divergences, and checksums), and the recipe-driven lissr route that replaces it going forward.
@@ -14,6 +24,6 @@ This compendium is the online supplementary material for *Socioeconomic Variatio
 
 ## Where the article's tables live
 
-Article Table 1 (the CLPM versus RI-CLPM fit comparison) comes from `tables/clpm_vs_riclpm_fit.csv` and `tables/clpm_vs_riclpm_fit_grouped.csv`. The pooled time-invariant dynamics reported in Section 4.5 and drawn in Figure 1 are `tables/riclpm_dynamics_coefficients_pooled.csv`; Figure 2 draws on `tables/focal_covariance_by_ses.csv` and `tables/focal_covariance_boot.csv`. Appendix Table A1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Appendix Table A2 (per-group dynamics) is `tables/riclpm_dynamics_coefficients.csv`. Appendix Table A3 combines `tables/focal_covariance_by_ses.csv`, `tables/focal_covariance_boot.csv`, and `tables/moderation_lrt.csv`. Appendix Table A4 is `tables/riclpm_covariate_effects.csv`. The measurement-structure statistics of the article's Section 4.2 appear in the transcript's longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence of Section 4.8 is `tables/bmi_sensitivity_between.csv`, `tables/bmi_sensitivity_focal_by_ses.csv`, and `tables/bmi_sensitivity_moderation_lrt.csv`, with the underlying audit in `output/bmi_construction_audit_*.csv`, and the smoking-adjusted refit in `tables/smoke_sensitivity_between.csv`, `tables/smoke_sensitivity_focal_by_ses.csv`, `tables/smoke_sensitivity_comparison.csv`, `tables/smoke_sensitivity_moderation_lrt.csv`, and `tables/smoke_covariate_effects.csv`. All of these render in S6.
+Article Table 1 (the CLPM versus RI-CLPM fit comparison) comes from `tables/clpm_vs_riclpm_fit.csv` and `tables/clpm_vs_riclpm_fit_grouped.csv`. The pooled time-invariant dynamics reported in Section 4.5 and shown in the [within-person dynamics diagram](06-results-and-reproduction.qmd#fig-within-dynamics) are `tables/riclpm_dynamics_coefficients_pooled.csv`; the [moderation plot](06-results-and-reproduction.qmd#fig-moderation) draws on `tables/focal_covariance_by_ses.csv` and `tables/focal_covariance_boot.csv`. Appendix Table A1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Appendix Table A2 (per-group dynamics) is `tables/riclpm_dynamics_coefficients.csv`. Appendix Table A3 combines `tables/focal_covariance_by_ses.csv`, `tables/focal_covariance_boot.csv`, and `tables/moderation_lrt.csv`. Appendix Table A4 is `tables/riclpm_covariate_effects.csv`. The measurement-structure statistics of the article's Section 4.2 appear in the transcript's longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence of Section 4.8 is `tables/bmi_sensitivity_between.csv`, `tables/bmi_sensitivity_focal_by_ses.csv`, and `tables/bmi_sensitivity_moderation_lrt.csv`, with the underlying audit in `output/bmi_construction_audit_*.csv`, and the smoking-adjusted refit in `tables/smoke_sensitivity_between.csv`, `tables/smoke_sensitivity_focal_by_ses.csv`, `tables/smoke_sensitivity_comparison.csv`, `tables/smoke_sensitivity_moderation_lrt.csv`, and `tables/smoke_covariate_effects.csv`. All of these render in S6.
 
 Chunks that require LISS microdata are marked `eval: false` and mirror the pipeline verbatim; everything else executes at render time.

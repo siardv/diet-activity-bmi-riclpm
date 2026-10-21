@@ -4,6 +4,8 @@ title: "S3 · Sample selection with weasel"
 
 The analytic sample keeps every respondent observed on at least three of the seven analysis waves, and estimates under full-information maximum likelihood. This vignette expresses that rule as an explicit, named, auditable scenario with [`weasel`](https://github.com/siardv/weasel), shows the audit outputs the article draws on, and demonstrates the machinery live on synthetic data.
 
+![Data assembly, measure construction, and sample selection for the seven-wave panel. The minimum-three-wave rule retains 5,676 of 7,250 respondents; missingness is handled with full-information maximum likelihood. Panel construction is documented in [S2](02-building-the-panel.qmd), and measure definitions in [S4](04-measures-and-cleaning.qmd).](figures/fig-sample-flow.png){#fig-sample-flow width=700 fig-alt="Flow diagram from three LISS modules through panel assembly, measure construction, and sample selection, retaining 5,676 of 7,250 respondents."}
+
 ## Semantics first
 
 `weasel` counts a respondent as observed at a wave when a row with that `(id, wave)` pair exists in the long data. The study's notion of observed is substantive: at least one focal measure (BMI, fruit and vegetable consumption, or sport hours) reported at that wave. The bridge is a presence filter applied before planning:

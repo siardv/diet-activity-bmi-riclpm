@@ -2,6 +2,8 @@
 
 **Published site:** <https://siardv.github.io/diet-activity-bmi-riclpm/>
 
+[<img src="vignettes/figures/fig-model-diagram.png" width="480" alt="CLPM and RI-CLPM specifications for BMI, physical activity, and fruit and vegetable consumption">](https://siardv.github.io/diet-activity-bmi-riclpm/)
+
 Research compendium for **Socioeconomic Variations in the Reciprocal
 Relationships Between Fruit and Vegetable Consumption, Physical Activity, and Body Mass Index: A
 Random-Intercept Cross-Lagged Panel Study** (target journal: *Social Science &
@@ -51,6 +53,25 @@ The compendium doubles as a worked use case for two packages:
 
 No microdata are included or may be redistributed; see `data/README.md` for
 access.
+
+## Figures and link previews
+
+Four selected figure PNGs are published in `vignettes/figures/`: the model
+diagram, sample flow, within-person dynamics, and socioeconomic moderation.
+They appear alongside the relevant explanations in the guided tour. These
+are public copies of the figures; the manuscript directory remains ignored.
+
+Share the published site URL above to use the model diagram as its preview.
+The Quarto configuration supplies Open Graph and Twitter Card metadata, and
+the site publish script deploys the PNGs with the rendered pages. After
+publishing, check the site URL in the
+[LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) to refresh
+its cached preview. The portrait diagram may be fitted or cropped by LinkedIn.
+
+The GitHub repository URL has a separate social preview setting: under
+**Settings → General → Social preview**, upload
+`vignettes/figures/fig-model-diagram.png` if that URL should show the same
+diagram. Adding the image to the README alone does not set that preview.
 
 ## Reproducing the analysis
 
