@@ -110,6 +110,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta property="og:title" content="S5 · Models and inference – Reciprocal health dynamics">
+<meta property="og:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta property="og:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-model-diagram.png">
+<meta property="og:site_name" content="Reciprocal health dynamics">
+<meta property="og:image:alt" content="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics.">
+<meta property="og:image:height" content="2193">
+<meta property="og:image:width" content="1686">
+<meta name="twitter:title" content="S5 · Models and inference – Reciprocal health dynamics">
+<meta name="twitter:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta name="twitter:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-model-diagram.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics.">
+<meta name="twitter:image-height" content="2193">
+<meta name="twitter:image-width" content="1686">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -251,6 +265,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BMI1 <span class="sc">~</span><span class="er">~</span> <span class="dv">0</span><span class="sc">*</span>BMI1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Unit loadings define the random intercepts, observed residual variances are fixed to zero so all variance routes through the intercepts and the within components, wave-1 within covariances are freed, and the three random-intercept variances and three covariances are estimated. The complete parameter output of every fitted model (estimates, standard errors, z statistics, p values, confidence intervals, and standardised values) is released as <code>tables/full_parameters_*.csv</code> and rendered in S6.</p>
+<div id="fig-model-diagram" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-model-diagram.png" class="img-fluid figure-img" alt="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics." width="650">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: CLPM and RI-CLPM specifications for BMI, physical activity (PA), and fruit and vegetable consumption (FV). The RI-CLPM separates stable between-person differences from within-person dynamics; the focal trait-level BMI–PA covariance is highlighted.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="why-the-comparison-is-descriptive" class="level2">
 <h2 class="anchored" data-anchor-id="why-the-comparison-is-descriptive">Why the comparison is descriptive</h2>

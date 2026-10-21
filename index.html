@@ -73,8 +73,25 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<meta property="og:url" content="https://siardv.github.io/diet-activity-bmi-riclpm/">
+<meta property="og:type" content="website">
 
 
+<meta property="og:title" content="Online supplementary material: a guided tour – Reciprocal health dynamics">
+<meta property="og:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta property="og:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-model-diagram.png">
+<meta property="og:site_name" content="Reciprocal health dynamics">
+<meta property="og:image:height" content="2193">
+<meta property="og:image:width" content="1686">
+<meta property="og:image:alt" content="CLPM and RI-CLPM specifications for BMI, physical activity, and fruit and vegetable consumption.">
+<meta name="twitter:title" content="Online supplementary material: a guided tour – Reciprocal health dynamics">
+<meta name="twitter:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta name="twitter:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-model-diagram.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="2193">
+<meta name="twitter:image-width" content="1686">
+<meta name="twitter:image:alt" content="CLPM and RI-CLPM specifications for BMI, physical activity, and fruit and vegetable consumption.">
+<link rel="canonical" href="https://siardv.github.io/diet-activity-bmi-riclpm/">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -169,7 +186,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#where-the-articles-tables-live" id="toc-where-the-articles-tables-live" class="nav-link active" data-scroll-target="#where-the-articles-tables-live">Where the article’s tables live</a></li>
+  <li><a href="#explore-the-supplement" id="toc-explore-the-supplement" class="nav-link active" data-scroll-target="#explore-the-supplement">Explore the supplement</a></li>
+  <li><a href="#where-the-articles-tables-live" id="toc-where-the-articles-tables-live" class="nav-link" data-scroll-target="#where-the-articles-tables-live">Where the article’s tables live</a></li>
   </ul>
 </nav>
     </div>
@@ -196,6 +214,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This compendium is the online supplementary material for <em>Socioeconomic Variations in the Reciprocal Relationships Between Fruit and Vegetable Consumption, Physical Activity, and Body Mass Index: A Random-Intercept Cross-Lagged Panel Study</em>. It documents, in order, every step from an empty <code>data/</code> folder to the tables in the article. Sections are numbered S1 to S7 as cited from the manuscript; each is self-contained, and together they are deliberately exhaustive.</p>
+<div id="fig-model-overview" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-model-diagram.png" class="img-fluid figure-img" alt="Two-panel comparison of the CLPM among observed scores and the RI-CLPM separating stable traits from within-person BMI, physical activity, and fruit and vegetable consumption dynamics." width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The models at a glance: the CLPM relates observed scores over time, while the RI-CLPM separates stable between-person differences from within-person dynamics. The focal trait-level BMI–physical activity covariance is highlighted. See <a href="./05-models-and-inference.html#two-specifications-one-lag-structure">S5</a> for the specifications.
+</figcaption>
+</figure>
+</div>
+<section id="explore-the-supplement" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-supplement">Explore the supplement</h2>
 <ol type="1">
 <li><strong>S1 · Data acquisition with lissr.</strong> Registering, authenticating, browsing the archive, and downloading exactly the files the study needs.</li>
 <li><strong>S2 · Building the panel.</strong> The historical extract route that produced the published inputs (with its preserved construction record, known divergences, and checksums), and the recipe-driven lissr route that replaces it going forward.</li>
@@ -205,9 +235,10 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>S6 · Results and reproduction.</strong> Every released table rendered from <code>tables/</code> and <code>output/</code>, including the full parameter tables and the sensitivity refit, plus the exact reproduction ladder. Renders without any LISS data.</li>
 <li><strong>S7 · Analysis transcript (run_all).</strong> The chunk-by-chunk pipeline: code, output, and a closing <code>sessionInfo()</code>.</li>
 </ol>
+</section>
 <section id="where-the-articles-tables-live" class="level2">
 <h2 class="anchored" data-anchor-id="where-the-articles-tables-live">Where the article’s tables live</h2>
-<p>Article Table 1 (the CLPM versus RI-CLPM fit comparison) comes from <code>tables/clpm_vs_riclpm_fit.csv</code> and <code>tables/clpm_vs_riclpm_fit_grouped.csv</code>. The pooled time-invariant dynamics reported in Section 4.5 and drawn in Figure 1 are <code>tables/riclpm_dynamics_coefficients_pooled.csv</code>; Figure 2 draws on <code>tables/focal_covariance_by_ses.csv</code> and <code>tables/focal_covariance_boot.csv</code>. Appendix Table A1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Appendix Table A2 (per-group dynamics) is <code>tables/riclpm_dynamics_coefficients.csv</code>. Appendix Table A3 combines <code>tables/focal_covariance_by_ses.csv</code>, <code>tables/focal_covariance_boot.csv</code>, and <code>tables/moderation_lrt.csv</code>. Appendix Table A4 is <code>tables/riclpm_covariate_effects.csv</code>. The measurement-structure statistics of the article’s Section 4.2 appear in the transcript’s longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence of Section 4.8 is <code>tables/bmi_sensitivity_between.csv</code>, <code>tables/bmi_sensitivity_focal_by_ses.csv</code>, and <code>tables/bmi_sensitivity_moderation_lrt.csv</code>, with the underlying audit in <code>output/bmi_construction_audit_*.csv</code>, and the smoking-adjusted refit in <code>tables/smoke_sensitivity_between.csv</code>, <code>tables/smoke_sensitivity_focal_by_ses.csv</code>, <code>tables/smoke_sensitivity_comparison.csv</code>, <code>tables/smoke_sensitivity_moderation_lrt.csv</code>, and <code>tables/smoke_covariate_effects.csv</code>. All of these render in S6.</p>
+<p>Article Table 1 (the CLPM versus RI-CLPM fit comparison) comes from <code>tables/clpm_vs_riclpm_fit.csv</code> and <code>tables/clpm_vs_riclpm_fit_grouped.csv</code>. The pooled time-invariant dynamics reported in Section 4.5 and shown in the <a href="./06-results-and-reproduction.html#fig-within-dynamics">within-person dynamics diagram</a> are <code>tables/riclpm_dynamics_coefficients_pooled.csv</code>; the <a href="./06-results-and-reproduction.html#fig-moderation">moderation plot</a> draws on <code>tables/focal_covariance_by_ses.csv</code> and <code>tables/focal_covariance_boot.csv</code>. Appendix Table A1 (descriptives) comes from the wide-frame descriptives in the transcript (S7, section on the wide subset). Appendix Table A2 (per-group dynamics) is <code>tables/riclpm_dynamics_coefficients.csv</code>. Appendix Table A3 combines <code>tables/focal_covariance_by_ses.csv</code>, <code>tables/focal_covariance_boot.csv</code>, and <code>tables/moderation_lrt.csv</code>. Appendix Table A4 is <code>tables/riclpm_covariate_effects.csv</code>. The measurement-structure statistics of the article’s Section 4.2 appear in the transcript’s longitudinal invariance table (with df and scaled chi-squares) and its across-SES tables. The robustness evidence of Section 4.8 is <code>tables/bmi_sensitivity_between.csv</code>, <code>tables/bmi_sensitivity_focal_by_ses.csv</code>, and <code>tables/bmi_sensitivity_moderation_lrt.csv</code>, with the underlying audit in <code>output/bmi_construction_audit_*.csv</code>, and the smoking-adjusted refit in <code>tables/smoke_sensitivity_between.csv</code>, <code>tables/smoke_sensitivity_focal_by_ses.csv</code>, <code>tables/smoke_sensitivity_comparison.csv</code>, <code>tables/smoke_sensitivity_moderation_lrt.csv</code>, and <code>tables/smoke_covariate_effects.csv</code>. All of these render in S6.</p>
 <p>Chunks that require LISS microdata are marked <code>eval: false</code> and mirror the pipeline verbatim; everything else executes at render time.</p>
 
 

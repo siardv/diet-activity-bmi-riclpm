@@ -110,6 +110,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta property="og:title" content="S3 · Sample selection with weasel – Reciprocal health dynamics">
+<meta property="og:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta property="og:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-sample-flow.png">
+<meta property="og:site_name" content="Reciprocal health dynamics">
+<meta property="og:image:alt" content="Flow diagram from three LISS modules through panel assembly, measure construction, and sample selection, retaining 5,676 of 7,250 respondents.">
+<meta property="og:image:height" content="1934">
+<meta property="og:image:width" content="2087">
+<meta name="twitter:title" content="S3 · Sample selection with weasel – Reciprocal health dynamics">
+<meta name="twitter:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta name="twitter:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-sample-flow.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Flow diagram from three LISS modules through panel assembly, measure construction, and sample selection, retaining 5,676 of 7,250 respondents.">
+<meta name="twitter:image-height" content="1934">
+<meta name="twitter:image-width" content="2087">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -235,6 +249,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>The analytic sample keeps every respondent observed on at least three of the seven analysis waves, and estimates under full-information maximum likelihood. This vignette expresses that rule as an explicit, named, auditable scenario with <a href="https://github.com/siardv/weasel"><code>weasel</code></a>, shows the audit outputs the article draws on, and demonstrates the machinery live on synthetic data.</p>
+<div id="fig-sample-flow" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Flow diagram from three LISS modules through panel assembly, measure construction, and sample selection, retaining 5,676 of 7,250 respondents.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sample-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-sample-flow.png" class="img-fluid figure-img" alt="Flow diagram from three LISS modules through panel assembly, measure construction, and sample selection, retaining 5,676 of 7,250 respondents." width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sample-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Data assembly, measure construction, and sample selection for the seven-wave panel. The minimum-three-wave rule retains 5,676 of 7,250 respondents; missingness is handled with full-information maximum likelihood. Panel construction is documented in <a href="./02-building-the-panel.html">S2</a>, and measure definitions in <a href="./04-measures-and-cleaning.html">S4</a>.
+</figcaption>
+</figure>
+</div>
 <section id="semantics-first" class="level2">
 <h2 class="anchored" data-anchor-id="semantics-first">Semantics first</h2>
 <p><code>weasel</code> counts a respondent as observed at a wave when a row with that <code>(id, wave)</code> pair exists in the long data. The study’s notion of observed is substantive: at least one focal measure (BMI, fruit and vegetable consumption, or sport hours) reported at that wave. The bridge is a presence filter applied before planning:</p>
@@ -358,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(weasel<span class="sc">::</span><span class="fu">weasel_justify_subset</span>(p, <span class="st">"min3_of7"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (van den Bosch, 2026). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 297 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. The planning population comprised 400 respondent(s) observed at least once within the analysis window, out of 400 distinct respondent(s) in the supplied data; retention figures are relative to this in-window population. In the resulting subset, mean within-window coverage was 0.696, endpoint coverage was 0.549. The analysis window was selected using the package's span rule (full), which prioritizes a coherent window with comparatively strong participation. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.</code></pre>
+<pre><code>To construct a longitudinal analysis sample, we selected respondents whose wave participation satisfied explicit structural criteria using the WEASEL framework (Wave-based Extraction and Selection for Longitudinal Data) (van den Bosch, 2026). Specifically, we focused on waves 1 to 7 (L = 7) and did not require observed endpoints, allowing unanchored participation, allowed up to 4 missing waves within the window, and restricted the missingness structure (at most 5 interior missing block(s), each no longer than 5 wave(s)). This strategy retained 297 respondent(s), reflecting an explicit trade-off between sample size and within-window completeness. The planning population comprised 400 respondent(s) observed at least once within the analysis window, out of 400 distinct respondent(s) in the supplied data; retention figures are relative to this in-window population. In the resulting subset, mean within-window coverage was 0.696, endpoint coverage was 0.549. The analysis window used the full wave grid from the first to the last grid wave. All selection decisions were rule-based and reproducible, and can be regenerated from the same inputs and parameters using the weasel workflow.</code></pre>
 </div>
 </div>
 <div class="cell">

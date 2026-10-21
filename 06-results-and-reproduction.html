@@ -110,6 +110,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<meta property="og:title" content="S6 · Results and reproduction – Reciprocal health dynamics">
+<meta property="og:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta property="og:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-within-dynamics.png">
+<meta property="og:site_name" content="Reciprocal health dynamics">
+<meta property="og:image:alt" content="Pooled within-person dynamics: autoregressive paths for all three constructs, small negative reciprocal paths between BMI and physical activity, and a negative path from fruit and vegetable consumption to later BMI.">
+<meta property="og:image:height" content="982">
+<meta property="og:image:width" content="1603">
+<meta name="twitter:title" content="S6 · Results and reproduction – Reciprocal health dynamics">
+<meta name="twitter:description" content="Online supplementary material on diet, physical activity, and BMI in the Dutch LISS panel, with model specifications, results, and reproducible code.">
+<meta name="twitter:image" content="https://siardv.github.io/diet-activity-bmi-riclpm/figures/fig-within-dynamics.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="Pooled within-person dynamics: autoregressive paths for all three constructs, small negative reciprocal paths between BMI and physical activity, and a negative path from fruit and vegetable consumption to later BMI.">
+<meta name="twitter:image-height" content="982">
+<meta name="twitter:image-width" content="1603">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -468,6 +482,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="within-person-dynamics-pooled-time-invariant" class="level2">
 <h2 class="anchored" data-anchor-id="within-person-dynamics-pooled-time-invariant">Within-person dynamics (pooled, time-invariant)</h2>
+<div id="fig-within-dynamics" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Pooled within-person dynamics: autoregressive paths for all three constructs, small negative reciprocal paths between BMI and physical activity, and a negative path from fruit and vegetable consumption to later BMI.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-within-dynamics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-within-dynamics.png" class="img-fluid figure-img" alt="Pooled within-person dynamics: autoregressive paths for all three constructs, small negative reciprocal paths between BMI and physical activity, and a negative path from fruit and vegetable consumption to later BMI." width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-within-dynamics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Pooled time-invariant within-person dynamics. Labels show unstandardised estimates for significant paths; dashed grey arrows indicate paths not significant at p &lt; 0.05. Two asterisks indicate p &lt; 0.01; three indicate p &lt; 0.001. The underlying estimates are tabulated below.
+</figcaption>
+</figure>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"riclpm_dynamics_coefficients_pooled.csv"</span>),</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Autoregressive and cross-lagged coefficients"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -595,6 +619,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="socioeconomic-moderation" class="level2">
 <h2 class="anchored" data-anchor-id="socioeconomic-moderation">Socioeconomic moderation</h2>
+<div id="fig-moderation" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Standardised trait-level BMI–physical activity covariances of approximately −0.120, −0.129, and −0.113 for lower, intermediate, and higher household education, with bootstrap 95% confidence intervals.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-moderation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fig-moderation.png" class="img-fluid figure-img" alt="Standardised trait-level BMI–physical activity covariances of approximately −0.120, −0.129, and −0.113 for lower, intermediate, and higher household education, with bootstrap 95% confidence intervals." width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moderation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Standardised trait-level BMI–PA covariance by household education stratum, with percentile bootstrap 95% confidence intervals (1,000 resamples). The equality test provides no evidence of socioeconomic moderation (scaled Δχ²(2) = 1.47, p = 0.479). The underlying estimates, intervals, and test are tabulated below.
+</figcaption>
+</figure>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">k</span>(<span class="fu">tbl</span>(<span class="st">"focal_covariance_by_ses.csv"</span>),</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Standardised trait BMI-PA covariance by stratum"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2773,7 +2807,7 @@ loaded via a namespace (and not attached):
  [1] htmlwidgets_1.6.4 compiler_4.6.1    fastmap_1.2.0     cli_3.6.6        
  [5] tools_4.6.1       htmltools_0.5.9   otel_0.2.0        yaml_2.3.12      
  [9] rmarkdown_2.31    knitr_1.51        jsonlite_2.0.0    xfun_0.57        
-[13] digest_0.6.39     rlang_1.2.0       evaluate_1.0.5   </code></pre>
+[13] digest_0.6.39     rlang_1.3.0       evaluate_1.0.5   </code></pre>
 </div>
 </div>
 </section>
